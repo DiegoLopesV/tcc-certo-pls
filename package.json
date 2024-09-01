@@ -1,0 +1,14 @@
+{
+  "name": "tcc-laravel-2024",
+  "version": "1.0.0",
+  "description": "Projeto do nosso grupo do ano de 2024, informática 4 (IFPR Campus Curitiba)!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^5.3.3"
+  }
+}

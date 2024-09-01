@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<buildpath>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/app/Console"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/app/Exceptions"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/app/Http"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/app/Mail"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/app/Models"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/app/Providers"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/bootstrap"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/config"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/database/factories"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/database/migrations"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/database/seeders"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/lang/en"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/public"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/resources/views/auth"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/resources/views/disciplinas"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/resources/views/emails"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/resources/views/home"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/resources/views/layouts"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/resources/views/produtos"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/resources/views/professores"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/resources/views/solicitacoes"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/resources/views/usuarios"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/routes"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/storage/framework/views"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/tests"/>
+	<buildpathentry kind="src" path="crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltbb/crudlaraveltb/vendor"/>
+	<buildpathentry kind="con" path="org.eclipse.php.core.LANGUAGE"/>
+</buildpath>
