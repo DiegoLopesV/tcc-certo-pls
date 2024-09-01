@@ -172,7 +172,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/info3', [AlunosController::class, 'showInfo3'])->name('info3');
         Route::get('/info4', [AlunosController::class, 'showInfo4'])->name('info4');
         Route::get('/pg1', [AlunosController::class, 'showPg1'])->name('pg1');
-
+        Route::get('/pg2', [AlunosController::class, 'showPg2'])->name('pg2');
+        Route::get('/pg3', [AlunosController::class, 'showPg3'])->name('pg3');
 
         //Rotas das Ocorrências
         Route::get('/ocorrencias', [OcorrenciasController::class, 'index'])->name('ocorrencias.index');

@@ -149,4 +149,14 @@ class AlunosController extends Controller
         $alunos = Alunos::where('turma', 'PG 1')->get();
         return view('layouts.partials.pg1', compact('alunos'));
     }
+    public function showPg2()
+    {
+        $alunos = Alunos::where('turma', 'PG 2')->get();
+        return view('layouts.partials.pg2', compact('alunos'));
+    }
+    public function showPg3()
+    {
+        $alunos = Alunos::where('turma', 'PG 3')->get();
+        return view('layouts.partials.pg3', compact('alunos'));
+    }
 }
