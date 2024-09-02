@@ -19,5 +19,7 @@ class Alunos extends Model
         'email_pais',
         'curso',
         'turma',
+        'ano_atual',
+        'status_reprovacao',
     ];
 }

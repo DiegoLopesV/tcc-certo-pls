@@ -5,7 +5,10 @@
     <div class="position-relative m-3 border border-dark border-3 rounded p-5 ">
         <div class="fs-1 mb-3">Lista de todos os alunos</div>
         <div> 
-            <button class="position-absolute top-0 end-0 mx-3 rounded" id="AddALunos" data-bs-toggle="modal" data-bs-target="#alunoModal">Adicionar Alunos</button>
+            <button class="position-absolute top-0 end-0 mx-3 rounded AddALunos m-2"  data-bs-toggle="modal" data-bs-target="#alunoModal">Adicionar Alunos</button>
+        </div>
+        <div>
+            <a href="{{ route('passar_ano') }}"> <button class="position-absolute top-0 end-0 mx-3 rounded AddALunos ">Passar de Ano</button></a>
         </div>
         <div class="alunos-container d-flex">
             <!-- Container para adicionar o novo conteúdo -->

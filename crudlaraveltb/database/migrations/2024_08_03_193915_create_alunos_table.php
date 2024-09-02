@@ -24,6 +24,8 @@ return new class extends Migration
             $table->string("email_pais");
             $table->string("curso");
             $table->string("turma");
+            $table->string("ano_atual");
+            $table->boolean("status_reprovacao");
             $table->timestamps();
         });
     }

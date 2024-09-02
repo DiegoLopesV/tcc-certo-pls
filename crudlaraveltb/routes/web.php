@@ -232,6 +232,19 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::post('password/reset', [ResetPasswordController::class, 'reset'])->name('password.update');
 
 
+        //Rota Passar Alunos 
+        Route::get('/passar_ano', function () {
+            return view('layouts.partials.passar_ano');
+        })->name('passar_ano');
+
+        Route::get('/passar-ano', [AlunosController::class, 'promoverAlunos'])->name('passar_ano');
+
+
+
+        
+
+
+
 
         /**
          * Logout Routes

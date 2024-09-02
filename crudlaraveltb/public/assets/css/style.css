@@ -356,11 +356,17 @@ span {
     transition: 0.3s;
 }
 /*Alunos.index */
-#AddALunos{
+.AddALunos{
     height: 50px;
     margin-top: 70px;
     transition: 0.3s;
     width: 150px;
+}
+.AddALunos:hover{
+    height: 55px;
+    margin-top: 70px;
+    transition: 0.3s;
+    width: 155px;
 }
 .aluno-card {
     position: relative; /* Necessário para posicionar o botão no canto superior direito */
