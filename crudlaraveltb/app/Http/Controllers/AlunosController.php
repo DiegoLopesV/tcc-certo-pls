@@ -159,4 +159,116 @@ class AlunosController extends Controller
         $alunos = Alunos::where('turma', 'PG 3')->get();
         return view('layouts.partials.pg3', compact('alunos'));
     }
+
+    public function showAdm1()
+    {
+        $alunos = Alunos::where('turma', 'Adm 1')->get();
+        return view('layouts.partials.adm1', compact('alunos'));
+    }
+
+    public function showAdm2()
+    {
+        $alunos = Alunos::where('turma', 'Adm 2')->get();
+        return view('layouts.partials.adm2', compact('alunos'));
+    }
+
+    public function showAdm3()
+    {
+        $alunos = Alunos::where('turma', 'Adm 3')->get();
+        return view('layouts.partials.adm3', compact('alunos'));
+    }
+
+    public function showElet1()
+    {
+        $alunos = Alunos::where('turma', 'Eletrônica 1')->get();
+        return view('layouts.partials.elet1', compact('alunos'));
+    }
+
+    public function showElet2()
+    {
+        $alunos = Alunos::where('turma', 'Eletrônica 2')->get();
+        return view('layouts.partials.elet2', compact('alunos'));
+    }
+
+    public function showElet3()
+    {
+        $alunos = Alunos::where('turma', 'Eletrônica 3')->get();
+        return view('layouts.partials.elet3', compact('alunos'));
+    }
+
+    public function showMec1()
+    {
+        $alunos = Alunos::where('turma', 'Mecânica 1')->get();
+        return view('layouts.partials.mec1', compact('alunos'));
+    }
+
+    public function showMec2()
+    {
+        $alunos = Alunos::where('turma', 'Mecânica 2')->get();
+        return view('layouts.partials.mec2', compact('alunos'));
+    }
+
+    public function showMec3()
+    {
+        $alunos = Alunos::where('turma', 'Mecânica 3')->get();
+        return view('layouts.partials.mec3', compact('alunos'));
+    }
+
+    public function showCont1()
+    {
+        $alunos = Alunos::where('turma', 'Contabilidade 1')->get();
+        return view('layouts.partials.cont1', compact('alunos'));
+    }
+
+    public function showCont2()
+    {
+        $alunos = Alunos::where('turma', 'Contabilidade 2')->get();
+        return view('layouts.partials.cont2', compact('alunos'));
+    }
+
+    public function showCont3()
+    {
+        $alunos = Alunos::where('turma', 'Contabilidade 3')->get();
+        return view('layouts.partials.cont3', compact('alunos'));
+    }
+
+    public function showJogos1()
+    {
+        $alunos = Alunos::where('turma', 'Jogos 1')->get();
+        return view('layouts.partials.jogos1', compact('alunos'));
+    }
+
+    public function showJogos2()
+    {
+        $alunos = Alunos::where('turma', 'Jogos 2')->get();
+        return view('layouts.partials.jogos2', compact('alunos'));
+    }
+
+
+    public function showJogos3()
+    {
+        $alunos = Alunos::where('turma', 'Jogos 3')->get();
+        return view('layouts.partials.jogos3', compact('alunos'));
+    }
+
+    public function showPf1()
+    {
+        $alunos = Alunos::where('turma', 'PF 1')->get();
+        return view('layouts.partials.pf1', compact('alunos'));
+    }
+
+    public function showPf2()
+    {
+        $alunos = Alunos::where('turma', 'PF 2')->get();
+        return view('layouts.partials.pf2', compact('alunos'));
+    }
+
+    public function showPf3()
+    {
+        $alunos = Alunos::where('turma', 'PF 3')->get();
+        return view('layouts.partials.pf3', compact('alunos'));
+    }
+
+
+
 }

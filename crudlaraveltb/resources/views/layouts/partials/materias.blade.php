@@ -29,37 +29,37 @@
                 </div>
                 <!-- Botão Administração -->
                 <div class="col">
-                    <a href="" class="btn btn-outline-dark btn-lg bg-Adm border-3 btn-curso">
+                    <a href="{{ route('adm') }}" class="btn btn-outline-dark btn-lg bg-Adm border-3 btn-curso">
                         <i class="fa-solid fa-user-tie"></i> Administração
                     </a>
                 </div>
                 <!-- Botão Eletrônica -->
                 <div class="col">
-                    <a href="" class="btn btn-outline-dark btn-lg bg-Elet border-3 btn-curso">
+                    <a href="{{ route('elet') }}" class="btn btn-outline-dark btn-lg bg-Elet border-3 btn-curso">
                         <i class="fa-solid fa-bolt"></i> Eletrônica
                     </a>
                 </div>
                 <!-- Botão Mecânica -->
                 <div class="col">
-                    <a href="" class="btn btn-outline-dark btn-lg bg-Mec border-3 btn-curso">
+                    <a href="{{ route('mec') }}" class="btn btn-outline-dark btn-lg bg-Mec border-3 btn-curso">
                         <i class="fa-solid fa-screwdriver-wrench"></i> Mecânica
                     </a>
                 </div>
                 <!-- Botão Contabilidade -->
                 <div class="col">
-                    <a href="" class="btn btn-outline-dark btn-lg bg-Cont border-3 btn-curso">
-                        <i class="fa-solid fa-camera"></i> Contabilidade
+                    <a href="{{ route('cont') }}" class="btn btn-outline-dark btn-lg bg-Cont border-3 btn-curso">
+                        <i class="fa-solid fa-calculator"></i> Contabilidade
                     </a>
                 </div>
                 <!-- Botão Programação de Jogos Digitais -->
                 <div class="col">
-                    <a href="" class="btn btn-outline-dark btn-lg bg-Foto border-3 btn-curso">
+                    <a href="{{ route('jogos') }}" class="btn btn-outline-dark btn-lg bg-Foto border-3 btn-curso">
                         <i class="fa-solid fa-gamepad"></i> Programação de Jogos Digitais
                     </a>
                 </div>
                 <!-- Botão Processos Fotográficos -->
                 <div class="col">
-                    <a href="" class="btn btn-outline-dark btn-lg bg-Jogos border-3 btn-curso">
+                    <a href="{{ route('pf') }}" class="btn btn-outline-dark btn-lg bg-Jogos border-3 btn-curso">
                         <i class="fa-solid fa-camera"></i> Processos Fotográficos
                     </a>
                 </div>

@@ -110,45 +110,39 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/info', function () {
             return view('layouts.partials.info');
         })->name('info');
+
+        //Rota ADM
+        Route::get('/adm', function () {
+            return view('layouts.partials.adm');
+        })->name('adm');
+
+        //Rota Eletrônica
+        Route::get('/elet', function () {
+            return view('layouts.partials.elet');
+        })->name('elet');
+
+        //Rota Mecânica
+        Route::get('/mec', function () {
+            return view('layouts.partials.mec');
+        })->name('mec');
+
+        //Rota Contabilidade
+        Route::get('/cont', function () {
+            return view('layouts.partials.cont');
+        })->name('cont');
+
+        //Rota Jogos
+        Route::get('/jogos', function () {
+            return view('layouts.partials.jogos');
+        })->name('jogos');
+
+        //Rota PF
+        Route::get('/pf', function () {
+            return view('layouts.partials.pf');
+        })->name('pf');
+
         //rota info turmas
         Route::get('/turma/{id}', [InfoController::class, 'show']);
-
-        //Rota Info1
-        Route::get('/info1', function () {
-            return view('layouts.partials.info1');
-        })->name('info1');
-
-
-        //Rota Info2
-        Route::get('/info2', function () {
-            return view('layouts.partials.info2');
-        })->name('info2');
-
-        //Rota Info3
-        Route::get('/info3', function () {
-            return view('layouts.partials.info3');
-        })->name('info3');
-
-        //Rota Info4
-        Route::get('/info4', function () {
-            return view('layouts.partials.info4');
-        })->name('info4');
-
-        //Rota Pg1
-        Route::get('/pg1', function () {
-            return view('layouts.partials.pg1');
-        })->name('pg1');
-
-        //Rota pg2
-        Route::get('/pg2', function () {
-            return view('layouts.partials.pg2');
-        })->name('pg2');
-
-        //Rota Pg3
-        Route::get('/pg3', function () {
-            return view('layouts.partials.pg3');
-        })->name('pg3');
-
 
         //Solicitações
         Route::resource(
@@ -174,6 +168,26 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/pg1', [AlunosController::class, 'showPg1'])->name('pg1');
         Route::get('/pg2', [AlunosController::class, 'showPg2'])->name('pg2');
         Route::get('/pg3', [AlunosController::class, 'showPg3'])->name('pg3');
+        Route::get('/adm1', [AlunosController::class, 'showAdm1'])->name('adm1');
+        Route::get('/adm2', [AlunosController::class, 'showAdm2'])->name('adm2');
+        Route::get('/adm3', [AlunosController::class, 'showAdm3'])->name('adm3');
+        Route::get('/elet1', [AlunosController::class, 'showElet1'])->name('elet1');
+        Route::get('/elet2', [AlunosController::class, 'showElet2'])->name('elet2');
+        Route::get('/elet3', [AlunosController::class, 'showElet3'])->name('elet3');
+        Route::get('/mec1', [AlunosController::class, 'showMec1'])->name('mec1');
+        Route::get('/mec2', [AlunosController::class, 'showMec2'])->name('mec2');
+        Route::get('/mec3', [AlunosController::class, 'showMec3'])->name('mec3');
+        Route::get('/cont1', [AlunosController::class, 'showCont1'])->name('cont1');
+        Route::get('/cont2', [AlunosController::class, 'showCont2'])->name('cont2');
+        Route::get('/cont3', [AlunosController::class, 'showCont3'])->name('cont3');
+        Route::get('/jogos1', [AlunosController::class, 'showJogos1'])->name('jogos1');
+        Route::get('/jogos2', [AlunosController::class, 'showJogos2'])->name('jogos2');
+        Route::get('/jogos3', [AlunosController::class, 'showJogos3'])->name('jogos3');
+        Route::get('/jogos4', [AlunosController::class, 'showJogos4'])->name('jogos4');
+        Route::get('/pf1', [AlunosController::class, 'showPf1'])->name('pf1');
+        Route::get('/pf2', [AlunosController::class, 'showPf2'])->name('pf2');
+        Route::get('/pf3', [AlunosController::class, 'showPf3'])->name('pf3');
+
 
         //Rotas das Ocorrências
         Route::get('/ocorrencias', [OcorrenciasController::class, 'index'])->name('ocorrencias.index');
@@ -203,7 +217,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
 
 
-        
+
 
         //Graficos  
         Route::get('/graficos', function () {

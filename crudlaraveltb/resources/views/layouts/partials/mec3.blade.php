@@ -6,8 +6,9 @@
 
     <div class="d-flex text-center border border-dark border-3 border-top-0  ">
 
-        <div class="border border-dark border-2 m-3 box01 p-2 fs-1" id="ic"> <i class="fa-solid fa-oil-well"></i>
-            Petróleo e Gás 1</div>
+        <div class="border border-dark border-2 m-3 box01 p-2 fs-1" id="ic"> <i class="fa-solid fa-screwdriver-wrench"></i>
+            Mecânica 3</div>
+
         @include('layouts.partials.btnTurmas')
 
 
