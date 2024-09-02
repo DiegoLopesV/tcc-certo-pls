@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ocorrencias;
-
+use App\Models\Enfermaria;
 
 
 class OcorrenciasController extends Controller
@@ -15,21 +15,30 @@ class OcorrenciasController extends Controller
      */
     
      public function index(Request $request)
-     {
-         // Verifica se há uma pesquisa
-         $search = $request->input('search');
- 
-         // Se houver uma pesquisa, filtra as ocorrências pelo título
-         if ($search) {
-             $ocorrencias = Ocorrencias::where('titulo', 'like', '%' . $search . '%')->get();
-         }  else {
-             // Caso contrário, busca todas as ocorrências
-             $ocorrencias = Ocorrencias::all();
-         }
- 
-         // Retorna a view com as ocorrências filtradas
-         return view('ocorrencias.index', compact('ocorrencias'));
-     }
+{
+    // Verifica se há uma pesquisa
+    $search = $request->input('search');
+    
+    // Se houver uma pesquisa, filtra as ocorrências e as entidades de enfermaria
+    if ($search) {
+        // Busca ocorrências com base no título
+        $ocorrencias = Ocorrencias::where('titulo', 'like', '%' . $search . '%')->get();
+        
+        // Busca entidades de enfermaria com base no título
+        $enfermarias = Enfermaria::where('titulo', 'like', '%' . $search . '%')->get();
+
+        // Passa os resultados para a view
+        return view('ocorrencias.index', compact('ocorrencias', 'enfermarias', 'search'));
+    } else {
+        // Caso contrário, busca todas as ocorrências e entidades de enfermaria
+        $ocorrencias = Ocorrencias::all();
+        $enfermarias = Enfermaria::all();
+
+        // Passa os resultados para a view
+        return view('ocorrencias.index', compact('ocorrencias', 'enfermarias'));
+    }
+}
+
 
     //Função Filtro
     public function filtro($turma)

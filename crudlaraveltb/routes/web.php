@@ -92,9 +92,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         //Filtro Ocorrências
         Route::get('/filtro/{turma}', [OcorrenciasController::class, 'filtro'])->name('ocorrencias.filtro');
 
-        //Rotas da Enfermaria
-        Route::get("/enfermaria", "EnfermariaController@index")->name("enfermaria.index");
-
         //Rotas das Mensagens
         Route::get("/mensagens", "MensagensController@index")->name("mensagens.index");
 
@@ -199,6 +196,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/graficosOco', [OcorrenciasController::class, 'showMonthlyChartOco'])->name('graficosOco');
         Route::get("/ocorrencias/pdf", "OcorrenciasPDFController@gerarPDF")->name("ocorrencias.pdf");
 
+
         //Rotas Enfermaria
         Route::get('/enfermaria', [EnfermariaController::class, 'index'])->name('enfermaria.index');
         Route::get('/enfermaria/create', [EnfermariaController::class, 'create'])->name('enfermaria.create');
@@ -207,12 +205,14 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::put('/enfermaria/{id}', [EnfermariaController::class, 'update'])->name('enfermaria.update');
         Route::delete('/enfermaria/{id}', [EnfermariaController::class, 'destroy'])->name('enfermaria.destroy');
         Route::get('/graficosEnf', [EnfermariaController::class, 'showMonthlyChart'])->name('graficosEnf');
+        Route::get("/enfermaria/pdf", "EnfermariaPDFController@gerarPDF")->name("enfermaria.pdf");
 
 
 
         //Rota para manter o card dos alunos
         Route::post('/alunos', 'AlunosController@store')->name('alunos.store');
 
+      
 
 
 

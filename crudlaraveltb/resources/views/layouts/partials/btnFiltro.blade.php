@@ -36,8 +36,6 @@
     </div>
 </div>
 
-
-<script src="{{ mix('js/app.js') }}"></script>
 <script>
     document.getElementById('applyFilters').addEventListener('click', function() {
         const form = document.getElementById('filterForm');
