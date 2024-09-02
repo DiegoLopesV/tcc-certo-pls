@@ -47,6 +47,55 @@ class AlunosController extends Controller
         $aluno->telefone_pais = $request->telefone_pais;
         $aluno->email = $request->email;
         $aluno->email_pais = $request->email_pais;
+        $aluno->status_reprovacao = false;
+
+            // Atualize apenas os campos enviados
+    $aluno->update($request->only([
+        'nome', 'curso', 'turma', 'cpf', 'nome_pais', 
+        'telefone', 'telefone_pais', 'email', 'email_pais'
+    ]));
+
+        // Mapeia as turmas para o ano_atual
+    $anoMap = [
+        'Info 1' => 1,
+        'Info 2' => 2,
+        'Info 3' => 3,
+        'Info 4' => 4,
+        'PG 1' => 1,
+        'PG 2' => 2,
+        'PG 3' => 3,
+        'Adm 1' => 1,
+        'Adm 2' => 2,
+        'Adm 3' => 3,
+        'Eletrônica 1' => 1,
+        'Eletrônica 2' => 2,
+        'Eletrônica 3' => 3,
+        'Mecânica 1' => 1,
+        'Mecânica 2' => 2,
+        'Mecânica 3' => 3,
+        'Contabilidade 1' => 1,
+        'Contabilidade 2' => 2,
+        'Contabilidade 3' => 3,
+        'Jogos 1' => 1,
+        'Jogos 2' => 2,
+        'Jogos 3' => 3,
+        'PF 1' => 1,
+        'PF 2' => 2,
+        'PF 3' => 3,
+    ];
+
+    // Define o ano_atual com base na turma
+    $anoAtual = $anoMap[$request->turma] ?? 0;
+
+    // Confirma que ano_atual não é 0 (opcional, pode adicionar um log aqui para depuração)
+    if ($anoAtual === 0) {
+        // Log::error('Turma não encontrada no mapeamento: ' . $request->turma);
+        // Ou retorne um erro
+        return response()->json(['error' => 'Turma inválida.'], 400);
+    }
+
+    $aluno->ano_atual = $anoAtual;
+    $aluno->status_reprovacao = false;
 
         $aluno->save();
 
@@ -111,7 +160,6 @@ class AlunosController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
         $alunos = Alunos::findOrFail($id);
         $alunos->delete();
         return response()->json(['message' => 'Aluno excluído com sucesso!']);
@@ -268,6 +316,42 @@ class AlunosController extends Controller
         $alunos = Alunos::where('turma', 'PF 3')->get();
         return view('layouts.partials.pf3', compact('alunos'));
     }
+
+
+
+
+    public function promoverAlunos(Request $request)
+    {
+        $alunosParaReprovar = $request->input('alunos_reprovados', []);
+    
+        // Recupera todos os alunos
+        $alunos = Alunos::all(); // Certifique-se de que o modelo 'Alunos' esteja importado corretamente
+    
+        foreach ($alunos as $aluno) {
+            if (in_array($aluno->id, $alunosParaReprovar)) {
+                // Marca como reprovado
+                $aluno->status_reprovacao = true;
+            } else {
+                // Promove para o próximo ano
+                $aluno->ano_atual += 1;
+                $aluno->status_reprovacao = false; // Resetar o status de reprovação
+            }
+    
+            $aluno->save();
+        }
+
+        //dd($alunos);
+    
+        // Passa a variável $alunos para a view
+
+
+        return view('layouts.partials.passar_ano', compact('alunos'));
+    }
+    
+    
+    
+    
+    
 
 
 
