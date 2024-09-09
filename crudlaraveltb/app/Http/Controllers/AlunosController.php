@@ -49,53 +49,60 @@ class AlunosController extends Controller
         $aluno->email_pais = $request->email_pais;
         $aluno->status_reprovacao = false;
 
-            // Atualize apenas os campos enviados
-    $aluno->update($request->only([
-        'nome', 'curso', 'turma', 'cpf', 'nome_pais', 
-        'telefone', 'telefone_pais', 'email', 'email_pais'
-    ]));
+        // Atualize apenas os campos enviados
+        $aluno->update($request->only([
+            'nome',
+            'curso',
+            'turma',
+            'cpf',
+            'nome_pais',
+            'telefone',
+            'telefone_pais',
+            'email',
+            'email_pais'
+        ]));
 
         // Mapeia as turmas para o ano_atual
-    $anoMap = [
-        'Info 1' => 1,
-        'Info 2' => 2,
-        'Info 3' => 3,
-        'Info 4' => 4,
-        'PG 1' => 1,
-        'PG 2' => 2,
-        'PG 3' => 3,
-        'Adm 1' => 1,
-        'Adm 2' => 2,
-        'Adm 3' => 3,
-        'Eletrônica 1' => 1,
-        'Eletrônica 2' => 2,
-        'Eletrônica 3' => 3,
-        'Mecânica 1' => 1,
-        'Mecânica 2' => 2,
-        'Mecânica 3' => 3,
-        'Contabilidade 1' => 1,
-        'Contabilidade 2' => 2,
-        'Contabilidade 3' => 3,
-        'Jogos 1' => 1,
-        'Jogos 2' => 2,
-        'Jogos 3' => 3,
-        'PF 1' => 1,
-        'PF 2' => 2,
-        'PF 3' => 3,
-    ];
+        $anoMap = [
+            'Info 1' => 1,
+            'Info 2' => 2,
+            'Info 3' => 3,
+            'Info 4' => 4,
+            'PG 1' => 1,
+            'PG 2' => 2,
+            'PG 3' => 3,
+            'Adm 1' => 1,
+            'Adm 2' => 2,
+            'Adm 3' => 3,
+            'Eletrônica 1' => 1,
+            'Eletrônica 2' => 2,
+            'Eletrônica 3' => 3,
+            'Mecânica 1' => 1,
+            'Mecânica 2' => 2,
+            'Mecânica 3' => 3,
+            'Contabilidade 1' => 1,
+            'Contabilidade 2' => 2,
+            'Contabilidade 3' => 3,
+            'Jogos 1' => 1,
+            'Jogos 2' => 2,
+            'Jogos 3' => 3,
+            'Processos Fotográficos 1' => 1,
+            'Processos Fotográficos 2' => 2,
+            'Processos Fotográficos 3' => 3,
+        ];
 
-    // Define o ano_atual com base na turma
-    $anoAtual = $anoMap[$request->turma] ?? 0;
+        // Define o ano_atual com base na turma
+        $anoAtual = $anoMap[$request->turma] ?? 0;
 
-    // Confirma que ano_atual não é 0 (opcional, pode adicionar um log aqui para depuração)
-    if ($anoAtual === 0) {
-        // Log::error('Turma não encontrada no mapeamento: ' . $request->turma);
-        // Ou retorne um erro
-        return response()->json(['error' => 'Turma inválida.'], 400);
-    }
+        // Confirma que ano_atual não é 0 (opcional, pode adicionar um log aqui para depuração)
+        if ($anoAtual === 0) {
+            // Log::error('Turma não encontrada no mapeamento: ' . $request->turma);
+            // Ou retorne um erro
+            return response()->json(['error' => 'Turma inválida.'], 400);
+        }
 
-    $aluno->ano_atual = $anoAtual;
-    $aluno->status_reprovacao = false;
+        $aluno->ano_atual = $anoAtual;
+        $aluno->status_reprovacao = false;
 
         $aluno->save();
 
@@ -210,19 +217,19 @@ class AlunosController extends Controller
 
     public function showAdm1()
     {
-        $alunos = Alunos::where('turma', 'Adm 1')->get();
+        $alunos = Alunos::where('turma', 'ADM 1')->get();
         return view('layouts.partials.adm1', compact('alunos'));
     }
 
     public function showAdm2()
     {
-        $alunos = Alunos::where('turma', 'Adm 2')->get();
+        $alunos = Alunos::where('turma', 'ADM 2')->get();
         return view('layouts.partials.adm2', compact('alunos'));
     }
 
     public function showAdm3()
     {
-        $alunos = Alunos::where('turma', 'Adm 3')->get();
+        $alunos = Alunos::where('turma', 'ADM 3')->get();
         return view('layouts.partials.adm3', compact('alunos'));
     }
 
@@ -301,32 +308,31 @@ class AlunosController extends Controller
 
     public function showPf1()
     {
-        $alunos = Alunos::where('turma', 'PF 1')->get();
+        $alunos = Alunos::where('turma', 'Processos Fotográficos 1')->get();
         return view('layouts.partials.pf1', compact('alunos'));
     }
 
     public function showPf2()
     {
-        $alunos = Alunos::where('turma', 'PF 2')->get();
+        $alunos = Alunos::where('turma', 'Processos Fotográficos 2')->get();
         return view('layouts.partials.pf2', compact('alunos'));
     }
 
     public function showPf3()
     {
-        $alunos = Alunos::where('turma', 'PF 3')->get();
+        $alunos = Alunos::where('turma', 'Processos Fotográficos 3')->get();
         return view('layouts.partials.pf3', compact('alunos'));
     }
-
 
 
 
     public function promoverAlunos(Request $request)
     {
         $alunosParaReprovar = $request->input('alunos_reprovados', []);
-    
+
         // Recupera todos os alunos
-        $alunos = Alunos::all(); // Certifique-se de que o modelo 'Alunos' esteja importado corretamente
-    
+        $alunos = Alunos::all();
+
         foreach ($alunos as $aluno) {
             if (in_array($aluno->id, $alunosParaReprovar)) {
                 // Marca como reprovado
@@ -336,42 +342,56 @@ class AlunosController extends Controller
                 $aluno->ano_atual += 1;
                 $aluno->status_reprovacao = false; // Resetar o status de reprovação
             }
-    
+
             $aluno->save();
         }
-
-        //dd($alunos);
-    
-        // Passa a variável $alunos para a view
-
 
         return view('layouts.partials.passar_ano', compact('alunos'));
     }
 
     public function passarDeAno(Request $request)
-{
-    $turmas = ['Info 1', 'Info 2', 'Info 3', 'Info 4', '']; // Exemplo de turmas
+    {
+        // Definindo turmas de diversos cursos
+        $turmas = [
+            'Info' => ['Info 1', 'Info 2', 'Info 3', 'Info 4'],
+            'PG' => ['PG 1', 'PG 2', 'PG 3'],
+            'ADM' => ['ADM 1', 'ADM 2', 'ADM 3'],
+            'Jogos' => ['Jogos 1', 'Jogos 2', 'Jogos 3', 'Jogos 4'],
+            'Mecânica' => ['Mecânica 1', 'Mecânica 2', 'Mecânica 3'],
+            'Eletrônica' => ['Eletrônica 1', 'Eletrônica 2', 'Eletrônica 3'],
+            'Contabilidade' => ['Contabilidade 1', 'Contabilidade 2', 'Contabilidade 3'],
+            'Processos Fotográficos' => ['Processos Fotográficos 1', 'Processos Fotográficos 2', 'Processos Fotográficos 3'],
+        ];
 
-    foreach ($request->input('alunos', []) as $alunoId => $aprovado) {
-        if ($aprovado) {
-            $aluno = Alunos::find($alunoId);
-            $currentTurmaIndex = array_search($aluno->turma, $turmas);
+        foreach ($request->input('alunos', []) as $alunoId => $aprovado) {
+            if ($aprovado) {
+                $aluno = Alunos::find($alunoId);
+                $curso = explode(' ', $aluno->turma)[0]; // Extrai o nome do curso
+                $currentTurmaIndex = array_search($aluno->turma, $turmas[$curso]);
 
-            if ($currentTurmaIndex !== false && $currentTurmaIndex < count($turmas) - 1) {
-                $aluno->turma = $turmas[$currentTurmaIndex + 1];
+                // Verifica se o aluno está na última turma
+                if ($currentTurmaIndex !== false && $currentTurmaIndex < count($turmas[$curso]) - 1) {
+                    $aluno->turma = $turmas[$curso][$currentTurmaIndex + 1];
+                } else {
+                    // Caso o aluno esteja na última turma
+                    $aluno->turma = 'passou de ano';
+                }
+
                 $aluno->save();
             }
         }
+
+        return response()->json(['message' => 'Alunos atualizados com sucesso!']);
     }
 
-    return response()->json(['message' => 'Alunos atualizados com sucesso!']);
-}
-    
-    
-    
-    
-    
 
+    // No seu controlador
+    public function mostrarAlunosPassados()
+    {
+        // Buscar todos os alunos
+        $alunos = Alunos::all();
 
-
+        // Retorne a view com a variável $alunos
+        return view('layouts.partials.alunosPassados', compact('alunos'));
+    }
 }
