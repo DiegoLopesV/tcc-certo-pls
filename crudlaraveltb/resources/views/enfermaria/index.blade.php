@@ -20,9 +20,11 @@
 
 
         @include('layouts.partials.btnEmitirRelat')
-        <button id="emitir" class=" border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold"
-            data-bs-toggle="modal" data-bs-target="#relatorio"> Emitir Relatórios <i
-                class="fa-regular fa-clipboard ms-1"></i> </button>
+        <!-- Botão para emitir relatório -->
+        @include('layouts.partials.btnEmitirRelat')
+        <a href="{{ route('enfermaria.pdf', ['download' => 'pdf']) }}" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold bg-white text-dark btn btn-sm float-left">
+            <i class="fa-solid fa-file-pdf me-1"></i> PDF
+        </a>
 
         <button id="filtrar" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold"
             data-bs-toggle="modal" data-bs-target="#filterModal"> <i class="fa-solid fa-list me-1"></i> Filtrar</button>

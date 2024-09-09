@@ -6,11 +6,10 @@
             font-family: Arial, sans-serif;
             margin: 20px;
             color: #333;
-            background-color: #fff; /* Fundo branco */
         }
         h1 {
             text-align: center;
-            color: #d9534f; /* Vermelho para o título */
+            color: #0056b3;
             margin-bottom: 20px;
         }
         .card {
@@ -19,12 +18,12 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             margin-bottom: 20px;
             padding: 15px;
-            background-color: #fff; /* Fundo branco para os cartões */
+            background-color: #fff;
         }
         .card-header {
             margin-bottom: 10px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #d9534f; /* Linha vermelha na base do cabeçalho */
+            border-bottom: 2px solid #0056b3;
             color: #333;
         }
         .card-header div {
@@ -59,21 +58,17 @@
 <body>
     <h1>{{ $title }}</h1>
 
-    @foreach ($ocorrencias as $ocorrencia)
-        <div class="row">
-            <div class="col">
-                <div class="card">
-                    <div class="card-header">
-                        <div><strong>Título:</strong> {{ $ocorrencia->titulo }}</div>
-                        <div><strong>Descrição:</strong> {{ $ocorrencia->descricao }}</div>
-                        <div><strong>Participantes:</strong> {{ $ocorrencia->participantes }}</div>
-                        <div><strong>Turma:</strong> {{ $ocorrencia->turma }}</div>
-                        <div><strong>Data:</strong> {{ $ocorrencia->data }}</div>
-                        <div><strong>Status:</strong> {{ $ocorrencia->status }}</div>
-                    </div>
-                </div>  
-            </div>
+    @foreach ($enfermaria as $item)
+    <div class="card">
+        <div class="card-header">
+            <div><strong>Título:</strong> {{ $item->titulo }}</div>
+            <div><strong>Descrição:</strong> {{ $item->descricao }}</div>
+            <div><strong>Pessoas:</strong> {{ $item->pessoas }}</div>
+            <div><strong>Turma:</strong> {{ $item->turma }}</div>
+            <div><strong>Data:</strong> {{ $item->data }}</div>
+            <div><strong>Status:</strong> {{ $item->status }}</div>
         </div>
+    </div>
     @endforeach
 </body>
 </html>

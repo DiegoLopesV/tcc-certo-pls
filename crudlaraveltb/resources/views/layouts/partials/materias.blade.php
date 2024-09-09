@@ -8,7 +8,6 @@
     @include('layouts.partials.essentials')
 </head>
 <body id="body">
-    <p><a href="{{ route('password.request') }}">Esqueceu a senha?</a></p>
     <div class="d-grid justify-content-center align-items-center border border-dark border-2 border-top-0">
         <!-- Cursos -->
         <div class="text-center fs-1 fw-bold text-decoration-underline mb-lg-5">Cursos</div>

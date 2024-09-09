@@ -11,6 +11,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\GraficoController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Models\Ocorrencias;
+use App\Http\Controllers\PerfilController;
 
 Route::get('send-mail', [MailController::class, 'index']);
 
@@ -78,28 +79,19 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::patch('/disciplinas/{disciplina}/update', 'DisciplinasController@update')->name('disciplinas.update');
         Route::delete('/disciplinas/{disciplina}/delete', 'DisciplinasController@destroy')->name('disciplinas.destroy');
         Route::get("/disciplinas/{professor_id}/pdf", "DisciplinaPDFController@gerarPDF")->name("disciplinas.pdf");
-        /*
-            Route::get('/disciplinasProfessores', 'DisciplinasProfessoresController@index')->name('disciplinasProfessores.index');
-            Route::get('/disciplinasProfessores/create', 'DisciplinasProfessoresController@create')->name('disciplinasProfessores.create');
-            Route::post('/disciplinasProfessores/create', 'DisciplinasProfessoresController@store')->name('disciplinasProfessores.store');
-            Route::get('/disciplinasProfessores/{disciplinasProfessores}/show', 'DisciplinasProfessoresController@show')->name('disciplinasProfessores.show');
-            Route::get('/disciplinasProfessores/{disciplinasProfessores}/edit', 'DisciplinasProfessoresController@edit')->name('disciplinasProfessores.edit');
-            Route::patch('/disciplinasProfessores/{disciplinasProfessores}/update', 'DisciplinasProfessoresController@update')->name('disciplinasProfessores.update');
-            Route::delete('/disciplinasProfessores/{disciplinasProfessores}/delete', 'DisciplinasProfessoresController@destroy')->name('disciplinasProfessores.destroy');
-            Route::get("/disciplinasProfessores/pdf", "DisciplinaProfessorPDFController@gerarPDF")->name("disciplinasProfessores.pdf");
-            */
+
 
         //Filtro Ocorrências
         Route::get('/filtro/{turma}', [OcorrenciasController::class, 'filtro'])->name('ocorrencias.filtro');
-
-        //Rotas da Enfermaria
-        Route::get("/enfermaria", "EnfermariaController@index")->name("enfermaria.index");
 
         //Rotas das Mensagens
         Route::get("/mensagens", "MensagensController@index")->name("mensagens.index");
 
         //Rotas Perfil
         Route::get("/perfil", "PerfilController@index")->name("perfil.index");
+        //->middleware('can:access');
+
+        
 
         // Rota Petroleo é Gás
         Route::get('/pg', function () {
@@ -199,6 +191,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/graficosOco', [OcorrenciasController::class, 'showMonthlyChartOco'])->name('graficosOco');
         Route::get("/ocorrencias/pdf", "OcorrenciasPDFController@gerarPDF")->name("ocorrencias.pdf");
 
+
         //Rotas Enfermaria
         Route::get('/enfermaria', [EnfermariaController::class, 'index'])->name('enfermaria.index');
         Route::get('/enfermaria/create', [EnfermariaController::class, 'create'])->name('enfermaria.create');
@@ -207,12 +200,14 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::put('/enfermaria/{id}', [EnfermariaController::class, 'update'])->name('enfermaria.update');
         Route::delete('/enfermaria/{id}', [EnfermariaController::class, 'destroy'])->name('enfermaria.destroy');
         Route::get('/graficosEnf', [EnfermariaController::class, 'showMonthlyChart'])->name('graficosEnf');
+        Route::get("/enfermaria/pdf", "EnfermariaPDFController@gerarPDF")->name("enfermaria.pdf");
 
 
 
         //Rota para manter o card dos alunos
         Route::post('/alunos', 'AlunosController@store')->name('alunos.store');
 
+      
 
 
 
@@ -262,4 +257,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
          */
         Route::get('/logout', 'LogoutController@perform')->name('logout.perform');
     });
+
+
+    
 });
