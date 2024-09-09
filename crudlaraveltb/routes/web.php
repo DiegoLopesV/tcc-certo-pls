@@ -11,6 +11,7 @@ use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\GraficoController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Models\Ocorrencias;
+use App\Http\Controllers\PerfilController;
 
 Route::get('send-mail', [MailController::class, 'index']);
 
@@ -78,16 +79,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::patch('/disciplinas/{disciplina}/update', 'DisciplinasController@update')->name('disciplinas.update');
         Route::delete('/disciplinas/{disciplina}/delete', 'DisciplinasController@destroy')->name('disciplinas.destroy');
         Route::get("/disciplinas/{professor_id}/pdf", "DisciplinaPDFController@gerarPDF")->name("disciplinas.pdf");
-        /*
-            Route::get('/disciplinasProfessores', 'DisciplinasProfessoresController@index')->name('disciplinasProfessores.index');
-            Route::get('/disciplinasProfessores/create', 'DisciplinasProfessoresController@create')->name('disciplinasProfessores.create');
-            Route::post('/disciplinasProfessores/create', 'DisciplinasProfessoresController@store')->name('disciplinasProfessores.store');
-            Route::get('/disciplinasProfessores/{disciplinasProfessores}/show', 'DisciplinasProfessoresController@show')->name('disciplinasProfessores.show');
-            Route::get('/disciplinasProfessores/{disciplinasProfessores}/edit', 'DisciplinasProfessoresController@edit')->name('disciplinasProfessores.edit');
-            Route::patch('/disciplinasProfessores/{disciplinasProfessores}/update', 'DisciplinasProfessoresController@update')->name('disciplinasProfessores.update');
-            Route::delete('/disciplinasProfessores/{disciplinasProfessores}/delete', 'DisciplinasProfessoresController@destroy')->name('disciplinasProfessores.destroy');
-            Route::get("/disciplinasProfessores/pdf", "DisciplinaProfessorPDFController@gerarPDF")->name("disciplinasProfessores.pdf");
-            */
+
 
         //Filtro Ocorrências
         Route::get('/filtro/{turma}', [OcorrenciasController::class, 'filtro'])->name('ocorrencias.filtro');
@@ -97,6 +89,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         //Rotas Perfil
         Route::get("/perfil", "PerfilController@index")->name("perfil.index");
+        //->middleware('can:access');
+
+        
 
         // Rota Petroleo é Gás
         Route::get('/pg', function () {
@@ -243,7 +238,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
 
 
-        
+       
 
 
 
@@ -253,4 +248,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
          */
         Route::get('/logout', 'LogoutController@perform')->name('logout.perform');
     });
+
+
+    
 });
