@@ -1,5 +1,6 @@
 @include('layouts.partials.essentials')
 @include('layouts.partials.navbarlogged')
+
 <form id="passarDeAnoForm">
     @csrf
     <table class="table m-2">
@@ -12,13 +13,15 @@
         </thead>
         <tbody>
             @foreach($alunos as $aluno)
-            <tr>
-                <td>{{ $aluno->nome }}</td>
-                <td>{{ $aluno->turma }}</td>
-                <td>
-                    <input  id="checkbox" type="checkbox" name="alunos[{{ $aluno->id }}]" checked>
-                </td>
-            </tr>
+                @if($aluno->turma !== 'passou de ano')
+                <tr>
+                    <td>{{ $aluno->nome }}</td>
+                    <td>{{ $aluno->turma }}</td>
+                    <td>
+                        <input id="checkbox" type="checkbox" name="alunos[{{ $aluno->id }}]" checked>
+                    </td>
+                </tr>
+                @endif
             @endforeach
         </tbody>
     </table>

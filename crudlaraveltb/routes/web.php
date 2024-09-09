@@ -219,6 +219,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             return view('layouts.partials.graficos');
         })->name('graficos');
 
+        //AlunoPassados  
+        Route::get('/alunosPassados', [AlunosController::class, 'mostrarAlunosPassados'], function () {
+            return view('layouts.partials.alunosPassados');
+        })->name('alunosPassados');
+
         //Password reset routes
 
         Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
@@ -236,9 +241,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         Route::get('/passar-ano', [AlunosController::class, 'promoverAlunos'])->name('passar_ano');
 
+        // No arquivo routes/web.php
+        // No arquivo routes/web.php
+        
 
 
-       
+
+
 
 
 
