@@ -237,6 +237,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             return view('layouts.partials.passar_ano');
         })->name('passar_ano');
 
+        Route::post('/alunos/passar-de-ano', [AlunosController::class, 'passarDeAno'])->name('alunos.passarDeAno');
+
         Route::get('/passar-ano', [AlunosController::class, 'promoverAlunos'])->name('passar_ano');
 
 

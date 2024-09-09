@@ -347,6 +347,25 @@ class AlunosController extends Controller
 
         return view('layouts.partials.passar_ano', compact('alunos'));
     }
+
+    public function passarDeAno(Request $request)
+{
+    $turmas = ['Info 1', 'Info 2', 'Info 3', 'Info 4', '']; // Exemplo de turmas
+
+    foreach ($request->input('alunos', []) as $alunoId => $aprovado) {
+        if ($aprovado) {
+            $aluno = Alunos::find($alunoId);
+            $currentTurmaIndex = array_search($aluno->turma, $turmas);
+
+            if ($currentTurmaIndex !== false && $currentTurmaIndex < count($turmas) - 1) {
+                $aluno->turma = $turmas[$currentTurmaIndex + 1];
+                $aluno->save();
+            }
+        }
+    }
+
+    return response()->json(['message' => 'Alunos atualizados com sucesso!']);
+}
     
     
     

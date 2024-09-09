@@ -397,3 +397,8 @@ span {
     width: 80% !important;
     height: 80% !important;
 }
+
+#checkbox{
+    height: 20px;
+    width: 20px;
+}
