@@ -187,6 +187,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/pf1', [AlunosController::class, 'showPf1'])->name('pf1');
         Route::get('/pf2', [AlunosController::class, 'showPf2'])->name('pf2');
         Route::get('/pf3', [AlunosController::class, 'showPf3'])->name('pf3');
+        Route::resource('alunos', AlunosController::class);
+        Route::put('/alunos/{id}', [AlunosController::class, 'update']);
+        Route::post('/alunos', [AlunosController::class, 'store']);
+
+
 
 
         //Rotas das Ocorrências

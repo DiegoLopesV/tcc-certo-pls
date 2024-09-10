@@ -1,5 +1,5 @@
 @extends('layouts.partials.essentials')
-@include('layouts.partials.navbarlogged')
+@include('layouts.partials.navbarlogged') 
 
 <body id="body">
     <div class="position-relative m-3 border border-dark border-3 rounded p-5">
@@ -25,6 +25,7 @@
                             <div class="d-flex justify-content-end">
                                 <button class="btn btn-sm btn-warning m-2" onclick="editAluno({{ $aluno->id }})">Editar</button>
                             </div>
+                            <img src="{{ asset($aluno->foto) }}" alt="Foto do Aluno" class="img-fluid">
                             <p><strong>Nome:</strong> {{ $aluno->nome }}</p>
                             <p><strong>Curso:</strong> {{ $aluno->curso }}</p>
                             <p><strong>Turma:</strong> {{ $aluno->turma }}</p>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alunos;
+use Illuminate\Support\Facades\Storage;
+
 
 class AlunosController extends Controller
 {
@@ -37,6 +39,13 @@ class AlunosController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            // Validações
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validação da foto
+        ]);
+
+
+
         $aluno = new Alunos();
         $aluno->nome = $request->nome;
         $aluno->curso = $request->curso;
@@ -48,6 +57,14 @@ class AlunosController extends Controller
         $aluno->email = $request->email;
         $aluno->email_pais = $request->email_pais;
         $aluno->status_reprovacao = false;
+
+        // Manipula o upload da foto
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('assets/img'), $fileName);
+            $aluno->foto = 'assets/img/' . $fileName;
+        }
 
         // Atualize apenas os campos enviados
         $aluno->update($request->only([
@@ -143,6 +160,11 @@ class AlunosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            // Validações
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validação da foto
+        ]);
+
         $aluno = Alunos::findOrFail($id);
         $aluno->nome = $request->nome;
         $aluno->curso = $request->curso;
@@ -153,6 +175,18 @@ class AlunosController extends Controller
         $aluno->telefone_pais = $request->telefone_pais;
         $aluno->email = $request->email;
         $aluno->email_pais = $request->email_pais;
+
+        // Manipula o upload da foto
+        if ($request->hasFile('foto')) {
+            // Remove a foto antiga se existir
+            if ($aluno->foto && file_exists(public_path($aluno->foto))) {
+                unlink(public_path($aluno->foto));
+            }
+            $file = $request->file('foto');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('assets/img'), $fileName);
+            $aluno->foto = 'assets/img/' . $fileName;
+        }
 
         $aluno->save();
 

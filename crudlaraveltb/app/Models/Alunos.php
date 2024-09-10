@@ -20,6 +20,7 @@ class Alunos extends Model
         'curso',
         'turma',
         'ano_atual',
+        'foto',
         'status_reprovacao',
     ];
 }
