@@ -23,7 +23,9 @@
     <div class="d-flex align-items-center justify-content-center border border-dark border-2 p-2 text-center">
         <!-- Botão para emitir relatório -->
         @include('layouts.partials.btnEmitirRelat')
-        <a href="{{route('ocorrencias.pdf',['download'=>'pdf'])}}" class="btn btn-secondary btn-sm float-left">PDF</a>
+        <a href="{{ route('ocorrencias.pdf', ['download' => 'pdf']) }}" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold bg-white text-dark btn btn-sm float-left" >
+            <i class="fa-solid fa-file-pdf me-1"></i> PDF
+        </a>
         
         <!-- Botão para abrir modal de filtro -->
         <button id="filtrar" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold" data-bs-toggle="modal" data-bs-target="#filterModal">

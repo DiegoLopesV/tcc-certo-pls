@@ -15,7 +15,7 @@ class OcorrenciasPDFController extends Controller
         $ocorrencias = Ocorrencias::orderBy("id", "desc")->get();
         
         $dados = [
-            "title" => "Este é o PDF",
+            "title" => "Relatório Geral de Ocorrências",
             "ocorrencias" => $ocorrencias,
             "data" => date('d/m/Y')
         ];

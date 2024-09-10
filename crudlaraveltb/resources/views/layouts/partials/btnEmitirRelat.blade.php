@@ -1,16 +1,13 @@
-
 <!-- Modal -->
 <div class="modal fade" id="relatorio" tabindex="-1" aria-labelledby="relatorioLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="relatorioLabel">Emitir Relatório</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="relatorioForm">
+                <form id="relatorioForm" method="GET" action="{{ route('ocorrencias.pdf') }}">
                     <div class="form-group">
                         <label for="title">Título</label>
                         <input type="text" class="form-control" id="title" name="title" required>
@@ -19,13 +16,13 @@
                         <label for="date">Data</label>
                         <input type="date" class="form-control" id="date" name="date" required>
                     </div>
-
                     <button type="submit" class="btn btn-primary">Emitir</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 
 
 
@@ -58,10 +55,10 @@ infoBox.querySelector('.expand-btn').addEventListener('click', function() {
 });
 
 // Adiciona o novo retângulo ao container
-document.getElementById('infoContainer').appendChild(infoBox);
+document.getElementById('ocorrenciaContainer').appendChild(infoBox);
 
 // Fecha o modal
-$('#relatorio').modal('hide');
+('#relatorio').modal('hide');
 
 // Limpa o formulário
 document.getElementById('relatorioForm').reset();

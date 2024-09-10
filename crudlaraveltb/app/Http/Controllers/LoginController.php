@@ -29,7 +29,13 @@ class LoginController extends Controller
     
     protected function authenticated(Request $request, $user)
     {
-        return redirect()->intended();
+        if ($user->access_level === 'admin') {
+            // Redireciona para a página inicial ou qualquer outra página padrão para admin
+            return redirect()->route('home.index'); // Ajuste conforme necessário
+        }
+
+        // Redireciona para a página de perfil para usuários comuns
+        return redirect()->route('perfil.index');
     }
     
 }
