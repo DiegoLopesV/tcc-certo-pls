@@ -39,13 +39,23 @@ class AlunosController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         // Validações
         $request->validate([
             'nome' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validação da foto
         ]);
-    
+
+        // Verifica se há uma imagem e faz o upload para a pasta correta
+        if ($request->hasFile('foto')) {
+            //dd($request->file('foto'));  // Verifique se o arquivo está sendo recebido
+            $image = $request->file('foto');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('assets/img'), $imageName);  // Caminho correto
+            $validatedData['foto'] = 'assets/img/' . $imageName;  // Armazena o caminho relativo
+        }
+
+
         // Criar novo aluno
         $aluno = new Alunos();
         $aluno->nome = $request->nome;
@@ -57,16 +67,12 @@ class AlunosController extends Controller
         $aluno->telefone_pais = $request->telefone_pais;
         $aluno->email = $request->email;
         $aluno->email_pais = $request->email_pais;
-        $aluno->status_reprovacao = false;
-        
-            // Armazenar o arquivo
-            if ($request->hasFile('foto')) {
-                $file = $request->file('foto');
-                $filename = time() . '.' . $file->getClientOriginalExtension();
-                $path = $file->storeAs('public/assets/img', $filename);
-                $aluno->foto = $filename;
-                
-            }
+        $aluno->foto = $validatedData['foto'] ?? null;
+
+
+
+
+
         // Mapeia as turmas para o ano_atual
         $anoMap = [
             'Info 1' => 1,
@@ -95,27 +101,27 @@ class AlunosController extends Controller
             'Processos Fotográficos 2' => 2,
             'Processos Fotográficos 3' => 3,
         ];
-    
+
         // Define o ano_atual com base na turma
         $anoAtual = $anoMap[$request->turma] ?? 0;
-    
+
         if ($anoAtual === 0) {
             return response()->json(['error' => 'Turma inválida.'], 400);
         }
-    
+
         $aluno->ano_atual = $anoAtual;
         $aluno->status_reprovacao = false;
-    
+
         // Salva o aluno no banco de dados
         $aluno->save();
-    
+
         // Retorna o aluno completo junto com a mensagem de sucesso
         return response()->json([
             'message' => 'Aluno salvo com sucesso!',
             'aluno' => $aluno // Aqui retornamos o aluno completo
         ]);
     }
-    
+
 
 
     /**
@@ -131,7 +137,7 @@ class AlunosController extends Controller
         if (!$aluno) {
             return response()->json(['message' => 'Aluno não encontrado'], 404);
         }
-    
+
         return response()->json($aluno);
     }
 
@@ -169,13 +175,13 @@ class AlunosController extends Controller
             'email_pais' => 'required|email|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validação da foto
         ]);
-    
+
         // Busca o aluno pelo ID
         $aluno = Alunos::findOrFail($id);
-    
+
         // Atualiza os campos do aluno
         $aluno->fill($request->except('foto'));
-    
+
         // Verifica se há upload de foto
         if ($request->hasFile('foto')) {
             if ($aluno->foto && Storage::exists($aluno->foto)) {
@@ -186,15 +192,15 @@ class AlunosController extends Controller
             $path = $file->store('public/assets/img');
             $aluno->foto = Storage::url($path);
         }
-    
+
         // Salva as atualizações no banco de dados
         $aluno->save();
-    
+
         // Retorna uma resposta de sucesso
         return response()->json(['message' => 'Aluno atualizado com sucesso!']);
     }
-    
-    
+
+
 
     /**
      * Remove the specified resource from storage.

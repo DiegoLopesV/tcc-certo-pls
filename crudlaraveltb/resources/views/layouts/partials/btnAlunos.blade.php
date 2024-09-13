@@ -35,6 +35,7 @@
             </div>
             <div class="modal-body">
                 <form id="infoForm" data-store-url="{{ route('alunos.store') }}" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome">
                         <label for="nome">Nome</label>
