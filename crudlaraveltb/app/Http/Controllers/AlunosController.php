@@ -39,13 +39,14 @@ class AlunosController extends Controller
      */
     public function store(Request $request)
     {
+        
+        // Validações
         $request->validate([
-            // Validações
+            'nome' => 'required|string|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validação da foto
         ]);
-
-
-
+    
+        // Criar novo aluno
         $aluno = new Alunos();
         $aluno->nome = $request->nome;
         $aluno->curso = $request->curso;
@@ -57,28 +58,15 @@ class AlunosController extends Controller
         $aluno->email = $request->email;
         $aluno->email_pais = $request->email_pais;
         $aluno->status_reprovacao = false;
-
-        // Manipula o upload da foto
-        if ($request->hasFile('foto')) {
-            $file = $request->file('foto');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('assets/img'), $fileName);
-            $aluno->foto = 'assets/img/' . $fileName;
-        }
-
-        // Atualize apenas os campos enviados
-        $aluno->update($request->only([
-            'nome',
-            'curso',
-            'turma',
-            'cpf',
-            'nome_pais',
-            'telefone',
-            'telefone_pais',
-            'email',
-            'email_pais'
-        ]));
-
+        
+            // Armazenar o arquivo
+            if ($request->hasFile('foto')) {
+                $file = $request->file('foto');
+                $filename = time() . '.' . $file->getClientOriginalExtension();
+                $path = $file->storeAs('public/assets/img', $filename);
+                $aluno->foto = $filename;
+                
+            }
         // Mapeia as turmas para o ano_atual
         $anoMap = [
             'Info 1' => 1,
@@ -107,24 +95,27 @@ class AlunosController extends Controller
             'Processos Fotográficos 2' => 2,
             'Processos Fotográficos 3' => 3,
         ];
-
+    
         // Define o ano_atual com base na turma
         $anoAtual = $anoMap[$request->turma] ?? 0;
-
-        // Confirma que ano_atual não é 0 (opcional, pode adicionar um log aqui para depuração)
+    
         if ($anoAtual === 0) {
-            // Log::error('Turma não encontrada no mapeamento: ' . $request->turma);
-            // Ou retorne um erro
             return response()->json(['error' => 'Turma inválida.'], 400);
         }
-
+    
         $aluno->ano_atual = $anoAtual;
         $aluno->status_reprovacao = false;
-
+    
+        // Salva o aluno no banco de dados
         $aluno->save();
-
-        return response()->json(['message' => 'Aluno salvo com sucesso!', 'id' => $aluno->id]);
+    
+        // Retorna o aluno completo junto com a mensagem de sucesso
+        return response()->json([
+            'message' => 'Aluno salvo com sucesso!',
+            'aluno' => $aluno // Aqui retornamos o aluno completo
+        ]);
     }
+    
 
 
     /**
@@ -135,8 +126,13 @@ class AlunosController extends Controller
      */
     public function show($id)
     {
-        $alunos = Alunos::findOrFail($id);
-        return view("alunos.show", compact("alunos"));
+        $aluno = Alunos::find($id);
+
+        if (!$aluno) {
+            return response()->json(['message' => 'Aluno não encontrado'], 404);
+        }
+    
+        return response()->json($aluno);
     }
 
     /**
@@ -160,38 +156,45 @@ class AlunosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        // Validações
         $request->validate([
-            // Validações
+            'nome' => 'required|string|max:255',
+            'curso' => 'required|string|max:255',
+            'turma' => 'required|string|max:255',
+            'cpf' => 'required|string|max:15',
+            'nome_pais' => 'required|string|max:255',
+            'telefone' => 'required|string|max:20',
+            'telefone_pais' => 'required|string|max:20',
+            'email' => 'required|email|max:255',
+            'email_pais' => 'required|email|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validação da foto
         ]);
-
+    
+        // Busca o aluno pelo ID
         $aluno = Alunos::findOrFail($id);
-        $aluno->nome = $request->nome;
-        $aluno->curso = $request->curso;
-        $aluno->turma = $request->turma;
-        $aluno->cpf = $request->cpf;
-        $aluno->nome_pais = $request->nome_pais;
-        $aluno->telefone = $request->telefone;
-        $aluno->telefone_pais = $request->telefone_pais;
-        $aluno->email = $request->email;
-        $aluno->email_pais = $request->email_pais;
-
-        // Manipula o upload da foto
+    
+        // Atualiza os campos do aluno
+        $aluno->fill($request->except('foto'));
+    
+        // Verifica se há upload de foto
         if ($request->hasFile('foto')) {
-            // Remove a foto antiga se existir
-            if ($aluno->foto && file_exists(public_path($aluno->foto))) {
-                unlink(public_path($aluno->foto));
+            if ($aluno->foto && Storage::exists($aluno->foto)) {
+                Storage::delete($aluno->foto);
             }
+
             $file = $request->file('foto');
-            $fileName = time() . '_' . $file->getClientOriginalName();
-            $file->move(public_path('assets/img'), $fileName);
-            $aluno->foto = 'assets/img/' . $fileName;
+            $path = $file->store('public/assets/img');
+            $aluno->foto = Storage::url($path);
         }
-
+    
+        // Salva as atualizações no banco de dados
         $aluno->save();
-
+    
+        // Retorna uma resposta de sucesso
         return response()->json(['message' => 'Aluno atualizado com sucesso!']);
     }
+    
+    
 
     /**
      * Remove the specified resource from storage.
@@ -201,8 +204,12 @@ class AlunosController extends Controller
      */
     public function destroy($id)
     {
-        $alunos = Alunos::findOrFail($id);
-        $alunos->delete();
+        $aluno = Alunos::findOrFail($id);
+        if ($aluno->foto && Storage::exists($aluno->foto)) {
+            Storage::delete($aluno->foto);
+        }
+        $aluno->delete();
+
         return response()->json(['message' => 'Aluno excluído com sucesso!']);
     }
 
