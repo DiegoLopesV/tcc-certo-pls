@@ -91,7 +91,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get("/perfil", "PerfilController@index")->name("perfil.index");
         //->middleware('can:access');
 
-        
+
 
         // Rota Petroleo é Gás
         Route::get('/pg', function () {
@@ -147,12 +147,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         })->name('dependencias');
 
         //Rotas Alunos
-        Route::get('/alunos', [AlunosController::class, 'index'])->name('alunos.index');
-        Route::get('/alunos/create', [AlunosController::class, 'create'])->name('alunos.create');
-        Route::post('/alunos/create', [AlunosController::class, 'store'])->name('alunos.store');
-        Route::get('/alunos/{id}/edit', [AlunosController::class, 'edit'])->name('alunos.edit');
-        Route::put('/alunos/{id}', [AlunosController::class, 'update'])->name('alunos.update');
-        Route::delete('/alunos/{id}', [AlunosController::class, 'destroy'])->name('alunos.destroy');
+        Route::get('/alunos', [AlunosController::class, 'index'])->name('alunos.index');  // Exibir todos os alunos
+        Route::get('/alunos/create', [AlunosController::class, 'create'])->name('alunos.create');  // Formulário de criação
+        Route::post('/alunos', [AlunosController::class, 'store'])->name('alunos.store');  // Salvar novo aluno
+        Route::get('/alunos/{id}', [AlunosController::class, 'show'])->name('alunos.show');  // Exibir um aluno específico
+        Route::get('/alunos/{id}/edit', [AlunosController::class, 'edit'])->name('alunos.edit');  // Formulário de edição
+        Route::put('/alunos/{id}', [AlunosController::class, 'update'])->name('alunos.update');  // Atualizar aluno existente
+        Route::delete('/alunos/{id}', [AlunosController::class, 'destroy'])->name('alunos.destroy');  // Excluir aluno
         Route::get('/info1', [AlunosController::class, 'showInfo1'])->name('info1');
         Route::get('/info2', [AlunosController::class, 'showInfo2'])->name('info2');
         Route::get('/info3', [AlunosController::class, 'showInfo3'])->name('info3');
@@ -179,9 +180,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/pf1', [AlunosController::class, 'showPf1'])->name('pf1');
         Route::get('/pf2', [AlunosController::class, 'showPf2'])->name('pf2');
         Route::get('/pf3', [AlunosController::class, 'showPf3'])->name('pf3');
-        Route::resource('alunos', AlunosController::class);
-        Route::put('/alunos/{id}', [AlunosController::class, 'update']);
-        Route::post('/alunos', [AlunosController::class, 'store']);
+
 
 
 
@@ -212,7 +211,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         //Rota para manter o card dos alunos
         Route::post('/alunos', 'AlunosController@store')->name('alunos.store');
 
-      
+
 
 
 
@@ -248,7 +247,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         // No arquivo routes/web.php
         // No arquivo routes/web.php
-        
+
 
 
 
@@ -262,7 +261,4 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
          */
         Route::get('/logout', 'LogoutController@perform')->name('logout.perform');
     });
-
-
-    
 });
