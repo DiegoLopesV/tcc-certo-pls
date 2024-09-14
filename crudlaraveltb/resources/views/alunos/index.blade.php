@@ -42,7 +42,7 @@
                     @if ($aluno->turma !== 'passou de ano')
                         <div class="aluno-card rounded text-center border border-dark border-2 excesso" data-id="{{ $aluno->id }}">
                             <!-- O card agora é clicável para abrir o modal -->
-                            <img src="{{ $aluno->foto }}" alt="Foto do Aluno" class="img-fluid img-preview mt-3" style="cursor: pointer;">
+                            <img src="{{ $aluno->foto }}" alt="Foto do Aluno" class="img-fluid img-preview mt-4 mb-3" style="cursor: pointer;">
                             <p><strong>Nome:</strong> {{ $aluno->nome }}</p>
                             <p><strong>Curso:</strong> {{ $aluno->curso }}</p>
                             <p><strong>Turma:</strong> {{ $aluno->turma }}</p>
@@ -53,11 +53,13 @@
         </div>
     </div>
 
-
-    @include('layouts.partials.btnAlunos')
     @include('layouts.partials.formEditAluno')
+    @include('layouts.partials.btnAlunos')
+    
+
 
 </div>
+
     <script src="{{ asset('assets/js/dropdown.js') }}"></script>
     <script src="{{ asset('assets/js/imagePreview.js') }}"></script>
     <script src="{{ asset('assets/js/formHandler.js') }}"></script>

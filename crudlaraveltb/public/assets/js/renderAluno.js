@@ -13,7 +13,7 @@ function renderAluno(aluno) {
     infoBox.innerHTML = `
     ${
         aluno.foto
-            ? `<img src="${aluno.foto}" alt="Foto do Aluno" class="img-preview mt-3" style="max-width: 150px;">`
+            ? `<img src="${aluno.foto}" alt="Foto do Aluno" class="img-preview mt-4 mb-3" style="max-width: 150px;">`
             : ""
     }
     <p><strong>Nome:</strong> ${aluno.nome}</p>

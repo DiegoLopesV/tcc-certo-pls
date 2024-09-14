@@ -17,7 +17,7 @@ class AlunosController extends Controller
     public function index()
     {
         // select * from tb_alunos order by id desc limit 10
-        $alunos = ALunos::all();
+        $alunos = Alunos::all();
         return view('alunos.index', compact('alunos'));
     }
 
@@ -162,6 +162,10 @@ class AlunosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
+        // Busca o aluno pelo ID
+        $aluno = Alunos::findOrFail($id);
+        
         // Validações
         $request->validate([
             'nome' => 'required|string|max:255',
@@ -173,25 +177,25 @@ class AlunosController extends Controller
             'telefone_pais' => 'required|string|max:20',
             'email' => 'required|email|max:255',
             'email_pais' => 'required|email|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validação da foto
         ]);
 
-        // Busca o aluno pelo ID
-        $aluno = Alunos::findOrFail($id);
 
-        // Atualiza os campos do aluno
-        $aluno->fill($request->except('foto'));
+        
 
-        // Verifica se há upload de foto
-        if ($request->hasFile('foto')) {
-            if ($aluno->foto && Storage::exists($aluno->foto)) {
-                Storage::delete($aluno->foto);
-            }
 
-            $file = $request->file('foto');
-            $path = $file->store('public/assets/img');
-            $aluno->foto = Storage::url($path);
-        }
+        // Verifica se há uma imagem e faz o upload para a pasta correta
+
+        $aluno->nome = $request->nome;
+        $aluno->curso = $request->curso;
+        $aluno->turma = $request->turma;
+        $aluno->cpf = $request->cpf;
+        $aluno->nome_pais = $request->nome_pais;
+        $aluno->telefone = $request->telefone;
+        $aluno->telefone_pais = $request->telefone_pais;
+        $aluno->email = $request->email;
+        $aluno->email_pais = $request->email_pais;
+
+
 
         // Salva as atualizações no banco de dados
         $aluno->save();
