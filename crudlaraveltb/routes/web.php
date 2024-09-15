@@ -168,7 +168,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         //Rotas das Ocorrências
         Route::get('/ocorrencias', [OcorrenciasController::class, 'index'])->name('ocorrencias.index');
         Route::get('/ocorrencias/create', [OcorrenciasController::class, 'create'])->name('ocorrencias.create');
-        Route::post('/ocorrencias/create', [OcorrenciasController::class, 'store'])->name('ocorrencias.store');
+        Route::post('/ocorrencias', [OcorrenciasController::class, 'store'])->name('ocorrencias.store');
         Route::get('/ocorrencias/{id}/edit', [OcorrenciasController::class, 'edit'])->name('ocorrencias.edit');
         Route::put('/ocorrencias/{id}', [OcorrenciasController::class, 'update'])->name('ocorrencias.update');
         Route::delete('/ocorrencias/{id}', [OcorrenciasController::class, 'destroy'])->name('ocorrencias.destroy');
