@@ -20,7 +20,7 @@
 <body id="body">
 
     <div>
-        @yield('content')
+        
     <div class="position-relative m-3 border border-dark border-3 rounded p-5">
         <div class="fs-1 mb-3">Lista de todos os alunos</div>
 

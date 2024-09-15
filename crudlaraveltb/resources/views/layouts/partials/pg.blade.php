@@ -16,13 +16,13 @@
         <span class="fs-1">Turmas</span>
         <div class="d-flex mt-2">
             <!-- Botões para as turmas -->
-            <a href="{{ route('pg1') }}" class="btn-turma">
+            <a href="{{ route('turma', ['turma' => 'pg1']) }}" class="btn-turma">
                 <i id="ic" class="fa-solid fa-oil-well"></i> Petróleo e Gás 1
             </a>
-            <a href="{{ route('pg2') }}" class="btn-turma">
+            <a href="{{ route('turma', ['turma' => 'pg2']) }}" class="btn-turma">
                 <i id="ic" class="fa-solid fa-oil-well"></i> Petróleo e Gás 2
             </a>
-            <a href="{{ route('pg3') }}" class="btn-turma">
+            <a href="{{ route('turma', ['turma' => 'pg3']) }}" class="btn-turma">
                 <i id="ic" class="fa-solid fa-oil-well"></i> Petróleo e Gás 3
             </a>
         </div>
