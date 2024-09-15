@@ -79,9 +79,9 @@ class AlunosController extends Controller
             'Info 2' => 2,
             'Info 3' => 3,
             'Info 4' => 4,
-            'PG 1' => 1,
-            'PG 2' => 2,
-            'PG 3' => 3,
+            'Pg 1' => 1,
+            'Pg 2' => 2,
+            'Pg 3' => 3,
             'Adm 1' => 1,
             'Adm 2' => 2,
             'Adm 3' => 3,
@@ -97,9 +97,10 @@ class AlunosController extends Controller
             'Jogos 1' => 1,
             'Jogos 2' => 2,
             'Jogos 3' => 3,
-            'Processos Fotográficos 1' => 1,
-            'Processos Fotográficos 2' => 2,
-            'Processos Fotográficos 3' => 3,
+            'Jogos 4' => 4,
+            'Pf 1' => 1,
+            'Pf 2' => 2,
+            'Pf 3' => 3,
         ];
 
         // Define o ano_atual com base na turma
@@ -222,158 +223,63 @@ class AlunosController extends Controller
 
         return response()->json(['message' => 'Aluno excluído com sucesso!']);
     }
+    public function showAlunosPorTurma($turma)
+    {
+        
+            // Mapear o formato recebido para o formato correto
+    $turmasMap = [
+        'info1' => 'Info 1',
+        'info2' => 'Info 2',
+        'info3' => 'Info 3',
+        'info4' => 'Info 4',
+        'pg1' => 'Pg 1',
+        'pg2' => 'Pg 2',
+        'pg3' => 'Pg 3',
+        'adm1' => 'Adm 1',
+        'adm2' => 'Adm 2',
+        'adm3' => 'Adm 3',
+        'eletronica1' => 'Eletronica 1',
+        'eletronica2' => 'Eletronica 2',
+        'eletronica3' => 'Eletronica 3',
+        'mecanica1' => 'Mecanica 1',
+        'mecanica2' => 'Mecanica 2',
+        'mecanica3' => 'Mecanica 3',
+        'contabilidade1' => 'Contabilidade 1',
+        'contabilidade2' => 'Contabilidade 2',
+        'contabilidade3' => 'Contabilidade 3',
+        'jogos1' => 'Jogos 1',
+        'jogos2' => 'Jogos 2',
+        'jogos3' => 'Jogos 3',
+        'jogos4' => 'Jogos 4',
+        'pf1' => 'Pf 1',
+        'pf2' => 'Pf 2',
+        'pf3' => 'Pf 3',
 
-    // método no controlador para retornar apenas alunos da turma Info 1
-    public function showInfo1()
-    {
-        $alunos = Alunos::where('turma', 'Info 1')->get();
-        return view('layouts.partials.info1', compact('alunos'));
-    }
-
-    // método no controlador para retornar apenas alunos da turma Info 1
-    public function showInfo2()
-    {
-        $alunos = Alunos::where('turma', 'Info 2')->get();
-        return view('layouts.partials.info2', compact('alunos'));
-    }
-
-    // método no controlador para retornar apenas alunos da turma Info 1
-    public function showInfo3()
-    {
-        $alunos = Alunos::where('turma', 'Info 3')->get();
-        return view('layouts.partials.info3', compact('alunos'));
-    }
-
-    public function showInfo4()
-    {
-        $alunos = Alunos::where('turma', 'Info 4')->get();
-        return view('layouts.partials.info4', compact('alunos'));
-    }
-
-    public function showPg1()
-    {
-        $alunos = Alunos::where('turma', 'PG 1')->get();
-        return view('layouts.partials.pg1', compact('alunos'));
-    }
-    public function showPg2()
-    {
-        $alunos = Alunos::where('turma', 'PG 2')->get();
-        return view('layouts.partials.pg2', compact('alunos'));
-    }
-    public function showPg3()
-    {
-        $alunos = Alunos::where('turma', 'PG 3')->get();
-        return view('layouts.partials.pg3', compact('alunos'));
-    }
-
-    public function showAdm1()
-    {
-        $alunos = Alunos::where('turma', 'ADM 1')->get();
-        return view('layouts.partials.adm1', compact('alunos'));
-    }
-
-    public function showAdm2()
-    {
-        $alunos = Alunos::where('turma', 'ADM 2')->get();
-        return view('layouts.partials.adm2', compact('alunos'));
-    }
-
-    public function showAdm3()
-    {
-        $alunos = Alunos::where('turma', 'ADM 3')->get();
-        return view('layouts.partials.adm3', compact('alunos'));
-    }
-
-    public function showElet1()
-    {
-        $alunos = Alunos::where('turma', 'Eletrônica 1')->get();
-        return view('layouts.partials.elet1', compact('alunos'));
-    }
-
-    public function showElet2()
-    {
-        $alunos = Alunos::where('turma', 'Eletrônica 2')->get();
-        return view('layouts.partials.elet2', compact('alunos'));
-    }
-
-    public function showElet3()
-    {
-        $alunos = Alunos::where('turma', 'Eletrônica 3')->get();
-        return view('layouts.partials.elet3', compact('alunos'));
-    }
-
-    public function showMec1()
-    {
-        $alunos = Alunos::where('turma', 'Mecânica 1')->get();
-        return view('layouts.partials.mec1', compact('alunos'));
-    }
-
-    public function showMec2()
-    {
-        $alunos = Alunos::where('turma', 'Mecânica 2')->get();
-        return view('layouts.partials.mec2', compact('alunos'));
-    }
-
-    public function showMec3()
-    {
-        $alunos = Alunos::where('turma', 'Mecânica 3')->get();
-        return view('layouts.partials.mec3', compact('alunos'));
-    }
-
-    public function showCont1()
-    {
-        $alunos = Alunos::where('turma', 'Contabilidade 1')->get();
-        return view('layouts.partials.cont1', compact('alunos'));
-    }
-
-    public function showCont2()
-    {
-        $alunos = Alunos::where('turma', 'Contabilidade 2')->get();
-        return view('layouts.partials.cont2', compact('alunos'));
-    }
-
-    public function showCont3()
-    {
-        $alunos = Alunos::where('turma', 'Contabilidade 3')->get();
-        return view('layouts.partials.cont3', compact('alunos'));
-    }
-
-    public function showJogos1()
-    {
-        $alunos = Alunos::where('turma', 'Jogos 1')->get();
-        return view('layouts.partials.jogos1', compact('alunos'));
-    }
-
-    public function showJogos2()
-    {
-        $alunos = Alunos::where('turma', 'Jogos 2')->get();
-        return view('layouts.partials.jogos2', compact('alunos'));
-    }
+        
 
 
-    public function showJogos3()
-    {
-        $alunos = Alunos::where('turma', 'Jogos 3')->get();
-        return view('layouts.partials.jogos3', compact('alunos'));
-    }
+        // Adicione mais mapeamentos conforme necessário
+    ];
 
-    public function showPf1()
-    {
-        $alunos = Alunos::where('turma', 'Processos Fotográficos 1')->get();
-        return view('layouts.partials.pf1', compact('alunos'));
-    }
+    $turmaFormatada = $turmasMap[$turma] ?? $turma; // Usa o valor mapeado ou o valor original se não houver mapeamento
 
-    public function showPf2()
-    {
-        $alunos = Alunos::where('turma', 'Processos Fotográficos 2')->get();
-        return view('layouts.partials.pf2', compact('alunos'));
-    }
+    // Verificar a consulta
+    $alunos = Alunos::where('turma', $turmaFormatada)->get();
 
-    public function showPf3()
-    {
-        $alunos = Alunos::where('turma', 'Processos Fotográficos 3')->get();
-        return view('layouts.partials.pf3', compact('alunos'));
+    
+        
+        // Remove o prefixo "turma/" e apenas utiliza o nome da turma, formatando o nome corretamente
+        $viewName = str_replace(' ', '', strtolower($turma)); // Converte "Info 4" para "info4"
+        
+        return view('layouts.partials.' . $viewName, compact('alunos'));
     }
+    
+    
+    
+    
+    
+    
+    
 
 
 
@@ -405,35 +311,37 @@ class AlunosController extends Controller
         // Definindo turmas de diversos cursos
         $turmas = [
             'Info' => ['Info 1', 'Info 2', 'Info 3', 'Info 4'],
-            'PG' => ['PG 1', 'PG 2', 'PG 3'],
-            'ADM' => ['ADM 1', 'ADM 2', 'ADM 3'],
+            'Pg' => ['Pg 1', 'Pg 2', 'Pg 3'],
+            'Adm' => ['Adm 1', 'Adm 2', 'Adm 3'],
             'Jogos' => ['Jogos 1', 'Jogos 2', 'Jogos 3', 'Jogos 4'],
             'Mecânica' => ['Mecânica 1', 'Mecânica 2', 'Mecânica 3'],
             'Eletrônica' => ['Eletrônica 1', 'Eletrônica 2', 'Eletrônica 3'],
             'Contabilidade' => ['Contabilidade 1', 'Contabilidade 2', 'Contabilidade 3'],
-            'Processos Fotográficos' => ['Processos Fotográficos 1', 'Processos Fotográficos 2', 'Processos Fotográficos 3'],
+            'Pf' => ['Pf 1', 'Pf 2', 'Pf 3'],
         ];
-
+    
         foreach ($request->input('alunos', []) as $alunoId => $aprovado) {
             if ($aprovado) {
                 $aluno = Alunos::find($alunoId);
                 $curso = explode(' ', $aluno->turma)[0]; // Extrai o nome do curso
-                $currentTurmaIndex = array_search($aluno->turma, $turmas[$curso]);
-
+                $cursoFormatado = ucfirst(strtolower($curso)); // Formata o nome do curso para corresponder à chave do array
+                $currentTurmaIndex = array_search($aluno->turma, $turmas[$cursoFormatado] ?? []);
+    
                 // Verifica se o aluno está na última turma
-                if ($currentTurmaIndex !== false && $currentTurmaIndex < count($turmas[$curso]) - 1) {
-                    $aluno->turma = $turmas[$curso][$currentTurmaIndex + 1];
+                if ($currentTurmaIndex !== false && $currentTurmaIndex < count($turmas[$cursoFormatado]) - 1) {
+                    $aluno->turma = $turmas[$cursoFormatado][$currentTurmaIndex + 1];
                 } else {
                     // Caso o aluno esteja na última turma
                     $aluno->turma = 'passou de ano';
                 }
-
+    
                 $aluno->save();
             }
         }
-
+    
         return response()->json(['message' => 'Alunos atualizados com sucesso!']);
     }
+    
 
 
     // No seu controlador
@@ -445,4 +353,20 @@ class AlunosController extends Controller
         // Retorne a view com a variável $alunos
         return view('layouts.partials.alunosPassados', compact('alunos'));
     }
+
+
+    public function deletarAlunos(Request $request)
+{
+    $alunosIds = $request->input('alunos', []);
+
+    // Verifica se os IDs dos alunos estão presentes
+    if (!empty($alunosIds)) {
+        Alunos::whereIn('id', $alunosIds)->delete();
+    }
+
+    return response()->json(['success' => true]);
 }
+
+}
+
+

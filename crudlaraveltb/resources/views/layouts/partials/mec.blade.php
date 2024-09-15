@@ -1,4 +1,12 @@
 @include('layouts.partials.essentials')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SGA</title>
+</head>
 
 <body id="body">
     @include('layouts.partials.navbarlogged')
@@ -16,15 +24,16 @@
         <span class="fs-1">Turmas</span>
         <div class="d-flex mt-2">
             <!-- Botões para as turmas -->
-            <a href="{{ route('mec1') }}" class="btn-turma">
+            <a href="{{ route('turma', ['turma' => 'mecanica1']) }}" class="btn-turma">
                 <i id="ic" class="fa-solid fa-screwdriver-wrench"></i> Mecânica 1
             </a>
-            <a href="{{ route('mec2') }}" class="btn-turma">
+            <a href="{{ route('turma', ['turma' => 'mecanica2']) }}" class="btn-turma">
                 <i id="ic" class="fa-solid fa-screwdriver-wrench"></i> Mecânica 2
             </a>
-            <a href="{{ route('mec3') }}" class="btn-turma">
+            <a href="{{ route('turma', ['turma' => 'mecanica3']) }}" class="btn-turma">
                 <i id="ic" class="fa-solid fa-screwdriver-wrench"></i> Mecânica 3
             </a>
         </div>
     </div>
 </body>
+</html>
