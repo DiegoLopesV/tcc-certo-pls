@@ -49,9 +49,12 @@
     <div id="ocorrenciaContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
         @foreach($ocorrencias as $ocorrencia)
             <div class="ocorrencia-card rounded text-center border border-dark border-2 excesso" data-id="{{ $ocorrencia->id }}">
-                <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end">
+                @if(auth()->check() && auth()->user()->key === '987xyz')
                     <button class="btn btn-sm btn-warning m-2" onclick="editOcorrencia({{ $ocorrencia->id }})">Editar</button>
-                </div>
+                @endif
+            </div>
+
                 <p><strong>Título:</strong> {{ $ocorrencia->titulo }}</p>
                 <p><strong>Descrição:</strong> {{ $ocorrencia->descricao }}</p>
                 <p><strong>Participantes:</strong> {{ $ocorrencia->participantes }}</p>

@@ -1,4 +1,4 @@
-<!-- Modal das Info dos alunos  -->
+<!-- Modal das Info dos alunos -->
 <div class="modal fade" id="alunoModalInfo" tabindex="-1" aria-labelledby="alunoModalInfoLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -18,12 +18,16 @@
                 <p><strong>Email dos Pais:</strong> <span id="modalEmailPais"></span></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning" id="modalEditButton">Editar</button>
+                @if(auth()->check() && auth()->user()->key === '987xyz')
+                    <button type="button" class="btn btn-warning" id="modalEditButton">Editar</button>
+                @endif
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <!-- Modal de cadastro -->
 <div class="modal fade" id="alunoModal" tabindex="-1" aria-labelledby="alunoModalLabel" aria-hidden="true">

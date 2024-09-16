@@ -28,14 +28,17 @@ class LoginController extends Controller
     }
     
     protected function authenticated(Request $request, $user)
-    {
-        if ($user->access_level === 'admin') {
-            // Redireciona para a página inicial ou qualquer outra página padrão para admin
-            return redirect()->route('home.index'); // Ajuste conforme necessário
-        }
-
-        // Redireciona para a página de perfil para usuários comuns
+{
+    // Verifica o código de acesso do usuário
+    if ($user->key === '987xyz' || $user->key === 'cba321' || $user->key === 'abc123') {
+        // Redireciona para a página inicial para os códigos de acesso especificados
+        return redirect()->route('home.index');
+    } elseif ($user->key === 'aluno2024') {
+        // Redireciona para a página de perfil para o código 'aluno2024'
         return redirect()->route('perfil.index');
-    }
+    } 
+}
+
+
     
 }

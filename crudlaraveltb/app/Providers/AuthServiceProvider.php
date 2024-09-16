@@ -28,17 +28,17 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('access', function(User $user){
-            return $user->access_level == 'admin';
+            return $user->key == 'aluno2024';
         });
 
         // Define gate for professor role
         Gate::define('access-professor', function(User $user) {
-            return $user->access_level === 'professor';
+            return $user->key === 'abc123';
         });
 
         // Define gate for terceirizado role
         Gate::define('access-terceirizado', function(User $user) {
-            return $user->access_level === 'terceirizado';
+            return $user->key === 'cba321';
         });
 
         //

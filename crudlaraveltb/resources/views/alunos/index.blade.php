@@ -25,32 +25,38 @@
         <div class="fs-1 mb-3">Lista de todos os alunos</div>
 
         <!-- Botões posicionados no canto superior direito -->
-        <div class="position-absolute top-0 end-0 mx-3">
-            <button class="rounded AddALunos mb-2" data-bs-toggle="modal" data-bs-target="#alunoModal">Adicionar Alunos</button>
-            <a href="{{ route('passar_ano') }}">
-                <button class="rounded AddALunos mb-2">Passar de Ano</button>
-            </a>
-            <a href="{{ route('alunosPassados') }}">
-                <button class="rounded AddALunos">Ex Alunos</button>
-            </a>
-        </div>
+@if(auth()->check() && auth()->user()->key === '987xyz')
+    <div class="position-absolute top-0 end-0 mx-3">
+        <button class="rounded AddALunos mb-2" data-bs-toggle="modal" data-bs-target="#alunoModal">Adicionar Alunos</button>
+        <a href="{{ route('passar_ano') }}">
+            <button class="rounded AddALunos mb-2">Passar de Ano</button>
+        </a>
+        <a href="{{ route('alunosPassados') }}">
+            <button class="rounded AddALunos">Ex Alunos</button>
+        </a>
+    </div>
+@endif
+
 
         <div class="alunos-container d-flex">
-            <!-- Container para adicionar o novo conteúdo -->
-            <div id="alunoContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
-                @foreach ($alunos as $aluno)
-                    @if ($aluno->turma !== 'passou de ano')
-                        <div class="aluno-card rounded text-center border border-dark border-2 excesso" data-id="{{ $aluno->id }}">
-                            <!-- O card agora é clicável para abrir o modal -->
-                            <img src="{{ $aluno->foto }}" alt="Foto do Aluno" class="img-fluid img-preview mt-4 mb-3" style="cursor: pointer;">
-                            <p><strong>Nome:</strong> {{ $aluno->nome }}</p>
-                            <p><strong>Curso:</strong> {{ $aluno->curso }}</p>
-                            <p><strong>Turma:</strong> {{ $aluno->turma }}</p>
-                        </div>
-                    @endif
-                @endforeach
-            </div>
-        </div>
+    <!-- Container para adicionar o novo conteúdo -->
+    <div id="alunoContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
+        @foreach ($alunos as $aluno)
+            @if ($aluno->turma !== 'passou de ano') <!-- Manter o filtro original -->
+                <div class="aluno-card rounded text-center border border-dark border-2 excesso"
+                     data-bs-toggle="modal" data-bs-target="#alunoModalInfo"
+                     data-id="{{ $aluno->id }}">
+                    <!-- O card agora é clicável para abrir o modal -->
+                    <img src="{{ $aluno->foto }}" alt="Foto do Aluno" class="img-fluid img-preview mt-4 mb-3" style="cursor: pointer;">
+                    <p><strong>Nome:</strong> {{ $aluno->nome }}</p>
+                    <p><strong>Curso:</strong> {{ $aluno->curso }}</p>
+                    <p><strong>Turma:</strong> {{ $aluno->turma }}</p>
+                </div>
+            @endif
+        @endforeach
+    </div>
+</div>
+
     </div>
 
     @include('layouts.partials.formEditAluno')
