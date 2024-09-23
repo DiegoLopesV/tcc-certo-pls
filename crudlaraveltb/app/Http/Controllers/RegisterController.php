@@ -15,29 +15,25 @@ class RegisterController extends Controller
     
     public function register(RegisterRequest $request)
 {
-    // Cria o usuário com os dados do formulário
-    $user = User::create(array_merge($request->validated(), ['role' => 'ROLE_USER']));
-    
+    // Cria o usuário
+    $user = User::create($request->all() + ['role' => 'ROLE_USER']);
+
     // Faz login do usuário
     auth()->login($user);
 
-    // Verifica a chave do usuário para decidir o redirecionamento
-    switch ($user->key) {
-        case '987xyz':
-        case 'cba321':
-        case 'abc123':
-            // Redireciona para a página inicial para usuários com chaves específicas
-            return redirect()->route('home.index')->with('success', "Cadastro efetuado com sucesso");
-        
-        case 'aluno2024':
-            // Redireciona para a página de perfil para usuários com a chave 'aluno2024'
-            return redirect()->route('perfil.index')->with('success', "Cadastro efetuado com sucesso");
-        
-        default:
-            // Redireciona para a página inicial padrão se a chave não corresponder a nenhum dos casos acima
-            return redirect('/')->with('success', "Cadastro efetuado com sucesso");
+    // Redireciona com base na chave
+    if ($user->key === '987xyz' || $user->key === 'cba321' || $user->key === 'abc123') {
+        return redirect()->route('home.index')->with('success', "Cadastro efetuado com sucesso");
+    } elseif ($user->key === 'aluno2024') {
+        return redirect()->route('perfil.index')->with('success', "Cadastro efetuado com sucesso");
     }
+
+    // Redireciona para uma página padrão se a chave não corresponder
+    return redirect()->route('home.index')->with('success', "Cadastro efetuado com sucesso");
 }
+
+
+
 
     
     

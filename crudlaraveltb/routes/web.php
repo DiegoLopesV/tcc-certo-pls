@@ -231,7 +231,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
 
 
-
+        Route::post('/notifications/read', function() {
+            auth()->user()->unreadNotifications->markAsRead();
+            return response()->json(['message' => 'Notificações marcadas como lidas']);
+        });
+        
 
 
 

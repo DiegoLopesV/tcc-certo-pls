@@ -25,8 +25,14 @@
                                 <a class="nav-link mx-4 fs-5 text-black" aria-current="page" href="{{ route('usuarios.index') }}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link mx-4 fs-5 text-black" href="{{ route('ocorrencias.index') }}">Ocorrências</a>
-                            </li>
+    <a class="nav-link mx-4 fs-5 text-black" href="{{ route('ocorrencias.index') }}">
+        Ocorrências
+        @if(auth()->user()->unreadNotifications->count())
+            <span class="badge bg-danger rounded-circle position-absolute" style="top: -5px; right: -10px;"></span>
+        @endif
+    </a>
+</li>
+
                             <li class="nav-item">
                                 <a class="nav-link mx-4 fs-5 text-black" href="{{ route('enfermaria.index') }}">Enfermaria</a>
                             </li>
@@ -90,3 +96,19 @@
         <input id="pesquisa" name="search" class="my-1 p-1 w-100 border border-dark rounded-4 text-center" type="search" placeholder="Pesquisar..." aria-label="Search">
     </form>
 </div>
+
+<!-- Incluir Axios via CDN -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const ocorrenciasLink = document.querySelector('a[href="{{ route('ocorrencias.index') }}"]');
+    if (ocorrenciasLink) {
+        ocorrenciasLink.addEventListener('click', function() {
+            axios.post('/notifications/read').then(response => {
+                // Lógica para atualizar a interface, se necessário
+            });
+        });
+    }
+});
+</script>

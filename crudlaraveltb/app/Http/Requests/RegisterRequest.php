@@ -32,7 +32,8 @@ class RegisterRequest extends FormRequest
             'email' => 'required|min:3',
             'email_pais' => 'required|min:3',
             'password' => 'required|min:3',
-            'password_confirmation' => 'required|same:password'
+            'password_confirmation' => 'required|same:password',
+            'key' => 'required|min:6',
         ];
     }
 }

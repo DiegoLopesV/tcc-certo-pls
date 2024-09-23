@@ -74,12 +74,21 @@
     	</div>
  
     	<div class="form-group form-floating mb-3 w-25 mx-auto">
-        	<input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Confirm Password" required="required">
-        	<label for="floatingConfirmPassword">Confirme a senha</label>
-        	@if ($errors->has('password_confirmation'))
-            	<span class="text-danger text-left">{{ $errors->first('password_confirmation') }}</span>
-        	@endif
-    	</div>
+    		<input type="password" class="form-control" name="password_confirmation" value="{{ old('password_confirmation') }}" placeholder="Confirm Password" required="required">
+    		<label for="floatingConfirmPassword">Confirme a senha</label>
+    		@if ($errors->has('password_confirmation'))
+				<span class="text-danger text-left">{{ $errors->first('password_confirmation') }}</span>
+    		@endif
+		</div>
+
+		<div class="form-group form-floating mb-3 w-25 mx-auto">
+    		<input type="text" class="form-control" name="key" value="{{ old('key') }}" placeholder="Chave" required="required">
+    		<label for="floatingKey">Chave</label>
+    		@if ($errors->has('key'))
+        		<span class="text-danger text-left">{{ $errors->first('key') }}</span>
+    		@endif
+		</div>
+
  
     	<div class="form-group form-floating mb-3 mx-auto">
         	<button class="btn btn-lg btn-primary w-25 mx-auto" type="submit">Registrar</button>

@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ocorrencias;
 use App\Models\Enfermaria;
-
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewOcorrenciaNotification;
 
 class OcorrenciasController extends Controller
 {
@@ -64,18 +65,21 @@ class OcorrenciasController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
-        $ocorrencia = new Ocorrencias();
-        $ocorrencia->titulo = $request->titulo;
-        $ocorrencia->descricao = $request->descricao;
-        $ocorrencia->participantes = $request->participantes;
-        $ocorrencia->turma = $request->turma;
-        $ocorrencia->data = $request->data;
-        $ocorrencia->status = $request->status;
-        $ocorrencia->save();
-        return response()->json(['message' => 'Ocorrencia salva com sucesso!', 'id' =>$ocorrencia->id]);
-    }
+{
+    $ocorrencia = new Ocorrencias();
+    $ocorrencia->titulo = $request->titulo;
+    $ocorrencia->descricao = $request->descricao;
+    $ocorrencia->participantes = $request->participantes;
+    $ocorrencia->turma = $request->turma;
+    $ocorrencia->data = $request->data;
+    $ocorrencia->status = $request->status;
+    $ocorrencia->save();
+
+    // Enviar notificação
+    Notification::send(auth()->user(), new NewOcorrenciaNotification($ocorrencia));
+
+    return response()->json(['message' => 'Ocorrência salva com sucesso!', 'id' => $ocorrencia->id]);
+}
 
     /**
      * Display the specified resource.

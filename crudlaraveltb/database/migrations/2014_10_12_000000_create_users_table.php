@@ -25,7 +25,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('role');
             $table->string('password', 255); // Mantenha 255 para a senha, já que geralmente será um hash.
-            $table->string('key')->default('aluno2024');
+            $table->string('key');
             $table->rememberToken();
             $table->timestamps();
             
