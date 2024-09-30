@@ -10,6 +10,7 @@ Projeto do nosso grupo do ano de 2024, informática 4 (IFPR Campus Curitiba)!
 ## Tópicos
 
 1. [Instalação](#instalação)
+2. [Como Executar o Arquivo](#como-executar-o-arquivo)
 
 ---
 
@@ -61,6 +62,23 @@ Para instalar o MySQL Workbench, siga os passos abaixo:
 
 ---
 
+## Como Executar o Arquivo
+
+Para executar o sistema de gerenciamento de alunos, siga os passos abaixo:
+
+1. **Acesse a pasta do projeto:**
+   - Abra o terminal ou prompt de comando.
+   - Navegue até a pasta onde o projeto está localizado usando o comando `cd <caminho_da_pasta_do_projeto>`.
+   
+2. **Inicie o servidor PHP:**
+   - Execute o comando `php -S localhost:8000` para iniciar um servidor local.
+
+3. **Acesse o sistema:**
+   - Abra o navegador da sua preferência e digite `http://localhost:8000` na barra de endereços.
+   - Você deverá ver a interface do sistema de gerenciamento de alunos.
+
+---
+
 ## Contribuições
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
@@ -70,6 +88,3 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull r
 ## Licença
 
 Este projeto é licenciado sob a [MIT License](LICENSE).
-
-
-
