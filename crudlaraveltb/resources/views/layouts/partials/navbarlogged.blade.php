@@ -66,9 +66,22 @@
                             <!-- Não exibe mais nada além do logout -->
                         @endif
                     </ul>
-                    <a href="{{ route('perfil.index') }}"> 
-                        <i class="perfil fa-regular fa-circle-user fs-1 mx-3 mt-2"></i>
-                    </a>
+
+                    <!-- Ícone de Sino de Notificações e Perfil -->
+                    <div class="d-flex align-items-center">
+                    <!-- Ícone de Notificações (Sino) Verde -->
+                        <a href="{{ route('perfil.index') }}" class="position-relative" style="text-decoration: none;">
+                            <i class="fa-regular fa-bell fs-2 mx-3 text-success"></i>
+                            @if(auth()->user()->unreadNotifications->count())
+                                <span class="badge bg-danger rounded-circle position-absolute" style="top: 0; right: 0; width: 15px; height: 15px;"></span>
+                             @endif
+                        </a>
+                    <!-- Ícone de Perfil Verde -->
+                        <a href="{{ route('perfil.index') }}" style="text-decoration: none;"> 
+                            <i class="perfil fa-regular fa-circle-user fs-1 mx-3 mt-2 text-success"></i>
+                        </a>
+                    </div>
+
                     @auth
                         <div class="fs-5 m-3"> {{ auth()->user()->email }}</div>
                         <p class="fs-5 m-3">IFPR</p>
