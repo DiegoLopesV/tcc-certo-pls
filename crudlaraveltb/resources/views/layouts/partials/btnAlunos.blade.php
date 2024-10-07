@@ -16,6 +16,13 @@
                 <p><strong>Telefone dos Pais:</strong> <span id="modalTelefonePais"></span></p>
                 <p><strong>Email:</strong> <span id="modalEmail"></span></p>
                 <p><strong>Email dos Pais:</strong> <span id="modalEmailPais"></span></p>
+
+                <!-- Aqui adicionamos a lista de ocorrências -->
+                <h6>Ocorrências</h6>
+                <ul id="ocorrenciasList"></ul>
+
+                <h6>Enfermaria</h6>
+                <ul id="enfermariaList"></ul>
             </div>
             <div class="modal-footer">
                 @if(auth()->check() && auth()->user()->key === '987xyz')
@@ -41,53 +48,59 @@
                 <form id="infoForm" data-store-url="{{ route('alunos.store') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome">
+                        <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome" required>
                         <label for="nome">Nome</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <select id="curso" class="form-select " name="curso">
+                        <select id="curso" class="form-select" name="curso" required>
                             <!-- As opções são preenchidas via JavaScript -->
                         </select>
                         <label for="curso">Curso</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <select id="turma" class="form-select" name="turma">
+                        <select id="turma" class="form-select" name="turma" required>
                             <!-- As opções são preenchidas via JavaScript -->
                         </select>
                         <label for="turma">Turma</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="cpf" placeholder="CPF" name="cpf">
+                        <input type="text" class="form-control" id="cpf" placeholder="CPF" name="cpf" required>
                         <label for="cpf">CPF</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="nome_pais" placeholder="Nome dos Pais"
-                            name="nome_pais">
+                        <input type="text" class="form-control" id="nome_pais" placeholder="Nome dos Pais" name="nome_pais" required>
                         <label for="nome_pais">Nome dos Pais</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="telefone" placeholder="Telefone"
-                            name="telefone">
+                        <input type="text" class="form-control" id="telefone" placeholder="Telefone" name="telefone" required>
                         <label for="telefone">Telefone</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="telefone_pais" placeholder="Telefone dos Pais"
-                            name="telefone_pais">
+                        <input type="text" class="form-control" id="telefone_pais" placeholder="Telefone dos Pais" name="telefone_pais">
                         <label for="telefone_pais">Telefone dos Pais</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+                        <input type="email" class="form-control" id="email" placeholder="Email" name="email" required>
                         <label for="email">Email</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="email_pais" placeholder="Email dos Pais"
-                            name="email_pais">
+                        <input type="email" class="form-control" id="email_pais" placeholder="Email dos Pais" name="email_pais">
                         <label for="email_pais">Email dos Pais</label>
                     </div>
                     <div class="form-floating mb-3">
-
+                        <label for="data_nascimento">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <label for="napne">É aluno da Napne?</label>
+                        <select class="form-select" id="napne" name="napne" required>
+                        <option value="">Selecione uma opção</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                        </select>
+                    </div>
+                    <div class="form-floating mb-3">
                         <input type="file" id="foto" name="foto" accept="image/*">
-
                         <div id="imagePreviewContainer">
                             <img id="imagePreview" class="img-preview" alt="">
                         </div>
@@ -99,6 +112,7 @@
         </div>
     </div>
 </div>
+
 
 
 

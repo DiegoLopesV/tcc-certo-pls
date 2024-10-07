@@ -12,7 +12,7 @@ async function editAluno(id) {
 
         if (data) {
             // Limpa os campos do formulário antes de preenchê-los
-            const fields = ['nome', 'curso', 'turma', 'cpf', 'nome_pais', 'telefone', 'telefone_pais', 'email', 'email_pais'];
+            const fields = ['nome', 'curso', 'turma', 'cpf', 'nome_pais', 'telefone', 'telefone_pais', 'email', 'email_pais, data_nascimento, napne'];
             fields.forEach(field => {
                 const element = document.getElementById(field + 'Editar');
                 if (element) {

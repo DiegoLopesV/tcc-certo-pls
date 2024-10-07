@@ -18,7 +18,7 @@
                         <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="pessoas">Alunos atendidos</label>
+                        <label for="pessoas">Aluno Atendido</label>
                         <input type="text" class="form-control" id="pessoas" name="pessoas" required>
                     </div>
                     <div class="form-group">

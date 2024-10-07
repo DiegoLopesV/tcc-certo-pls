@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Alunos;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\Ocorrencias;
+use App\Models\Enfermaria;
 
 class AlunosController extends Controller
 {
@@ -67,6 +68,8 @@ class AlunosController extends Controller
         $aluno->telefone_pais = $request->telefone_pais;
         $aluno->email = $request->email;
         $aluno->email_pais = $request->email_pais;
+        $aluno->data_nascimento = $request->data_nascimento;
+        $aluno->napne = $request->napne;
         $aluno->foto = $validatedData['foto'] ?? null;
 
 
@@ -195,6 +198,8 @@ class AlunosController extends Controller
         $aluno->telefone_pais = $request->telefone_pais;
         $aluno->email = $request->email;
         $aluno->email_pais = $request->email_pais;
+        $aluno->data_nascimento = $request->data_nascimento;
+        $aluno->napne = $request->napne;
 
 
 
@@ -365,6 +370,49 @@ class AlunosController extends Controller
     }
 
     return response()->json(['success' => true]);
+}
+
+
+
+
+// Ocorrencias.
+public function getOcorrenciasAluno($id)
+{
+    try {
+        // Buscar o aluno pelo ID
+        $aluno = Alunos::find($id);
+
+        if (!$aluno) {
+            return response()->json(['message' => 'Aluno não encontrado'], 404);
+        }
+
+        // Buscar as ocorrências que contenham o nome do aluno no campo de participantes
+        $ocorrencias = Ocorrencias::where('participantes', 'LIKE', '%' . $aluno->nome . '%')->get();
+
+        return response()->json($ocorrencias);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Erro ao buscar ocorrências', 'error' => $e->getMessage()], 500);
+    }
+}
+
+// Enfermaria
+public function getEnfermariasAluno($id)
+{
+    try {
+        // Buscar o aluno pelo ID
+        $aluno = Alunos::find($id);
+
+        if (!$aluno) {
+            return response()->json(['message' => 'Aluno não encontrado'], 404);
+        }
+
+        // Buscar as ocorrências que contenham o nome do aluno no campo de participantes
+        $enfermaria = Enfermaria::where('pessoas', 'LIKE', '%' . $aluno->nome . '%')->get();
+
+        return response()->json($enfermaria);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Erro ao buscar ocorrências', 'error' => $e->getMessage()], 500);
+    }
 }
 
 }

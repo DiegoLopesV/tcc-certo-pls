@@ -8,6 +8,7 @@ function updateAluno(id, aluno) {
             <p><strong>Nome:</strong> ${aluno.nome}</p>
             <p><strong>Curso:</strong> ${aluno.curso}</p>
             <p><strong>Turma:</strong> ${aluno.turma}</p>
+            <p><strong>Data de Nascimento:</strong> ${aluno.data_nascimento}</p>
         `;
         
         // Atualiza o evento de clique no card

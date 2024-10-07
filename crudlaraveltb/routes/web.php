@@ -158,6 +158,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         ->where('turma', 'info[1-4]|pg[1-3]|adm[1-3]|eletronica[1-3]|mecanica[1-3]|contabilidade[1-3]|jogos[1-4]|pf[1-3]')
         ->name('turma');
         Route::post('/deletar-alunos', [AlunosController::class, 'deletarAlunos']);
+        // routes/web.php
+        Route::get('/alunos/{id}/ocorrencias', [AlunosController::class, 'getOcorrenciasAluno']);
+        Route::get('/alunos/{id}/enfermaria', [AlunosController::class, 'getEnfermariasAluno']);
+
 
 
 

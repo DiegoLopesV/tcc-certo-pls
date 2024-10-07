@@ -60,14 +60,27 @@
                             name="email_pais" value="">
                         <label for="email_paisEditar">Email dos Pais</label>
                     </div>
-                    <!--
-                    <div class="form-floating mb-3">
-                        <input type="file" id="fotoEditar" name="foto" accept="image/*">
-                        <div id="imagePreviewContainerEditar">
-                            <img id="imagePreviewEditar" class="img-preview" alt="">
+                        <!--
+                        <div class="form-floating mb-3">
+                            <input type="file" id="fotoEditar" name="foto" accept="image/*">
+                            <div id="imagePreviewContainerEditar">
+                                <img id="imagePreviewEditar" class="img-preview" alt="">
+                            </div>
                         </div>
+                    -->
+                    <div class="form-floating mb-3">
+                        <label for="napne">É aluno da Napne?</label>
+                        <select class="form-select" id="napne" name="napne" required>
+                        <option value="">Selecione uma opção</option>
+                        <option value="Sim">Sim</option>
+                        <option value="Não">Não</option>
+                        </select>
                     </div>
-                -->
+                <div class="form-floating mb-3">
+                        <label for="data_nascimento">Data de Nascimento</label>
+                        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+                    </div>
+
                     <!-- Botão de Enviar -->
                     <button type="submit" class="btn btn-primary">Atualizar</button>
                     <!-- Botão de Enviar -->

@@ -56,7 +56,7 @@
                 </div>
                 <p><strong>Título:</strong> {{ $enfermaria->titulo }}</p>
                 <p><strong>Descrição:</strong> {{ $enfermaria->descricao }}</p>
-                <p><strong>Pessoa Atendida:</strong> {{ $enfermaria->pessoas }}</p>
+                <p><strong>Aluno Atendido:</strong> {{ $enfermaria->pessoas }}</p>
                 <p><strong>Turma:</strong> {{ $enfermaria->turma }}</p>
                 <p><strong>Data:</strong> {{ $enfermaria->data }}</p>
                 <p><strong>Status:</strong> {{ $enfermaria->status }}</p>
