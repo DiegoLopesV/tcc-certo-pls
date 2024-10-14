@@ -154,12 +154,32 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/alunos/{id}/edit', [AlunosController::class, 'edit'])->name('alunos.edit');  // Formulário de edição
         Route::put('/alunos/{id}', [AlunosController::class, 'update'])->name('alunos.update');  // Atualizar aluno existente
         Route::delete('/alunos/{id}', [AlunosController::class, 'destroy'])->name('alunos.destroy');  // Excluir aluno
-        Route::get('/{turma}', [AlunosController::class, 'showAlunosPorTurma'])
-        ->where('turma', 'info[1-4]|pg[1-3]|adm[1-3]|eletronica[1-3]|mecanica[1-3]|contabilidade[1-3]|jogos[1-4]|pf[1-3]')
-        ->name('turma');
-        Route::post('/deletar-alunos', [AlunosController::class, 'deletarAlunos']);
-
-
+        Route::get('/info1', [AlunosController::class, 'showInfo1'])->name('info1');
+        Route::get('/info2', [AlunosController::class, 'showInfo2'])->name('info2');
+        Route::get('/info3', [AlunosController::class, 'showInfo3'])->name('info3');
+        Route::get('/info4', [AlunosController::class, 'showInfo4'])->name('info4');
+        Route::get('/pg1', [AlunosController::class, 'showPg1'])->name('pg1');
+        Route::get('/pg2', [AlunosController::class, 'showPg2'])->name('pg2');
+        Route::get('/pg3', [AlunosController::class, 'showPg3'])->name('pg3');
+        Route::get('/adm1', [AlunosController::class, 'showAdm1'])->name('adm1');
+        Route::get('/adm2', [AlunosController::class, 'showAdm2'])->name('adm2');
+        Route::get('/adm3', [AlunosController::class, 'showAdm3'])->name('adm3');
+        Route::get('/elet1', [AlunosController::class, 'showElet1'])->name('elet1');
+        Route::get('/elet2', [AlunosController::class, 'showElet2'])->name('elet2');
+        Route::get('/elet3', [AlunosController::class, 'showElet3'])->name('elet3');
+        Route::get('/mec1', [AlunosController::class, 'showMec1'])->name('mec1');
+        Route::get('/mec2', [AlunosController::class, 'showMec2'])->name('mec2');
+        Route::get('/mec3', [AlunosController::class, 'showMec3'])->name('mec3');
+        Route::get('/cont1', [AlunosController::class, 'showCont1'])->name('cont1');
+        Route::get('/cont2', [AlunosController::class, 'showCont2'])->name('cont2');
+        Route::get('/cont3', [AlunosController::class, 'showCont3'])->name('cont3');
+        Route::get('/jogos1', [AlunosController::class, 'showJogos1'])->name('jogos1');
+        Route::get('/jogos2', [AlunosController::class, 'showJogos2'])->name('jogos2');
+        Route::get('/jogos3', [AlunosController::class, 'showJogos3'])->name('jogos3');
+        Route::get('/jogos4', [AlunosController::class, 'showJogos4'])->name('jogos4');
+        Route::get('/pf1', [AlunosController::class, 'showPf1'])->name('pf1');
+        Route::get('/pf2', [AlunosController::class, 'showPf2'])->name('pf2');
+        Route::get('/pf3', [AlunosController::class, 'showPf3'])->name('pf3');
 
 
 

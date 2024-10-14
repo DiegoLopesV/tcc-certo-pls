@@ -1,12 +1,4 @@
 @include('layouts.partials.essentials')
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>SGA</title>
-</head>
 
 <body id="body">
     @include('layouts.partials.navbarlogged')
@@ -24,19 +16,18 @@
         <span class="fs-1">Turmas</span>
         <div class="d-flex mt-2">
             <!-- Botões para as turmas -->
-            <a href="{{ route('turma', ['turma' => 'info1']) }}" class="btn-turma">
+            <a href="{{ route('info1') }}" class="btn-turma">
                 <i id="ic" class="fa-solid fa-laptop"></i> Informática 1
             </a>
-            <a href="{{ route('turma', ['turma' => 'info2']) }}" class="btn-turma">
+            <a href="{{ route('info2') }}" class="btn-turma">
                 <i id="ic" class="fa-solid fa-laptop"></i> Informática 2
             </a>
-            <a href="{{ route('turma', ['turma' => 'info3']) }}" class="btn-turma">
+            <a href="{{ route('info3') }}" class="btn-turma">
                 <i id="ic" class="fa-solid fa-laptop"></i> Informática 3
             </a>
-            <a href="{{ route('turma', ['turma' => 'info4']) }}" class="btn-turma">
+            <a href="{{ route('info4') }}" class="btn-turma">
                 <i id="ic" class="fa-solid fa-laptop"></i> Informática 4
             </a>
         </div>
     </div>
 </body>
-</html>

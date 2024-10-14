@@ -1,13 +1,13 @@
 // Dados das turmas por curso
 const turmasPorCurso = {
     'Informática': ['Info 1', 'Info 2', 'Info 3', 'Info 4'],
-    'Pg': ['Pg 1', 'Pg 2', 'Pg 3'],
-    'Adm': ['Adm 1', 'Adm 2', 'Adm 3'],
+    'PG': ['PG 1', 'PG 2', 'PG 3'],
+    'ADM': ['ADM 1', 'ADM 2', 'ADM 3'],
     'Jogos': ['Jogos 1', 'Jogos 2', 'Jogos 3', 'Jogos 4'],
-    'Mecânica': ['Mecânica 1', 'Mecânica 2', 'Mecânica 3'],
-    'Eletrônica': ['Eletrônica 1', 'Eletrônica 2', 'Eletrônica 3'],
-    'Contabilidade': ['Contabilidade 1', 'Contabilidade 2', 'Contabilidade 3'],
-    'Pf': ['Pf 1', 'Pf 2', 'Pf 3'],
+    'Mecânica': ['Mecânica 1', 'Mecânica 2'],
+    'Eletrônica': ['Eletrônica 1', 'Eletrônica 2'],
+    'Contabilidade': ['Contabilidade 1', 'Contabilidade 2'],
+    'Processos Fotográficos': ['Processos Fotográficos 1', 'Processos Fotográficos 2'],
 };
 
 // Preencher dropdown de cursos

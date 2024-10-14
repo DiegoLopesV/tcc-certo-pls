@@ -22,7 +22,7 @@ function deleteAluno(id) {
             // Limpa o ID do formulário e remove o botão de excluir
             const editarForm = document.getElementById('editarForm');
             editarForm.removeAttribute('data-id');
-            
+            document.querySelector('.btn-danger')?.remove();
         } else {
             console.error('Erro:', data.message);
         }
