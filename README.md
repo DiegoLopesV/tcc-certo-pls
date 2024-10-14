@@ -11,6 +11,8 @@ Projeto do nosso grupo do ano de 2024, informática 4 (IFPR Campus Curitiba)!
 
 1. [Instalação](#instalação)
 2. [Como Executar o Arquivo](#como-executar-o-arquivo)
+3. [Contribuições](#contribuições)
+4. [Licença](#licença)
 
 # Guia de Instalação do Projeto
 
