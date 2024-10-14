@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enfermaria;
+use App\Models\Alunos;
 use Illuminate\Http\Request;
 
 class EnfermariaController extends Controller
@@ -17,7 +18,8 @@ class EnfermariaController extends Controller
     {
 
         $enfermaria = Enfermaria::all();
-        return view('enfermaria.index', compact('enfermaria'));
+        $aluno = Alunos::find(1);
+        return view('enfermaria.index', compact('enfermaria', 'aluno'));
     }
 
     /**

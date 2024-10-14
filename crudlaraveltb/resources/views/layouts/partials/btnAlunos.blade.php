@@ -26,6 +26,7 @@
             </div>
             <div class="modal-footer">
                 @if(auth()->check() && auth()->user()->key === '987xyz')
+                    <a href="{{ route('alunos.pdf', ['download' => 'pdf','id' => $aluno->id]) }}" class="btn btn-primary">Gerar PDF</a>
                     <button type="button" class="btn btn-warning" id="modalEditButton">Editar</button>
                 @endif
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>

@@ -12,6 +12,7 @@ use App\Http\Controllers\GraficoController;
 use App\Http\Controllers\ResetPasswordController;
 use App\Models\Ocorrencias;
 use App\Http\Controllers\PerfilController;
+use App\Http\Controllers\AlunosPDFController;
 
 Route::get('send-mail', [MailController::class, 'index']);
 
@@ -161,6 +162,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         // routes/web.php
         Route::get('/alunos/{id}/ocorrencias', [AlunosController::class, 'getOcorrenciasAluno']);
         Route::get('/alunos/{id}/enfermaria', [AlunosController::class, 'getEnfermariasAluno']);
+        Route::get('/alunos/pdf/{id}', [AlunosPDFController::class, 'gerarPDF'])->name('alunos.pdf');
+
 
 
 
