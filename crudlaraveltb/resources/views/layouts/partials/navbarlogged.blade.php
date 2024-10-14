@@ -70,8 +70,8 @@
                     <!-- Ícone de Sino de Notificações e Perfil -->
                     <div class="d-flex align-items-center">
                     <!-- Ícone de Notificações (Sino) Verde -->
-                        <a href="{{ route('perfil.index') }}" class="position-relative" style="text-decoration: none;">
-                            <i class="fa-regular fa-bell fs-2 mx-3 text-success"></i>
+                        <!--<a href="{{ route('perfil.index') }}" class="position-relative" style="text-decoration: none;">
+                            <i class="fa-regular fa-bell fs-2 mx-3 text-success"></i> -->
                             @if(auth()->user()->unreadNotifications->count())
                                 <span class="badge bg-danger rounded-circle position-absolute" style="top: 0; right: 0; width: 15px; height: 15px;"></span>
                              @endif
@@ -86,13 +86,15 @@
                         <div class="fs-5 m-3"> {{ auth()->user()->email }}</div>
                         <p class="fs-5 m-3">IFPR</p>
                     @endauth
+
+                    @auth
+                    <a href="{{ route('logout.perform') }}" class="btn btn-outline-dark fs-5 m-2 logout">Logout</a>
+                @endauth
                 </div>
                 @endif
 
                 <div class="offcanvas-footer">
-                    @auth
-                        <a href="{{ route('logout.perform') }}" class="btn btn-outline-dark fs-5 m-2 logout">Logout</a>
-                    @endauth
+
                 </div>
             </div>
 

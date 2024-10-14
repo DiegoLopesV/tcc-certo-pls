@@ -16,7 +16,7 @@ function deleteAluno(id) {
             card?.remove();
 
             // Fecha o modal e limpa o formulário
-            const alunoModal = bootstrap.Modal.getInstance(document.getElementById('editarAlunoModal'));
+            const alunoModal = bootstrap.Modal.getInstance(document.getElementById('alunoModalInfo'));
             alunoModal.hide();
 
             // Limpa o ID do formulário e remove o botão de excluir

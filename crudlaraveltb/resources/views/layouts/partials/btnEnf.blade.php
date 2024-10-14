@@ -82,6 +82,7 @@
                             turma: formData.get('turma'),
                             data: formData.get('data'),
                             status: formData.get('status'),
+                            
                         });
                     } else {
                         renderEnfermaria({
@@ -96,6 +97,7 @@
                     }
 
                     const infoModal = bootstrap.Modal.getInstance(document.getElementById('infoModal'));
+                    
                     infoModal.hide();
                     document.getElementById('infoForm').reset();
                     document.getElementById('infoForm').removeAttribute('data-id');

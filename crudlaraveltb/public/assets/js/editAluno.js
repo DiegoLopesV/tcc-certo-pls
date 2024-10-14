@@ -12,7 +12,7 @@ async function editAluno(id) {
 
         if (data) {
             // Limpa os campos do formulário antes de preenchê-los
-            const fields = ['nome', 'curso', 'turma', 'cpf', 'nome_pais', 'telefone', 'telefone_pais', 'email', 'email_pais, data_nascimento, napne'];
+            const fields = ['nome', 'curso', 'turma', 'cpf', 'nome_pais', 'telefone', 'telefone_pais', 'email', 'email_pais', 'data_nascimento', 'napne'];
             fields.forEach(field => {
                 const element = document.getElementById(field + 'Editar');
                 if (element) {
@@ -32,9 +32,21 @@ async function editAluno(id) {
             const turmaDropdown = document.getElementById('turmaEditar');
             turmaDropdown.value = data.turma;
 
+            // Atualiza o campo Napne
+            const napneDropdown = document.getElementById('napne');
+
+            // Limpa as opções existentes antes de adicionar
+            napneDropdown.innerHTML = `
+                <option value="">Selecione uma opção</option>
+                <option value="Sim">Sim</option>
+                <option value="Não">Não</option>
+            `;
+            napneDropdown.value = data.napne || '';// Log para verificar
+
+            // Preencher outros campos
             fields.forEach(field => {
                 const element = document.getElementById(field + 'Editar');
-                if (element) {
+                if (element && field !== 'napne') { // Preencher outros campos
                     element.value = data[field] || '';
                 }
             });
@@ -52,33 +64,6 @@ async function editAluno(id) {
             // Abre o modal de edição
             const alunoModal = new bootstrap.Modal(document.getElementById('editarAlunoModal'));
             alunoModal.show();
-
-            // Adiciona um listener para o evento de submissão do formulário
-            editarForm.addEventListener('submit', async function(event) {
-                event.preventDefault(); // Previne o comportamento padrão de envio do formulário
-
-                const formData = new FormData(this);
-                const updateUrl = this.getAttribute('data-update-url'); // Obtém a URL de atualização
-
-                try {
-                    const updateResponse = await fetch(updateUrl, {
-                        method: 'POST',
-                        headers: {
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                        },
-                        body: formData
-                    });
-
-                    if (updateResponse.ok) {
-                        // Recarrega a página inteira para refletir as alterações
-                        location.reload();
-                    } else {
-                        console.error('Erro ao atualizar o aluno.');
-                    }
-                } catch (error) {
-                    console.error('Erro:', error);
-                }
-            });
         }
     } catch (error) {
         console.error('Erro:', error);

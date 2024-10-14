@@ -375,7 +375,6 @@ class AlunosController extends Controller
 
 
 
-// Ocorrencias.
 public function getOcorrenciasAluno($id)
 {
     try {
@@ -386,14 +385,27 @@ public function getOcorrenciasAluno($id)
             return response()->json(['message' => 'Aluno não encontrado'], 404);
         }
 
-        // Buscar as ocorrências que contenham o nome do aluno no campo de participantes
-        $ocorrencias = Ocorrencias::where('participantes', 'LIKE', '%' . $aluno->nome . '%')->get();
+        // Buscar todas as ocorrências
+        $ocorrencias = Ocorrencias::all();
 
-        return response()->json($ocorrencias);
+        // Filtrar as ocorrências que contenham exatamente o nome do aluno no campo de participantes
+        $ocorrenciasFiltradas = $ocorrencias->filter(function ($ocorrencia) use ($aluno) {
+            // Separar a string de participantes por vírgulas
+            $participantes = explode(',', $ocorrencia->participantes);
+            
+            // Limpar os espaços em branco extras ao redor dos nomes
+            $participantes = array_map('trim', $participantes);
+
+            // Verificar se o nome do aluno está na lista de participantes
+            return in_array($aluno->nome, $participantes);
+        });
+
+        return response()->json($ocorrenciasFiltradas->values());
     } catch (\Exception $e) {
         return response()->json(['message' => 'Erro ao buscar ocorrências', 'error' => $e->getMessage()], 500);
     }
 }
+
 
 // Enfermaria
 public function getEnfermariasAluno($id)
@@ -406,10 +418,22 @@ public function getEnfermariasAluno($id)
             return response()->json(['message' => 'Aluno não encontrado'], 404);
         }
 
-        // Buscar as ocorrências que contenham o nome do aluno no campo de participantes
-        $enfermaria = Enfermaria::where('pessoas', 'LIKE', '%' . $aluno->nome . '%')->get();
+        // Buscar todas as ocorrências
+        $enfermaria = Enfermaria::all();
 
-        return response()->json($enfermaria);
+        // Filtrar as ocorrências que contenham exatamente o nome do aluno no campo de participantes
+        $enfermariasFiltradas = $enfermaria->filter(function ($enfermaria) use ($aluno) {
+            // Separar a string de participantes por vírgulas
+            $pessoas = explode(',', $enfermaria->pessoas);
+            
+            // Limpar os espaços em branco extras ao redor dos nomes
+            $pessoas = array_map('trim', $pessoas);
+
+            // Verificar se o nome do aluno está na lista de participantes
+            return in_array($aluno->nome, $pessoas);
+        });
+
+        return response()->json($enfermariasFiltradas->values());
     } catch (\Exception $e) {
         return response()->json(['message' => 'Erro ao buscar ocorrências', 'error' => $e->getMessage()], 500);
     }

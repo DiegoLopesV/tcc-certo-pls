@@ -26,7 +26,13 @@
             </div>
             <div class="modal-footer">
                 @if(auth()->check() && auth()->user()->key === '987xyz')
-                    <button type="button" class="btn btn-warning" id="modalEditButton">Editar</button>
+<!-- Botão Editar -->
+<button id="modalEditButton" class="btn btn-primary">Editar</button>
+
+<!-- Botão Deletar -->
+<button id="modalDeleteButton" class="btn btn-danger" data-aluno-id="">Deletar</button>
+
+
                 @endif
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
             </div>
@@ -88,17 +94,19 @@
                         <label for="email_pais">Email dos Pais</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <label for="data_nascimento">Data de Nascimento</label>
-                        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <label for="napne">É aluno da Napne?</label>
                         <select class="form-select" id="napne" name="napne" required>
-                        <option value="">Selecione uma opção</option>
-                        <option value="Sim">Sim</option>
-                        <option value="Não">Não</option>
+                            <option value="">Selecione uma opção</option>
+                            <option value="Sim">Sim</option>
+                            <option value="Não">Não</option>
                         </select>
+                        <label for="napne">É aluno da Napne?</label>
                     </div>
+                    
+                    <div class="form-floating mb-3">
+                        <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
+                        <label for="data_nascimento">Data de Nascimento</label>
+                    </div>
+                    
                     <div class="form-floating mb-3">
                         <input type="file" id="foto" name="foto" accept="image/*">
                         <div id="imagePreviewContainer">
