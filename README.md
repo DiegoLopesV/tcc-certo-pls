@@ -11,71 +11,73 @@ Projeto do nosso grupo do ano de 2024, informática 4 (IFPR Campus Curitiba)!
 
 1. [Instalação](#instalação)
 2. [Como Executar o Arquivo](#como-executar-o-arquivo)
+3. [Contribuições](#contribuições)
+4. [Licença](#licença)
 
----
+# Guia de Instalação do Projeto
 
-## Instalação
+Este guia irá orientá-lo na instalação da versão mais recente do PHP, Composer, MySQL Workbench, e na configuração do projeto Laravel.
 
-### 1. Composer
+## Instalação do PHP
 
-Para instalar o Composer, siga os passos abaixo:
+1. **Baixe a versão mais recente do PHP:**
+   - Acesse a [página oficial do PHP](https://www.php.net/downloads).
+   - Descompacte o arquivo em uma pasta de sua escolha.
+   
+2. **Configurar variáveis de ambiente:**
+   - Adicione o caminho da pasta do PHP às variáveis de ambiente (PATH).
+   
+3. **Configurações do PHP:**
+   - Abra o arquivo `php.ini` e descomente as seguintes linhas removendo o `;`:
+     ```
+     ;extension=fileinfo
+     ;extension=pdo_mysql
+     ```
 
-1. Acesse o seguinte endereço: [getcomposer.org/download](https://getcomposer.org/download/).
-2. Clique no link azul **"Composer-Setup.exe"**.
-3. Uma vez baixado, clique duas vezes no arquivo e selecione a primeira opção. Siga as instruções clicando em **Next** até concluir a instalação.
+## Instalação do Composer
 
----
+1. **Baixe o Composer:**
+   - Visite a [página do Composer](https://getcomposer.org/download/) e siga as instruções de instalação.
 
-### 2. PHP
+## Instalação do MySQL Workbench
 
-Para instalar o PHP, siga os passos abaixo:
+1. **Baixe e instale o MySQL Workbench:**
+   - Acesse a [página do MySQL Workbench](https://dev.mysql.com/downloads/workbench/).
+   - Crie um usuário root sem senha durante a configuração.
 
-1. Acesse o site oficial do PHP: [php.net/downloads.php](https://www.php.net/downloads.php).
-2. Role a página para baixo e clique em **"Windows Download"** dentro da seção **"Old Stable PHP 8.1.30 (Changelog)"**.
-3. Clique no botão **"zip"** para baixar a versão desejada.
-4. Extraia os arquivos do ZIP em uma pasta, como `C:\php`.
-5. Renomeie o arquivo `php.ini-development` para `php.ini`.
-6. Abra o arquivo `php.ini` e configure as opções conforme necessário (por exemplo, habilitando extensões).
-7. Adicione o diretório do PHP ao **PATH** do sistema:
-   - Vá em **"Configurações do sistema" > "Variáveis de ambiente"**.
-   - Em **"Variáveis do sistema"**, localize **"Path"** e clique em **"Editar"**.
-   - Adicione o caminho `C:\php` e clique em **"OK"**.
+2. **Criação do banco de dados:**
+   - Abra o MySQL Workbench e execute os seguintes comandos:
+     ```sql
+     CREATE DATABASE db_ifprtb;
+     USE db_ifprtb;
+     ```
 
----
+## Instalação do Visual Studio Code
 
-### 3. MySQL Workbench
+1. **Baixe e instale o Visual Studio Code:**
+   - Acesse a [página do Visual Studio Code](https://code.visualstudio.com/Download).
 
-Para instalar o MySQL Workbench, siga os passos abaixo:
+## Clonando o Repositório
 
-1. Acesse o site oficial do MySQL: [dev.mysql.com/downloads/workbench](https://dev.mysql.com/downloads/workbench/).
-2. Selecione sua plataforma (Windows, macOS ou Linux).
-3. Clique no botão **"Download"**.
-4. Na página de download, escolha a versão mais recente compatível com seu sistema.
-5. Você pode fazer login na Oracle ou clicar em **"No thanks, just start my download"** para pular o login.
-6. Abra o arquivo baixado (`.exe` no Windows ou `.dmg` no macOS).
-7. Siga o assistente de instalação:
-   - Aceite os termos e condições.
-   - Escolha a pasta de instalação (use a padrão, a menos que tenha preferência específica).
-   - Clique em **"Instalar"** e aguarde a conclusão.
-8. Após a instalação, abra o Workbench a partir do menu de aplicativos ou diretamente no Windows/macOS.
-9. Configure sua conexão com o banco de dados MySQL para começar a utilizá-lo.
+1. **Clone o repositório:**
+   - Abra o terminal e execute o seguinte comando:
+     ```bash
+     git clone https://github.com/seuusuario/tcc-certo-pls.git
+     ```
 
----
-
-## Como Executar o Arquivo
-
-Para executar o sistema de gerenciamento de alunos, siga os passos abaixo:
+## Executando o Projeto
 
 1. **Acesse a pasta do projeto:**
-   - Abra o terminal ou prompt de comando.
-   - Navegue até a pasta onde o projeto está localizado usando o comando `cd <caminho_da_pasta_do_projeto>`.
-   
-2. **Inicie o servidor PHP:**
-   - Execute o comando `php -S localhost:8000` para iniciar um servidor local.
+   - No terminal, execute os seguintes comandos:
+     ```bash
+     cd downloads
+     cd tcc-certo-pls
+     cd crudlaraveltb
+     ```
 
-3. **Acesse o sistema:**
-   - Abra o navegador da sua preferência e digite `http://localhost:8000` na barra de endereços.
-   - Você deverá ver a interface do sistema de gerenciamento de alunos.
+2. **Execute as migrações do banco de dados:**
+   ```bash
+   php artisan migrate
 
 ---
 

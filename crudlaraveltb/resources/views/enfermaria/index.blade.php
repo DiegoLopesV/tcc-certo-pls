@@ -18,12 +18,13 @@
     <!-- Botões abaixo do texto de ocorrências -->
     <div class="d-flex align-items-center justify-content-center border border-dark border-2 p-2 text-center">
 
-
         @include('layouts.partials.btnEmitirRelat')
         <!-- Botão para emitir relatório -->
         @include('layouts.partials.btnEmitirRelat')
+        
         <a href="{{ route('enfermaria.pdf', ['download' => 'pdf']) }}" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold bg-white text-dark btn btn-sm float-left">
             <i class="fa-solid fa-file-pdf me-1"></i> PDF
+            
         </a>
 
         <button id="filtrar" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold"
