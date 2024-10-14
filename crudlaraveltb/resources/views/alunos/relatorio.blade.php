@@ -65,7 +65,7 @@
             <th>Matrícula</th>
             <td>{{ $aluno->matricula }}</td>
             <th>Nascimento</th>
-            <td>{{ $aluno->nascimento }}</td>
+            <td>{{ $aluno->data_nascimento }}</td>
         </tr>
         <tr>
             <th>Curso</th>
@@ -77,8 +77,8 @@
         <tr>
             <td colspan="6">
                 Responsáveis: <br>
-                (00) 00000-00000 (Nome) <br>
-                (00) 00000-00000 (Nome)
+                {{ $aluno->telefone_pais }} ({{ $aluno->nome_pais }}) <br>
+                {{ $aluno->telefone_pais }} ({{ $aluno->nome_pais }})
             </td>
         </tr>
     </table>
