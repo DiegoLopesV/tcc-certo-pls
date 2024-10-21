@@ -24,19 +24,15 @@ class OcorrenciasController extends Controller
     if ($search) {
         // Busca ocorrências com base no título
         $ocorrencias = Ocorrencias::where('titulo', 'like', '%' . $search . '%')->get();
-        
-        // Busca entidades de enfermaria com base no título
-        $enfermarias = Enfermaria::where('titulo', 'like', '%' . $search . '%')->get();
 
         // Passa os resultados para a view
         return view('ocorrencias.index', compact('ocorrencias', 'enfermarias', 'search'));
     } else {
         // Caso contrário, busca todas as ocorrências e entidades de enfermaria
         $ocorrencias = Ocorrencias::all();
-        $enfermarias = Enfermaria::all();
 
         // Passa os resultados para a view
-        return view('ocorrencias.index', compact('ocorrencias', 'enfermarias'));
+        return view('ocorrencias.index', compact('ocorrencias'));
     }
 }
 

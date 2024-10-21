@@ -13,6 +13,7 @@ use App\Http\Controllers\ResetPasswordController;
 use App\Models\Ocorrencias;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\AlunosPDFController;
+use App\Http\Controllers\BuscaController;
 
 Route::get('send-mail', [MailController::class, 'index']);
 
@@ -182,6 +183,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/graficosOco', [OcorrenciasController::class, 'showMonthlyChartOco'])->name('graficosOco');
         Route::get("/ocorrencias/pdf", "OcorrenciasPDFController@gerarPDF")->name("ocorrencias.pdf");
 
+        Route::get('busca',[BuscaController::class,'index'])->name('busca.index');
 
         //Rotas Enfermaria
         Route::get('/enfermaria', [EnfermariaController::class, 'index'])->name('enfermaria.index');

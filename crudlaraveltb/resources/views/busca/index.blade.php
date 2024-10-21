@@ -17,7 +17,7 @@
 
     <!-- Título da página -->
     <div class="m-4 text-center fs-1 fw-bold">
-        Ocorrências
+        Resultados
     </div>
 
     <!-- Seção de Botões -->
@@ -75,6 +75,29 @@
                 }
                 
                 @endphp</p>
+            </div>
+        @endforeach
+        @foreach($enfermarias as $enfermaria)
+        <div class="ocorrencia-card rounded text-center border border-dark border-2 excesso" data-id="{{ $ocorrencia->id }}">
+            <div class="d-flex justify-content-end">
+                Enfermaria
+
+                
+                @if(auth()->check() && auth()->user()->key === '987xyz')
+                <div class="d-flex justify-content-end">
+                    <button class="btn btn-sm btn-warning m-2"
+                        onclick="editEnfermaria({{ $enfermaria->id }})">Editar</button>
+                </div>
+                @endif
+            </div>
+
+            <p><strong>Título:</strong> {{ $enfermaria->titulo }}</p>
+                <p><strong>Descrição:</strong> {{ $enfermaria->descricao }}</p>
+                <p><strong>Aluno Atendido:</strong> {{ $enfermaria->pessoas }}</p>
+                <p><strong>Turma:</strong> {{ $enfermaria->turma }}</p>
+                <p><strong>Data:</strong> {{ $enfermaria->data }}</p>
+                <p><strong>Status:</strong> {{ $enfermaria->status }}</p>
+
             </div>
         @endforeach
     </div>

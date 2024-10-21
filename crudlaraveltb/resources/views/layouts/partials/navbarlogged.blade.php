@@ -107,7 +107,7 @@
 
 <!-- Pesquisar -->
 <div id="" class="align-items-center border border-dark border-2 mb-0 p-1">
-    <form action="{{ route('ocorrencias.index') }}" method="GET" class="d-flex rounded-4" role="search">
+    <form action="{{ route('busca.index') }}" method="GET" class="d-flex rounded-4" role="search">
         <input id="pesquisa" name="search" class="my-1 p-1 w-100 border border-dark rounded-4 text-center" type="search" placeholder="Pesquisar..." aria-label="Search">
     </form>
 </div>
