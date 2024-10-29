@@ -112,6 +112,7 @@ document.getElementById('editarForm').addEventListener('submit', async function(
             // Fechar o modal e talvez atualizar a lista de alunos
             const alunoModal = bootstrap.Modal.getInstance(document.getElementById('editarAlunoModal'));
             alunoModal.hide();
+            location.reload();
             
         } else {
             console.error('Erro na atualização do aluno');

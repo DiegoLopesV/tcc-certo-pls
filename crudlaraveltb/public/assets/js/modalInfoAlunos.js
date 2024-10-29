@@ -84,8 +84,15 @@ function showModal(aluno) {
         if (confirm('Tem certeza que deseja excluir este aluno?')) {
             const alunoModalInfo = bootstrap.Modal.getInstance(document.getElementById("alunoModalInfo"));
             alunoModalInfo.hide(); // Fecha o modal de informações do aluno
+            
+            document.getElementById('alunoModalInfo').addEventListener('hidden.bs.modal', function() {
+                const backdrops = document.querySelectorAll('.modal-backdrop');
+                backdrops.forEach(backdrop => backdrop.remove());
+                document.body.classList.remove('modal-open');
+                document.body.style.removeProperty('padding-right');
+            });
+
             deleteAluno(alunoId);
-            location.reload(); // Chama a função de deletar o aluno
         }
     };
 

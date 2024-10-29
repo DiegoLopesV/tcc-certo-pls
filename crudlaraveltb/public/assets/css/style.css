@@ -182,7 +182,7 @@
     width: 25%;
     height: 50px;
     transition: 0.3s;
-    background-color: white;
+    background-color: rgb(243, 243, 243);
 
 }
 #botoes{
@@ -305,7 +305,7 @@ span {
 }
 /*Info.blade.php */
 .box01{
-    width: 30%;
+    width: 35%;
     height: 85px;
 }
 /*Info.blade.php */
@@ -451,5 +451,16 @@ span {
         }
         #filtroAluno{
             height: 45px;
-            width: 135px;
+            width: 155px;
         }
+
+
+/*Em celulares diminui o tamanho do texto Informática*/
+@media (max-width:640px){
+    .btnTurmasCel{
+        display: flex;
+        flex-wrap: wrap; 
+        justify-content: center;
+    }
+}
+

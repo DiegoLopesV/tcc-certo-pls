@@ -1,4 +1,7 @@
 @include('layouts.partials.essentials')
+<body>
+    
+
 <!-- Modal -->
 <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -17,13 +20,15 @@
                         <label for="descricao">Descrição</label>
                         <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="participantes">Participantes</label>
                         <input type="text" class="form-control" id="participantes" name="participantes" required>
                     </div>
-                    <div class="form-group">
+                    <div class="form-floating mb-3">
+                        <select id="turma" class="form-select" name="turma" required>
+                            <!-- As opções são preenchidas via JavaScript -->
+                        </select>
                         <label for="turma">Turma</label>
-                        <input type="text" class="form-control" id="turma" name="turma" required>
                     </div>
                     <div class="form-group">
                         <label for="data">Data</label>
@@ -43,3 +48,5 @@
         </div>
     </div>
 </div>
+<script src="{{ asset('assets/js/dropdownTurmas.js') }}"></script>
+</body>

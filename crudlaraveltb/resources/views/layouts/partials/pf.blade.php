@@ -21,8 +21,8 @@
 
     <div class="border border-dark border-3 border-top-0 align-items-center justify-content-center text-center p-2">
         <!-- Turmas -->
-        <span class="fs-1">Turmas</span>
-        <div class="d-flex mt-2">
+        <span class="fs-1 me-5">Turmas</span>
+        <div class="d-flex mt-2 btnTurmasCel">
             <!-- Botões para as turmas -->
             <a href="{{ route('turma', ['turma' => 'pf1']) }}" class="btn-turma">
                 <i id="ic" class="fa-solid fa-camera"></i> Processos Fotográficos 1

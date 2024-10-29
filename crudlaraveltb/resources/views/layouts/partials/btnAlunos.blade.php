@@ -76,7 +76,10 @@
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="cpf" placeholder="CPF" name="cpf" required>
                         <label for="cpf">CPF</label>
+                        <div id="cpfError" class="text-danger" style="display: none;"></div> <!-- Mensagem de erro -->
                     </div>
+                    
+                    
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="nome_pais" placeholder="Nome dos Pais" name="nome_pais" required>
                         <label for="nome_pais">Nome dos Pais</label>
@@ -224,6 +227,70 @@ document.getElementById('relatorioForm').addEventListener('submit', function(eve
         console.error('Erro ao gerar PDF:', error);
     });
 });
+
+function isValidCPF(cpf) {
+    // Remove caracteres não numéricos
+    cpf = cpf.replace(/\D/g, '');
+
+    // Verifica se o CPF tem 11 dígitos e não são todos iguais
+    if (cpf.length !== 11 || /^[0-9]{1}\1{10}$/.test(cpf)) {
+        return false;
+    }
+
+    // Cálculo do primeiro dígito verificador
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+        sum += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let firstVerifier = 11 - (sum % 11);
+    if (firstVerifier >= 10) firstVerifier = 0;
+
+    // Cálculo do segundo dígito verificador
+    sum = 0;
+    for (let i = 0; i < 10; i++) {
+        sum += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    let secondVerifier = 11 - (sum % 11);
+    if (secondVerifier >= 10) secondVerifier = 0;
+
+    // Verifica se os dígitos verificadores estão corretos
+    return (firstVerifier === parseInt(cpf.charAt(9))) && (secondVerifier === parseInt(cpf.charAt(10)));
+}
+
+
+// Valida o CPF ao perder o foco do campo
+document.getElementById('cpf').addEventListener('blur', function() {
+    const cpf = this.value;
+    const errorDiv = document.getElementById('cpfError');
+
+    if (!isValidCPF(cpf)) {
+        errorDiv.textContent = 'CPF inválido. Por favor, insira um CPF válido.';
+        errorDiv.style.display = 'block';
+        this.focus(); // Foca novamente no campo
+    } else {
+        errorDiv.style.display = 'none'; // Limpa a mensagem de erro
+    }
+});
+
+// Limpar mensagem de erro enquanto digita
+document.getElementById('cpf').addEventListener('input', function() {
+    const errorDiv = document.getElementById('cpfError');
+    errorDiv.style.display = 'none'; // Oculta a mensagem de erro
+});
+
+// Validar CPF na submissão do formulário
+document.querySelector('form').addEventListener('submit', function(event) {
+    const cpf = document.getElementById('cpf').value;
+    if (!isValidCPF(cpf)) {
+        event.preventDefault(); // Impede o envio do formulário
+        const errorDiv = document.getElementById('cpfError');
+        errorDiv.textContent = 'CPF inválido. Por favor, insira um CPF válido.';
+        errorDiv.style.display = 'block';
+        document.getElementById('cpf').focus(); // Foca no campo de CPF
+    }
+});
+
+
 </script>
 
 
