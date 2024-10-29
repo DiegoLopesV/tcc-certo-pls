@@ -178,7 +178,13 @@
     height: 50px;
     transition: 0.3s;
 }
+#pdf{
+    width: 25%;
+    height: 50px;
+    transition: 0.3s;
+    background-color: white;
 
+}
 #botoes{
     height: 100%;
     width: 100%;
@@ -233,6 +239,12 @@ span {
     background-color: #cecece;
 }
 #add:hover{
+    transition: 0.3s;
+    width: 26%;
+    height: 51px;
+    background-color: #cecece;
+}
+#pdf:hover{
     transition: 0.3s;
     width: 26%;
     height: 51px;
@@ -409,3 +421,35 @@ span {
     object-fit: cover !important; /* Garante que a imagem preencha o círculo sem distorcer */
     border: 2px solid #000 !important; /* Adiciona uma borda para destacar */
 }
+        /* Adicione um estilo para o botão de seleção e o botão de confirmar */
+        .ocorrencia-checkbox{
+            height: 20px;
+            width: 20px;
+        }
+        .select-mode .checkbox-container {
+            display: block;
+        }
+        .checkbox-container {
+            display: none;
+            position: absolute;
+            top: 5px;
+            right: 5px;
+        }
+        .hidden {
+            display: none ;
+        }
+        .ocorrencia-card {
+            position: relative;
+        }
+    
+        .enfermaria-checkbox{
+            height: 20px;
+            width: 20px;
+        }
+        .enfermaria-card {
+            position: relative;
+        }
+        #filtroAluno{
+            height: 45px;
+            width: 135px;
+        }

@@ -71,8 +71,7 @@ class OcorrenciasController extends Controller
     $ocorrencia->status = $request->status;
     $ocorrencia->save();
 
-    // Enviar notificação
-    Notification::send(auth()->user(), new NewOcorrenciaNotification($ocorrencia));
+  
 
     return response()->json(['message' => 'Ocorrência salva com sucesso!', 'id' => $ocorrencia->id]);
 }
@@ -154,4 +153,20 @@ class OcorrenciasController extends Controller
            
            return view('layouts.partials.graficosOco', compact('data'));
        }
+
+
+       public function deletarOcorrencias(Request $request)
+{
+    $ocorrenciasIds = $request->input('ocorrencias');
+    
+    if (!$ocorrenciasIds || !is_array($ocorrenciasIds)) {
+        return response()->json(['success' => false, 'message' => 'Dados inválidos'], 400);
+    }
+
+    // Exclui as ocorrências com os IDs fornecidos
+    Ocorrencias::whereIn('id', $ocorrenciasIds)->delete();
+
+    return response()->json(['success' => true]);
+}
+
 }

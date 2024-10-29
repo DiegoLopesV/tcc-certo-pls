@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Enfermaria;
 use App\Models\Alunos;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class EnfermariaController extends Controller
 {
@@ -97,11 +98,20 @@ class EnfermariaController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
-        $enfermaria = Enfermaria::findOrFail($id);
+        Log::info('Tentando excluir atendimento com ID: ' . $id);
+    
+        $enfermaria = Enfermaria::find($id);
+        if (!$enfermaria) {
+            Log::warning('Atendimento não encontrado com ID: ' . $id);
+            return response()->json(['message' => 'Atendimento não encontrado.'], 404);
+        }
+    
         $enfermaria->delete();
+        Log::info('Atendimento excluído com sucesso: ' . $id);
+    
         return response()->json(['message' => 'Atendimento excluído com sucesso!']);
     }
+    
 
     //Função Graficos Enfermaria
     public function showMonthlyChart(Request $request)
@@ -120,6 +130,20 @@ class EnfermariaController extends Controller
                       ->get();
         
         return view('layouts.partials.graficosEnf', compact('data'));
+    }
+
+    public function deletarEnfermarias(Request $request)
+    {
+        $enfermariasIds = $request->input('enfermarias');
+        
+        if (!$enfermariasIds || !is_array($enfermariasIds)) {
+            return response()->json(['success' => false, 'message' => 'Dados inválidos'], 400);
+        }
+    
+        // Exclui as ocorrências com os IDs fornecidos
+        Enfermaria::whereIn('id', $enfermariasIds)->delete();
+    
+        return response()->json(['success' => true]);
     }
     
 }

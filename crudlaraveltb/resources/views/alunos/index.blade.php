@@ -22,7 +22,12 @@
     <div>
         
     <div class="position-relative m-3 border border-dark border-3 rounded p-5">
-        <div class="fs-1 mb-3">Lista de todos os alunos</div>
+        <div class="fs-1 mb-3">Lista de todos os alunos <br>
+            <button type="button" class="btn btn-primary border border-dark border-2 fs-5 p-0 m-0" id="filtroAluno" data-bs-toggle="modal" data-bs-target="#filterModal">
+                Abrir Filtro
+            </button>   
+        </div>
+        
 
         <!-- Botões posicionados no canto superior direito -->
 @if(auth()->check() && auth()->user()->key === '987xyz')
@@ -33,7 +38,7 @@
         </a>
         <a href="{{ route('alunosPassados') }}">
             <button class="rounded AddALunos">Ex Alunos</button>
-        </a>
+        </a>     
     </div>
 @endif
 
@@ -45,14 +50,14 @@
             @if ($aluno->turma !== 'passou de ano') <!-- Manter o filtro original -->
                 <div class="aluno-card rounded text-center border border-dark border-2 excesso"
                      data-bs-toggle="modal" data-bs-target="#alunoModalInfo"
-                     data-id="{{ $aluno->id }}"
+                     data-id="{{ $aluno->id }}" data-turma="{{ $aluno->turma }}"
                      style="background-color: {{ $aluno->napne === 'Sim' ? '#cce7ff' : 'transparent' }};">
                     <!-- O card agora é clicável para abrir o modal -->
                     <img src="{{ $aluno->foto }}" alt="Foto do Aluno" class="img-fluid img-preview mt-4 mb-3" style="cursor: pointer;">
                     <p><strong>Nome:</strong> {{ $aluno->nome }}</p>
                     <p><strong>Curso:</strong> {{ $aluno->curso }}</p>
                     <p><strong>Turma:</strong> {{ $aluno->turma }}</p>
-                    <p><strong>Data de Nascimento:</strong> {{ $aluno->data_nascimento }}</p>
+                    <p><strong>Data de Nascimento:</strong> {{ \Carbon\Carbon::parse($aluno->data_nascimento)->format('d-m-Y') }}</p>
 
                     
                 </div>
@@ -65,6 +70,7 @@
 
     @include('layouts.partials.formEditAluno')
     @include('layouts.partials.btnAlunos')
+    @include('layouts.partials.btnFiltro')
     
 
 
@@ -79,6 +85,7 @@
     <script src="{{ asset('assets/js/editAluno.js') }}"></script>
     <script src="{{ asset('assets/js/deleteAluno.js') }}"></script>
     <script src="{{ asset('assets/js/utilidadesAluno.js') }}"></script>
+    <script src="{{ asset('assets/js/showRelatorioNapne.js') }}"></script>
 
 
 

@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Enfermaria</title>
     @include('layouts.partials.essentials')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 </head>
 
 <body id="body">
@@ -21,10 +23,12 @@
         @include('layouts.partials.btnEmitirRelat')
         <!-- Botão para emitir relatório -->
         @include('layouts.partials.btnEmitirRelat')
-        
-        <a href="{{ route('enfermaria.pdf', ['download' => 'pdf']) }}" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold bg-white text-dark btn btn-sm float-left">
+
+        <a href="{{ route('enfermaria.pdf', ['download' => 'pdf']) }}"
+            class="border border-dark border-1 border rounded-2 m-2 fs-3 fw-bold text-dark btn btn-sm float-left"
+            id="pdf">
             <i class="fa-solid fa-file-pdf me-1"></i> PDF
-            
+
         </a>
 
         <button id="filtrar" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold"
@@ -37,29 +41,43 @@
     </div>
 
 
-    <div class="border border-dark border-2 border-top-0">
-        <!-- Link que abre o dropdown -->
+    <!-- Seção para ordenação -->
+    <div class="border border-dark border-2 border-top-0 position-relative">
         <a class="ms-1 fs-2 text-dark text-decoration-none" href="#" id="ordenarLink">Ordenar ▼</a>
+        @include('layouts.partials.btnOrdenar') <!-- Incluindo o dropdown de ordenação -->
     </div>
 
+    @if (auth()->check() && auth()->user()->key === '987xyz')
+        <!-- Botões para ativar o modo de seleção e confirmar a exclusão -->
+        <div class=" m-2 mt-4">
+            <button id="selectModeBtn" class="btn btn-primary">Excluir múltiplos Atendimentos</button>
+            <button id="confirmDeleteBtn" class="btn btn-danger hidden">Confirmar Exclusão</button>
+            <button id="cancelDeleteBtn" class="btn btn-secondary hidden">Cancelar</button>
+        </div>
+    @endif
 
 
-    </div>
 
     <!-- Container com os card -->
     <div id="enfermariaContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
         @foreach ($enfermaria as $enfermaria)
-            <div class="aluno-card rounded text-center border border-dark border-2 excesso"
-                data-id="{{ $enfermaria->id }}">
+            <div class="enfermaria-card rounded text-center border border-dark border-2 excesso"
+                data-id="{{ $enfermaria->id }}" data-turma="{{ $enfermaria->turma }}">
                 <div class="d-flex justify-content-end">
-                    <button class="btn btn-sm btn-warning m-2"
-                        onclick="editEnfermaria({{ $enfermaria->id }})">Editar</button>
+                    @if (auth()->check() && auth()->user()->key === '987xyz')
+                        <button class="btn btn-sm btn-warning m-2"
+                            onclick="editEnfermaria({{ $enfermaria->id }})">Editar</button>
+
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="enfermaria-checkbox" data-id="{{ $enfermaria->id }}">
+                        </div>
+                    @endif
                 </div>
                 <p><strong>Título:</strong> {{ $enfermaria->titulo }}</p>
                 <p><strong>Descrição:</strong> {{ $enfermaria->descricao }}</p>
                 <p><strong>Aluno Atendido:</strong> {{ $enfermaria->pessoas }}</p>
                 <p><strong>Turma:</strong> {{ $enfermaria->turma }}</p>
-                <p><strong>Data:</strong> {{ $enfermaria->data }}</p>
+                <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($enfermaria->data)->format('d-m-Y') }}</p>
                 <p><strong>Status:</strong> {{ $enfermaria->status }}</p>
             </div>
         @endforeach
@@ -68,6 +86,101 @@
     @include('layouts.partials.btnEnf')
 
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectModeBtn = document.getElementById('selectModeBtn');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+            const enfermariaCards = document.querySelectorAll('.enfermaria-card'); // Cards de enfermaria
+            const checkboxes = document.querySelectorAll(
+                '.enfermaria-checkbox'); // Checkbox para selecionar enfermarias
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            selectModeBtn.addEventListener('click', function() {
+                // Ativa ou desativa o modo de seleção
+                document.body.classList.toggle('select-mode');
+                selectModeBtn.classList.toggle('hidden');
+                confirmDeleteBtn.classList.toggle('hidden');
+                cancelDeleteBtn.classList.toggle('hidden'); // Mostrar o botão de Cancelar
+
+                // Exibe ou oculta os checkboxes em cada card de enfermaria
+                enfermariaCards.forEach(card => {
+                    const checkboxContainer = card.querySelector('.checkbox-container');
+                    checkboxContainer.classList.toggle('hidden');
+                });
+
+            });
+
+            cancelDeleteBtn.addEventListener('click', function() {
+                // Oculta o modo de seleção
+                document.body.classList.remove('select-mode');
+                selectModeBtn.classList.remove('hidden');
+                confirmDeleteBtn.classList.add('hidden');
+                cancelDeleteBtn.classList.add('hidden'); // Oculta o botão de Cancelar
+
+                // Oculta os checkboxes em cada card de enfermaria
+                enfermariaCards.forEach(card => {
+                    const checkboxContainer = card.querySelector('.checkbox-container');
+                    checkboxContainer.classList.add('hidden');
+                });
+
+                // Desmarca todas as checkboxes
+                checkboxes.forEach(checkbox => checkbox.checked = false);
+            });
+
+
+            confirmDeleteBtn.addEventListener('click', function() {
+                const selectedEnfermarias = Array.from(checkboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.dataset.id);
+
+                if (selectedEnfermarias.length > 0) {
+                    // Envia uma requisição AJAX para deletar as enfermarias
+                    fetch('/deletar-enfermarias', { // Endpoint para deletar enfermarias
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-Token': csrfToken
+                            },
+                            body: JSON.stringify({
+                                enfermarias: selectedEnfermarias
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Remove os cards das enfermarias excluídas
+                                selectedEnfermarias.forEach(id => {
+                                    document.querySelector(
+                                            `.enfermaria-card[data-id="${id}"]`)
+                                        .remove();
+                                });
+
+                                // Restaura o estado original dos botões e oculta os checkboxes
+                                document.body.classList.remove('select-mode');
+                                selectModeBtn.classList.remove('hidden');
+                                confirmDeleteBtn.classList.add('hidden');
+
+                                // Desmarca todas as checkboxes
+                                checkboxes.forEach(checkbox => checkbox.checked = false);
+
+                                // Oculta os checkboxes em cada card de enfermaria
+                                enfermariaCards.forEach(card => {
+                                    const checkboxContainer = card.querySelector(
+                                        '.checkbox-container');
+                                    checkboxContainer.classList.add('hidden');
+                                });
+                            } else {
+                                alert('Erro ao excluir enfermarias');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro:', error);
+                        });
+                }
+            });
+        });
+    </script>
 
 
 

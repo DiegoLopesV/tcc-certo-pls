@@ -24,7 +24,7 @@
     <div class="d-flex align-items-center justify-content-center border border-dark border-2 p-2 text-center">
         <!-- Botão para emitir relatório -->
         @include('layouts.partials.btnEmitirRelat')
-        <a href="{{ route('ocorrencias.pdf', ['download' => 'pdf']) }}" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold bg-white text-dark btn btn-sm float-left" >
+        <a href="{{ route('ocorrencias.pdf', ['download' => 'pdf']) }}" id="pdf" class="border border-dark border-1 border rounded-2 m-1 fs-2 text-wrap fw-bold"  >
             <i class="fa-solid fa-file-pdf me-1"></i> PDF
         </a>
         
@@ -78,7 +78,7 @@
             </div>
         @endforeach
         @foreach($enfermarias as $enfermaria)
-        <div class="ocorrencia-card rounded text-center border border-dark border-2 excesso" data-id="{{ $ocorrencia->id }}">
+        <div class="aluno-card rounded text-center border border-dark border-2 excesso" data-id="{{ $enfermaria->id }}">
             <div class="d-flex justify-content-end">
                 Enfermaria
 
@@ -100,6 +100,24 @@
 
             </div>
         @endforeach
+        @foreach ($alunos as $aluno)
+            @if ($aluno->turma !== 'passou de ano') <!-- Manter o filtro original -->
+                <div class="aluno-card rounded text-center border border-dark border-2 excesso"
+                     data-bs-toggle="modal" data-bs-target="#alunoModalInfo"
+                     data-id="{{ $aluno->id }}"
+                     style="background-color: {{ $aluno->napne === 'Sim' ? '#cce7ff' : 'transparent' }};">
+                    <!-- O card agora é clicável para abrir o modal -->
+                    <img src="{{ $aluno->foto }}" alt="Foto do Aluno" class="img-fluid img-preview mt-4 mb-3" style="cursor: pointer;">
+                    <p><strong>Nome:</strong> {{ $aluno->nome }}</p>
+                    <p><strong>Curso:</strong> {{ $aluno->curso }}</p>
+                    <p><strong>Turma:</strong> {{ $aluno->turma }}</p>
+                    <p><strong>Data de Nascimento:</strong> {{ $aluno->data_nascimento }}</p>
+
+                    
+                </div>
+            @endif
+        @endforeach
+        
     </div>
 
     <!-- Botões adicionais -->
@@ -109,7 +127,11 @@
     <script src="{{ asset('assets/js/formOco.js') }}"></script>
     <script src="{{ asset('assets/js/editOco.js') }}"></script>
 
-
+    <script>
+        const pdfButton = document.getElementById('pdf');
+        console.log(pdfButton); // Verifica se o botão foi encontrado
+        console.log(getComputedStyle(pdfButton).backgroundColor); // Verifica a cor de fundo
+    </script>
 </body>
 @include('layouts.partials.btnOrdenar')
 

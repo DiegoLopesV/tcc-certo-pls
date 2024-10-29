@@ -7,8 +7,10 @@ function editOcorrencia(id) {
             document.getElementById('descricao').value = ocorrencia.descricao;
             document.getElementById('participantes').value = ocorrencia.participantes;
             document.getElementById('turma').value = ocorrencia.turma;
-            document.getElementById('data').value = ocorrencia.data;
             document.getElementById('status').value = ocorrencia.status;
+            // Certifique-se de que a data está no formato correto (YYYY-MM-DD)
+            const dataFormatada = new Date(ocorrencia.data).toISOString().split('T')[0];
+            document.getElementById('data').value = dataFormatada;
 
             // Adiciona o botão de exclusão se ainda não existir
             let deleteButton = document.querySelector('.btn-danger');

@@ -17,13 +17,22 @@
                         <label for="descricao">Descrição</label>
                         <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group mb-3">
                         <label for="pessoas">Aluno Atendido</label>
                         <input type="text" class="form-control" id="pessoas" name="pessoas" required>
                     </div>
-                    <div class="form-group">
+
+                    <div class="form-floating mb-3">
+                        <select id="curso" class="form-select" name="curso" required>
+                            <!-- As opções são preenchidas via JavaScript -->
+                        </select>
+                        <label for="curso">Curso</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <select id="turma" class="form-select" name="turma" required>
+                            <!-- As opções são preenchidas via JavaScript -->
+                        </select>
                         <label for="turma">Turma</label>
-                        <input type="text" class="form-control" id="turma" name="turma" required>
                     </div>
                     <div class="form-group">
                         <label for="data">Data</label>
@@ -43,6 +52,8 @@
         </div>
     </div>
 </div>
+
+<script src="{{ asset('assets/js/dropdown.js') }}"></script>
 
 <script>
     document.getElementById('infoForm').addEventListener('submit', function(event) {
@@ -101,10 +112,12 @@
                     infoModal.hide();
                     document.getElementById('infoForm').reset();
                     document.getElementById('infoForm').removeAttribute('data-id');
-                    document.querySelector('.btn-danger')?.remove(); // Remove o botão de excluir se existir
+                    document.querySelector('.btn-danger')?.remove();
+                     // Remove o botão de excluir se existir
                 }
             })
             .catch(error => console.error('Erro:', error));
+            location.reload();
     });
 
     function renderEnfermaria(enfermaria) {
@@ -145,53 +158,74 @@
     }
 
     function editEnfermaria(id) {
-        fetch(`/enfermaria/${id}/edit`)
-            .then(response => response.json())
-            .then(enfermaria => {
-                document.getElementById('titulo').value = enfermaria.titulo;
-                document.getElementById('descricao').value = enfermaria.descricao;
-                document.getElementById('pessoas').value = enfermaria.pessoas;
-                document.getElementById('turma').value = enfermaria.turma;
-                document.getElementById('data').value = enfermaria.data;
-                document.getElementById('status').value = enfermaria.status;
+    fetch(`/enfermaria/${id}/edit`)
+        .then(response => response.json())
+        .then(enfermaria => {
+            document.getElementById('titulo').value = enfermaria.titulo;
+            document.getElementById('descricao').value = enfermaria.descricao;
+            document.getElementById('pessoas').value = enfermaria.pessoas;
+            document.getElementById('turma').value = enfermaria.turma;
 
-                let deleteButton = document.querySelector('.btn-danger');
-                if (!deleteButton) {
-                    deleteButton =
-                    `<button type="button" class="btn btn-danger" onclick="deleteEnfermaria(${id})">Excluir</button>`;
-                    document.getElementById('infoForm').insertAdjacentHTML('beforeend', deleteButton);
+            // Certifique-se de que a data está no formato correto (YYYY-MM-DD)
+            const dataFormatada = new Date(enfermaria.data).toISOString().split('T')[0];
+            document.getElementById('data').value = dataFormatada;
+
+            document.getElementById('status').value = enfermaria.status;
+
+            // Remove qualquer botão de excluir existente antes de adicionar um novo
+            const existingDeleteButton = document.querySelector('.btn-danger');
+            if (existingDeleteButton) {
+                existingDeleteButton.remove(); // Remove o botão existente se já houver
+            }
+
+            // Adiciona o botão de excluir ao final do formulário
+            const deleteButton = `
+                <button type="button" class="btn btn-danger" onclick="deleteEnfermaria(${id})">Excluir</button>
+            `;
+            document.getElementById('infoForm').insertAdjacentHTML('beforeend', deleteButton);
+
+            document.getElementById('infoForm').setAttribute('data-id', id);
+
+            const infoModal = new bootstrap.Modal(document.getElementById('infoModal'));
+            infoModal.show();
+        })
+        .catch(error => console.error('Erro:', error));
+}
+
+
+
+function deleteEnfermaria(id) {
+    if (confirm('Tem certeza que deseja excluir este atendimento?')) {
+        fetch(`/enfermaria/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
                 }
-
-                document.getElementById('infoForm').setAttribute('data-id', id);
-
-                const infoModal = new bootstrap.Modal(document.getElementById('infoModal'));
-                infoModal.show();
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(errorData => {
+                        throw new Error(errorData.message || 'Erro ao excluir');
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.message === 'Atendimento excluída com sucesso!') {
+                    const card = document.querySelector(`[data-id='${id}']`);
+                    if (card) {
+                        card.remove();
+                    }
+                    const infoModal = bootstrap.Modal.getInstance(document.getElementById('infoModal'));
+                    infoModal.hide();
+                    
+                }
+                location.reload();
             })
             .catch(error => console.error('Erro:', error));
     }
+}
 
-    function deleteEnfermaria(id) {
-        if (confirm('Tem certeza que deseja excluir este atendimento?')) {
-            fetch(`/enfermaria/${id}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message === 'Atendimento excluída com sucesso!') {
-                        const card = document.querySelector(`[data-id='${id}']`);
-                        if (card) {
-                            card.remove();
-                        }
-                        const infoModal = bootstrap.Modal.getInstance(document.getElementById('infoModal'));
-                        infoModal.hide();
-                    }
-                })
-                .catch(error => console.error('Erro:', error));
-        }
-    }
 
     document.getElementById('infoModal').addEventListener('hidden.bs.modal', function() {
         const backdrops = document.querySelectorAll('.modal-backdrop');
@@ -202,6 +236,6 @@
 </script>
 
 
-<!--                
+
 
                                 

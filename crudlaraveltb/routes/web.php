@@ -14,6 +14,7 @@ use App\Models\Ocorrencias;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\AlunosPDFController;
 use App\Http\Controllers\BuscaController;
+use App\Models\Enfermaria;
 
 Route::get('send-mail', [MailController::class, 'index']);
 
@@ -173,6 +174,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
 
 
+
         //Rotas das Ocorrências
         Route::get('/ocorrencias', [OcorrenciasController::class, 'index'])->name('ocorrencias.index');
         Route::get('/ocorrencias/create', [OcorrenciasController::class, 'create'])->name('ocorrencias.create');
@@ -182,6 +184,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::delete('/ocorrencias/{id}', [OcorrenciasController::class, 'destroy'])->name('ocorrencias.destroy');
         Route::get('/graficosOco', [OcorrenciasController::class, 'showMonthlyChartOco'])->name('graficosOco');
         Route::get("/ocorrencias/pdf", "OcorrenciasPDFController@gerarPDF")->name("ocorrencias.pdf");
+
+        Route::post('/deletar-ocorrencias', [OcorrenciasController::class, 'deletarOcorrencias']);
 
         Route::get('busca',[BuscaController::class,'index'])->name('busca.index');
 
@@ -195,7 +199,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/graficosEnf', [EnfermariaController::class, 'showMonthlyChart'])->name('graficosEnf');
         Route::get("/enfermaria/pdf", "EnfermariaPDFController@gerarPDF")->name("enfermaria.pdf");
 
-
+        Route::post('/deletar-enfermarias', [EnfermariaController::class, 'deletarEnfermarias']);
 
         //Rota para manter o card dos alunos
         Route::post('/alunos', 'AlunosController@store')->name('alunos.store');

@@ -51,8 +51,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     });
                 }
 
-                const infoModal = bootstrap.Modal.getInstance(document.getElementById('infoModal'));
-                infoModal.hide();
+                // Fecha o modal e remove o overlay, se necessário
+                const infoModalInstance = bootstrap.Modal.getInstance(infoModalElement);
+                infoModalInstance.hide();
+
+                // Remover overlays remanescentes
+                document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                document.body.classList.remove('modal-open');
+                document.body.style = ""; 
+
                 document.getElementById('infoForm').reset();
                 document.getElementById('infoForm').removeAttribute('data-id');
                 document.querySelector('.btn-danger')?.remove();

@@ -12,6 +12,19 @@ function showModal(aluno) {
     document.getElementById("data_nascimento").textContent = aluno.data_nascimento;
     document.getElementById("napne").textContent = aluno.napne;
 
+    function closeAlunoModal() {
+        const alunoModal = bootstrap.Modal.getInstance(document.getElementById("alunoModalInfo"));
+        alunoModal.hide();
+        const backdrops = document.querySelectorAll('.modal-backdrop');
+        backdrops.forEach(backdrop => backdrop.remove());
+        document.body.classList.remove('modal-open');
+        document.body.style.overflow = 'auto'; // Adiciona scroll novamente
+        document.body.style.removeProperty('padding-right');// Remove qualquer estilo extra no body
+    }
+    // Aplica o closeAlunoModal ao botão Close
+    document.getElementById("close").onclick = closeAlunoModal;
+
+
     // Atualiza o ID do aluno no botão Deletar
     const deleteButton = document.getElementById("modalDeleteButton");
     deleteButton.setAttribute('data-aluno-id', aluno.id);
@@ -80,3 +93,42 @@ function showModal(aluno) {
     const alunoModalInfo = new bootstrap.Modal(document.getElementById("alunoModalInfo"));
     alunoModalInfo.show();
 }
+
+document.getElementById('emitirRelatorioNapneButton').onclick = function() {
+    // Coleta os dados do modal
+    const alunoData = {
+        nome: document.getElementById("modalNome").textContent,
+        curso: document.getElementById("modalCurso").textContent,
+        turma: document.getElementById("modalTurma").textContent,
+        cpf: document.getElementById("modalCpf").textContent,
+        nome_pais: document.getElementById("modalNomePais").textContent,
+        telefone: document.getElementById("modalTelefone").textContent,
+        telefone_pais: document.getElementById("modalTelefonePais").textContent,
+        email: document.getElementById("modalEmail").textContent,
+        email_pais: document.getElementById("modalEmailPais").textContent
+    };
+
+    // Envia os dados para o servidor
+    fetch('/alunos/gerar-relatorio-napne', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify(alunoData)
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        // Cria um link para download do PDF
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'relatorio_napne.pdf';
+        document.body.appendChild(a); // necessário para o Firefox
+        a.click();
+        a.remove();
+    })
+    .catch(error => {
+        console.error('Erro ao gerar PDF:', error);
+    });
+};

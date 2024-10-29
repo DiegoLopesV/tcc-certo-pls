@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="alunoModalInfoLabel">Informações do Aluno</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close"></button>
             </div>
             <div class="modal-body">
                 <p><strong>Nome:</strong> <span id="modalNome"></span></p>
@@ -32,6 +32,10 @@
 <!-- Botão Deletar -->
 <button id="modalDeleteButton" class="btn btn-danger" data-aluno-id="">Deletar</button>
 
+<!-- Botão Emitir Relatório Napne -->
+<button type="button" class="btn btn-primary" id="emitirRelatorioNapneButton">
+    Emitir Relatório Napne
+</button>
 
                 @endif
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -120,6 +124,109 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Napne -->
+<div class="modal fade" id="relatorioNapneModal" tabindex="-1" aria-labelledby="relatorioNapneModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="relatorioNapneModalLabel">Relatório Napne</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="relatorioForm">
+                    <!-- Formulário para Relatório Napne -->
+                    <div class="form-group">
+                        <label for="bimestre">Bimestre:</label>
+                        <input type="text" class="form-control" id="bimestre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aluno">Aluno(a):</label>
+                        <input type="text" class="form-control" id="aluno" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cursoTurma">Curso e Turma:</label>
+                        <input type="text" class="form-control" id="cursoTurma" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="disciplina">Disciplina:</label>
+                        <input type="text" class="form-control" id="disciplina" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="professor">Professor(a):</label>
+                        <input type="text" class="form-control" id="professor" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="objetivos">Objetivos do bimestre alcançados pelo estudante:</label>
+                        <textarea class="form-control" id="objetivos" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="participacao">Nível de participação do estudante nas atividades:</label>
+                        <textarea class="form-control" id="participacao" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="avaliacao">Critérios e instrumentos de avaliação e respostas:</label>
+                        <textarea class="form-control" id="avaliacao" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="metodos">Métodos que facilitaram a aprendizagem:</label>
+                        <textarea class="form-control" id="metodos" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="dificuldades">Dificuldades:</label>
+                        <textarea class="form-control" id="dificuldades" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="informacoes">Informações importantes:</label>
+                        <textarea class="form-control" id="informacoes" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="data">Data:</label>
+                        <input type="date" class="form-control" id="data" required>
+                    </div>
+                    <!-- Botão de Enviar -->
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('relatorioForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Impede o comportamento padrão de envio
+
+    // Coleta os dados do formulário
+    const formData = new FormData(this);
+
+    // Envia os dados via POST para gerar o PDF
+    fetch('/alunos/gerar-relatorio-napne', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: formData
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        // Cria um link temporário para download do PDF
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'relatorio_napne.pdf';
+        document.body.appendChild(a); // Necessário para o Firefox
+        a.click();
+        a.remove();
+    })
+    .catch(error => {
+        console.error('Erro ao gerar PDF:', error);
+    });
+});
+</script>
+
+
 
 
 

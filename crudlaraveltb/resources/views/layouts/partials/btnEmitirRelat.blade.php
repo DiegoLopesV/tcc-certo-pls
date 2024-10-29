@@ -40,7 +40,7 @@ const date = document.getElementById('date').value;
 
 // Cria o novo retângulo de informação
 const infoBox = document.createElement('button');
-infoBox.className = 'info-box expand-btn d-flex border border-dark border-1 border rounded-2 my-2 w-100 fs-3 text-wrap fw-bold  align-items-center justify-content-center text-center';
+infoBox.className = 'info-box expand-btn d-flex border border-dark border-1 border rounded-2 my-2 w-100 fs-3 text-wrap fw-bold align-items-center justify-content-center text-center';
 infoBox.innerHTML = `
 
     <span><strong>Data:</strong> ${date}</span>

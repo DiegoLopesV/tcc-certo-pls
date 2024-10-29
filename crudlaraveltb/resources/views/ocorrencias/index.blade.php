@@ -8,6 +8,7 @@
     <title>SGA</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('layouts.partials.essentials')
+
 </head>
 
 <body id="body">
@@ -21,60 +22,79 @@
     </div>
 
     <!-- Seção de Botões -->
-    <div class="d-flex align-items-center justify-content-center border border-dark border-2 p-2 text-center">
+    <div class="d-flex align-items-center justify-content-center border border-dark border-2 p-1 text-center">
         <!-- Botão para emitir relatório -->
         @include('layouts.partials.btnEmitirRelat')
-        <a href="{{ route('ocorrencias.pdf', ['download' => 'pdf']) }}" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold bg-white text-dark btn btn-sm float-left" >
+        <a href="{{ route('ocorrencias.pdf', ['download' => 'pdf']) }}"
+            class="border border-dark border-1 border rounded-2 m-2 fs-3 fw-bold text-dark btn btn-sm float-left"
+            id="pdf">
             <i class="fa-solid fa-file-pdf me-1"></i> PDF
         </a>
-        
+
         <!-- Botão para abrir modal de filtro -->
-        <button id="filtrar" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold" data-bs-toggle="modal" data-bs-target="#filterModal">
+        <button id="filtrar" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold"
+            data-bs-toggle="modal" data-bs-target="#filterModal">
             <i class="fa-solid fa-list me-1"></i> Filtrar
         </button>
-        
+
         <!-- Botão para adicionar ocorrência -->
-        <button id="add" class="border border-dark border-1 border rounded-2 m-1 fs-2 text-wrap fw-bold" data-bs-toggle="modal" data-bs-target="#infoModal">
+        <button id="add" class="border border-dark border-1 border rounded-2 m-1 fs-2 text-wrap fw-bold"
+            data-bs-toggle="modal" data-bs-target="#infoModal">
             Adicionar Ocorrência <i class="fa-solid fa-plus ms-1"></i>
         </button>
     </div>
 
     <!-- Seção para ordenação -->
     <div class="border border-dark border-2 border-top-0">
-        <!-- Link que abre o dropdown -->
         <a class="ms-1 fs-2 text-dark text-decoration-none" href="#" id="ordenarLink">Ordenar ▼</a>
+        @include('layouts.partials.btnOrdenar') <!-- Incluindo o dropdown de ordenação -->
     </div>
+
+    @if (auth()->check() && auth()->user()->key === '987xyz')
+        <!-- Botões para ativar o modo de seleção e confirmar a exclusão -->
+        <div class=" m-2 mt-4">
+            <button id="selectModeBtn" class="btn btn-primary">Excluir múltiplas Ocorrências</button>
+            <button id="confirmDeleteBtn" class="btn btn-danger hidden">Confirmar Exclusão</button>
+            <button id="cancelDeleteBtn" class="btn btn-secondary hidden">Cancelar</button> <!-- Botão de Cancelar -->
+        </div>
+    @endif
 
     <!-- Container para informações -->
     <div id="ocorrenciaContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
-        @foreach($ocorrencias as $ocorrencia)
-        <div class="ocorrencia-card rounded text-center border border-dark border-2 excesso" data-id="{{ $ocorrencia->id }}">
-            <div class="d-flex justify-content-end">
-                Ocorrência
-                @if(auth()->check() && auth()->user()->key === '987xyz')
-                    <button class="btn btn-sm btn-warning m-2" onclick="editOcorrencia({{ $ocorrencia->id }})">Editar</button>
-                @endif
-            </div>
+        @foreach ($ocorrencias as $ocorrencia)
+            <div class="ocorrencia-card rounded text-center border border-dark border-2 excesso"
+                data-id="{{ $ocorrencia->id }}" data-turma="{{ $ocorrencia->turma }}">
+                <div class="d-flex justify-content-end">
+                    
+                    @if (auth()->check() && auth()->user()->key === '987xyz')
+                        <button class="btn btn-sm btn-warning m-2"
+                            onclick="editOcorrencia({{ $ocorrencia->id }})">Editar</button>
+
+                        <div class="checkbox-container">
+                            <input type="checkbox" class="ocorrencia-checkbox" data-id="{{ $ocorrencia->id }}" >
+                        </div>
+                    @endif
+                </div>
 
                 <p><strong>Título:</strong> {{ $ocorrencia->titulo }}</p>
                 <p><strong>Descrição:</strong> {{ $ocorrencia->descricao }}</p>
                 <p><strong>Participantes:</strong> {{ $ocorrencia->participantes }}</p>
                 <p><strong>Turma:</strong> {{ $ocorrencia->turma }}</p>
-                <p><strong>Data:</strong> {{ $ocorrencia->created_at }}</p>
-                <p><strong>Status:</strong> 
-                @php
-                
-                if($ocorrencia->status == 0){
-                    echo 'Concluído';
-                }
-                if($ocorrencia->status == 1){
-                    echo 'Em Andamento';
-                }
-                if($ocorrencia->status == 2){
-                    echo 'Pendente';
-                }
-                
-                @endphp</p>
+                <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($ocorrencia->data)->format('d-m-Y') }}</p>
+                <p><strong>Status:</strong> {{ $ocorrencia->status }}</p>
+                    @php
+
+                        if ($ocorrencia->status == 0) {
+                            echo 'Concluído';
+                        }
+                        if ($ocorrencia->status == 1) {
+                            echo 'Em Andamento';
+                        }
+                        if ($ocorrencia->status == 2) {
+                            echo 'Pendente';
+                        }
+
+                    @endphp</p>
             </div>
         @endforeach
     </div>
@@ -87,7 +107,87 @@
     <script src="{{ asset('assets/js/editOco.js') }}"></script>
 
 
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const selectModeBtn = document.getElementById('selectModeBtn');
+            const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+            const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+            const ocorrenciaCards = document.querySelectorAll('.ocorrencia-card'); // Cards de ocorrência
+            const checkboxes = document.querySelectorAll(
+                '.ocorrencia-checkbox'); // Checkbox para selecionar ocorrências
+            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+            selectModeBtn.addEventListener('click', function() {
+                // Ativa ou desativa o modo de seleção
+                document.body.classList.toggle('select-mode');
+                selectModeBtn.classList.toggle('hidden');
+                confirmDeleteBtn.classList.toggle('hidden');
+                cancelDeleteBtn.classList.toggle('hidden');
+            });
+
+
+            cancelDeleteBtn.addEventListener('click', function() {
+                // Oculta o modo de seleção
+                document.body.classList.remove('select-mode');
+                selectModeBtn.classList.remove('hidden');
+                confirmDeleteBtn.classList.add('hidden');
+                cancelDeleteBtn.classList.add('hidden'); // Oculta o botão de Cancelar
+
+                // Oculta os checkboxes em cada card de enfermaria
+                enfermariaCards.forEach(card => {
+                    const checkboxContainer = card.querySelector('.checkbox-container');
+                    checkboxContainer.classList.add('hidden');
+                });
+
+                // Desmarca todas as checkboxes
+                checkboxes.forEach(checkbox => checkbox.checked = false);
+            });
+
+            confirmDeleteBtn.addEventListener('click', function() {
+                const selectedOcorrencias = Array.from(checkboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => checkbox.dataset.id);
+
+                if (selectedOcorrencias.length > 0) {
+                    // Envia uma requisição AJAX para deletar as ocorrências
+                    fetch('/deletar-ocorrencias', { // Altere para o endpoint correto de ocorrências
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-Token': csrfToken
+                            },
+                            body: JSON.stringify({
+                                ocorrencias: selectedOcorrencias
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Remove os cards das ocorrências excluídas
+                                selectedOcorrencias.forEach(id => {
+                                    document.querySelector(`.ocorrencia-card[data-id="${id}"]`)
+                                        .remove();
+                                    document.body.classList.remove('select-mode');
+                                    selectModeBtn.classList.remove('hidden');
+                                    confirmDeleteBtn.classList.add('hidden');
+
+                                    // Desmarca todas as checkboxes
+                                    checkboxes.forEach(checkbox => checkbox.checked = false);
+                                });
+                            } else {
+                                alert('Erro ao excluir ocorrências');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Erro:', error);
+                        });
+                }
+            });
+        });
+    </script>
+
+
 </body>
-@include('layouts.partials.btnOrdenar')
 
 </html>
