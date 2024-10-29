@@ -7,7 +7,9 @@
     	<input type="hidden" name="_token" value="{{ csrf_token() }}" />
     	<img class="mb-4" src="{!! url('assets/img/ifpr_vertical.svg') !!}" alt="" width="202" height="187">
        
-    	<h1 class="h3 mb-3 fw-normal">Cadastro de usuário</h1>
+    	<h1 class="h3 mb-3 fw-normal">Cadastro de Servidor</h1>
+
+		<h5 class="mb-3">É Aluno?  <a href="{{route('qrRegistrarAluno')}}">clique aqui para se registrar</a></h5> 
  
           	<div class="form-group form-floating mb-3 w-25 mx-auto">
         	<input type="text" class="form-control" name="nome" value="{{ old('nome') }}" placeholder="Nome" required="required" autofocus>

@@ -17,7 +17,7 @@
 
     <!-- Título da página -->
     <div class="m-4 text-center fs-1 fw-bold">
-        Resultados
+        Resultado Pesquisa
     </div>
 
     <!-- Seção de Botões -->
@@ -79,8 +79,8 @@
         @endforeach
         @foreach($enfermarias as $enfermaria)
         <div class="aluno-card rounded text-center border border-dark border-2 excesso" data-id="{{ $enfermaria->id }}">
-            <div class="d-flex justify-content-end">
-                Enfermaria
+            <div class="d-flex justify-content-start">
+                Atendimento Enfermaria
 
                 
                 @if(auth()->check() && auth()->user()->key === '987xyz')

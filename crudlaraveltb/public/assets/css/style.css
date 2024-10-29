@@ -464,3 +464,7 @@ span {
     }
 }
 
+.form-container {
+    max-width: 500px; /* Ajuste conforme necessário */
+    margin: 0 auto; /* Centraliza o formulário */
+}

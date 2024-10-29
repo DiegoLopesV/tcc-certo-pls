@@ -71,7 +71,7 @@
                     <div class="d-flex align-items-center">
 
                     <!-- Ícone de Perfil Verde -->
-                        <a href="{{ route('perfil.index') }}" style="text-decoration: none;"> 
+                    <a href="{{ route('perfil.index') }}" style="text-decoration: none;"> 
                             <i class="perfil fa-regular fa-circle-user fs-1 mx-3 mt-2 text-success"></i>
                         </a>
                     </div>
