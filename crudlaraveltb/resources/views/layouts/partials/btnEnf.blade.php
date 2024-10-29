@@ -23,12 +23,6 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <select id="curso" class="form-select" name="curso" required>
-                            <!-- As opções são preenchidas via JavaScript -->
-                        </select>
-                        <label for="curso">Curso</label>
-                    </div>
-                    <div class="form-floating mb-3">
                         <select id="turma" class="form-select" name="turma" required>
                             <!-- As opções são preenchidas via JavaScript -->
                         </select>
@@ -53,8 +47,8 @@
     </div>
 </div>
 
-<script src="{{ asset('assets/js/dropdown.js') }}"></script>
 
+<script src="{{ asset('assets/js/dropdownTurmas.js') }}"></script>
 <script>
     document.getElementById('infoForm').addEventListener('submit', function(event) {
         event.preventDefault();

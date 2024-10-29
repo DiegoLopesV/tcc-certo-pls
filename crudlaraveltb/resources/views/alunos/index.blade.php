@@ -23,8 +23,8 @@
         
     <div class="position-relative m-3 border border-dark border-3 rounded p-5">
         <div class="fs-1 mb-3">Lista de todos os alunos <br>
-            <button type="button" class="btn btn-primary border border-dark border-2 fs-5 p-0 m-0" id="filtroAluno" data-bs-toggle="modal" data-bs-target="#filterModal">
-                Abrir Filtro
+            <button type="button" class="btn btn-primary border border-dark border-1 fs-5 p-0 m-0" id="filtroAluno" data-bs-toggle="modal" data-bs-target="#filterModal">
+                Filtrar por turma
             </button>   
         </div>
         
@@ -39,6 +39,9 @@
         <a href="{{ route('alunosPassados') }}">
             <button class="rounded AddALunos">Ex Alunos</button>
         </a>     
+
+        <a href="{{route('qrRegistrarAluno')}}"><button class="rounded AddALunos">Teste</button></a>
+
     </div>
 @endif
 

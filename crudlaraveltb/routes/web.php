@@ -221,6 +221,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             return view('layouts.partials.alunosPassados');
         })->name('alunosPassados');
 
+        
+        //qrRegis  
+        Route::get('/qrRegistrarAluno', function () {
+            return view('layouts.partials.qrRegistrarAluno');
+        })->name('qrRegistrarAluno');
+
+
         //Password reset routes
 
         Route::get('password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');

@@ -20,6 +20,12 @@ async function editAluno(id) {
                 }
             });
 
+                        // Formatando a data de nascimento corretamente para o padrão YYYY-MM-DD
+                        if (data.data_nascimento) {
+                            const dataFormatada = new Date(data.data_nascimento).toISOString().split('T')[0];
+                            document.getElementById('data_nascimento').value = dataFormatada;
+                        }
+
             // Atualiza dropdowns
             populateCursos('cursoEditar');
             updateTurmasDropdown('cursoEditar', 'turmaEditar');
@@ -46,7 +52,7 @@ async function editAluno(id) {
             // Preencher outros campos
             fields.forEach(field => {
                 const element = document.getElementById(field + 'Editar');
-                if (element && field !== 'napne') { // Preencher outros campos
+                if (element && field !== 'napne' && field !== 'data_nascimento') { // Preencher outros campos
                     element.value = data[field] || '';
                 }
             });
