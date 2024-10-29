@@ -40,8 +40,6 @@
             <button class="rounded AddALunos">Ex Alunos</button>
         </a>     
 
-        <a href="{{route('qrRegistrarAluno')}}"><button class="rounded AddALunos">Teste</button></a>
-
     </div>
 @endif
 

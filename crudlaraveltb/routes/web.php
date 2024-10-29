@@ -36,6 +36,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
          */
         Route::get('/login', 'LoginController@show')->name('login.show');
         Route::post('/login', 'LoginController@login')->name('login.perform');
+
+        // Registrar Aluno
+        Route::get('/qrRegistrarAluno', function () {
+        return view('layouts.partials.qrRegistrarAluno');
+        })->name('qrRegistrarAluno');
     });
 
     Route::group(['middleware' => ['auth']], function () {
@@ -216,17 +221,22 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             return view('layouts.partials.graficos');
         })->name('graficos');
 
+        //Materias  
+        Route::get('/materias', function () {
+            return view('layouts.partials.materias');
+        })->name('materias');
+
         //AlunoPassados  
         Route::get('/alunosPassados', [AlunosController::class, 'mostrarAlunosPassados'], function () {
             return view('layouts.partials.alunosPassados');
         })->name('alunosPassados');
 
         
-        //qrRegis  
+        /*qrRegis  
         Route::get('/qrRegistrarAluno', function () {
             return view('layouts.partials.qrRegistrarAluno');
         })->name('qrRegistrarAluno');
-
+*/
 
         //Password reset routes
 

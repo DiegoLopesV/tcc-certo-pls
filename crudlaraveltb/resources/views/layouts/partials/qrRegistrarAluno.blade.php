@@ -1,5 +1,5 @@
 @extends('layouts.partials.essentials')
-@include('layouts.partials.navbarlogged')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,12 +9,13 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Registrar Aluno</title>
 </head>
-<body>
+
 
 <body>
     <!-- Formulário de Cadastro -->
-<div class="container mt-4">
-    <h5>Formulário de Cadastro</h5>
+<div class="container mt-4 form-container text-center">
+    <img class="mb-4" src="{!! url('assets/img/ifpr_vertical.svg') !!}" alt="" width="202" height="187">
+    <h5>Formulário de Cadastro de Aluno</h5>
     <form id="infoForm" data-store-url="{{ route('alunos.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-floating mb-3">
@@ -76,13 +77,48 @@
                 <img id="imagePreview" class="img-preview" alt="">
             </div>
         </div>
+        <p> Já possui uma conta? Entrar <a href="{{ route('login.perform') }}"> aqui</a></p>
         <!-- Botão de Enviar -->
         <button type="submit" class="btn btn-primary">Enviar</button>
+        <a href="{{ route('home.index') }}" class="btn btn-secondary mx-auto">Página Inicial</a>
     </form>
+    
 </div>
 <script src="{{ asset('assets/js/dropdown.js') }}"></script>
-<script src="{{ asset('assets/js/formHandler.js') }}"></script>
 <script src="{{ asset('assets/js/imagePreview.js') }}"></script>
+
+<script>
+    // Captura o evento de envio do formulário
+    document.getElementById('infoForm').addEventListener('submit', function(event) {
+        // Impede o comportamento padrão de envio
+        event.preventDefault();
+
+        // Coleta os dados do formulário
+        const formData = new FormData(this);
+        const url = this.getAttribute('data-store-url');
+
+        // Envia os dados via POST
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                // Redireciona para a tela principal (matérias)
+                window.location.href = '/usuarios'; // Substitua '/materias' pelo caminho correto
+            } else {
+                console.error('Erro ao enviar o formulário:', response.statusText);
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao enviar o formulário:', error);
+        });
+    });
+</script>
+
 <script>
     document.getElementById('relatorioForm').addEventListener('submit', function(event) {
         event.preventDefault(); // Impede o comportamento padrão de envio
