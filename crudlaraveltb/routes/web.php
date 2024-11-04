@@ -255,6 +255,8 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         Route::get('/passar-ano', [AlunosController::class, 'promoverAlunos'])->name('passar_ano');
 
+        Route::post('gerarRelatorioNapne',[AlunosPDFController::class,'gerarRelatorioNapne'])->name('gerarRelatorioNapne');
+
         // No arquivo routes/web.php
         // No arquivo routes/web.php
 

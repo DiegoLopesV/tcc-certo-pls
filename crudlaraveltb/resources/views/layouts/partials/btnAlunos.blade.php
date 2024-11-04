@@ -133,13 +133,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="relatorioNapneModalLabel">Relatório Napne</h5>
+                <h5 class="modal-title" id="relatorioNapneModalLabel">Relatório Napnsadsae</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="relatorioForm">
+                <form id="relatorioForm" action="/alunos/gerar-relatorio-napne">
                     <!-- Formulário para Relatório Napne -->
                     <div class="form-group">
                         <label for="bimestre">Bimestre:</label>
@@ -198,7 +198,7 @@
 </div>
 
 <script>
-document.getElementById('relatorioForm').addEventListener('submit', function(event) {
+    document.getElementById('relatorioForm').addEventListener('submit', function(event) {
     event.preventDefault(); // Impede o comportamento padrão de envio
 
     // Coleta os dados do formulário
