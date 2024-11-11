@@ -24,6 +24,18 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
      */
     Route::get('/', 'HomeController@index')->name('home.index');
 
+
+    Route::post('/alunos/store2', [AlunosController::class, 'store2'])->name('alunos.store2');  // Salvar novo aluno
+
+    Route::post('/alunos/check-duplicate', [AlunosController::class, 'checkDuplicate'])->name('alunos.checkDuplicate');
+
+    // Registrar Alunoqr
+    Route::get('/qrRegistrarAluno', function () {
+        return view('layouts.partials.qrRegistrarAluno');
+    })->name('qrRegistrarAluno');
+
+
+
     Route::group(['middleware' => ['guest']], function () {
         /**
          * Register Routes
@@ -36,12 +48,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
          */
         Route::get('/login', 'LoginController@show')->name('login.show');
         Route::post('/login', 'LoginController@login')->name('login.perform');
-
-        // Registrar Aluno
-        Route::get('/qrRegistrarAluno', function () {
-        return view('layouts.partials.qrRegistrarAluno');
-        })->name('qrRegistrarAluno');
     });
+
+
 
     Route::group(['middleware' => ['auth']], function () {
         Route::get(
@@ -154,29 +163,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             return view('layouts.partials.dependencias');
         })->name('dependencias');
 
-        //Rotas Alunos
-        Route::get('/alunos', [AlunosController::class, 'index'])->name('alunos.index');  // Exibir todos os alunos
-        Route::get('/alunos/create', [AlunosController::class, 'create'])->name('alunos.create');  // Formulário de criação
-        Route::post('/alunos', [AlunosController::class, 'store'])->name('alunos.store');  // Salvar novo aluno
-        Route::get('/alunos/{id}', [AlunosController::class, 'show'])->name('alunos.show');  // Exibir um aluno específico
-        Route::get('/alunos/{id}/edit', [AlunosController::class, 'edit'])->name('alunos.edit');  // Formulário de edição
-        Route::put('/alunos/{id}', [AlunosController::class, 'update'])->name('alunos.update');  // Atualizar aluno existente
-        Route::delete('/alunos/{id}', [AlunosController::class, 'destroy'])->name('alunos.destroy');  // Excluir aluno
-        Route::get('/{turma}', [AlunosController::class, 'showAlunosPorTurma'])
-        ->where('turma', 'info[1-4]|pg[1-3]|adm[1-3]|eletronica[1-3]|mecanica[1-3]|contabilidade[1-3]|jogos[1-4]|pf[1-3]')
-        ->name('turma');
-        Route::post('/deletar-alunos', [AlunosController::class, 'deletarAlunos']);
+
+
         // routes/web.php
         Route::get('/alunos/{id}/ocorrencias', [AlunosController::class, 'getOcorrenciasAluno']);
         Route::get('/alunos/{id}/enfermaria', [AlunosController::class, 'getEnfermariasAluno']);
         Route::get('/alunos/pdf/{id}', [AlunosPDFController::class, 'gerarPDF'])->name('alunos.pdf');
-
-
-
-
-
-
-
 
 
 
@@ -192,7 +184,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         Route::post('/deletar-ocorrencias', [OcorrenciasController::class, 'deletarOcorrencias']);
 
-        Route::get('busca',[BuscaController::class,'index'])->name('busca.index');
+        Route::get('busca', [BuscaController::class, 'index'])->name('busca.index');
 
         //Rotas Enfermaria
         Route::get('/enfermaria', [EnfermariaController::class, 'index'])->name('enfermaria.index');
@@ -207,9 +199,20 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::post('/deletar-enfermarias', [EnfermariaController::class, 'deletarEnfermarias']);
 
         //Rota para manter o card dos alunos
-        Route::post('/alunos', 'AlunosController@store')->name('alunos.store');
 
+        //Rotas Alunos
+        Route::get('/alunos', [AlunosController::class, 'index'])->name('alunos.index');  // Exibir todos os alunos
+        Route::get('/alunos/create', [AlunosController::class, 'create'])->name('alunos.create');  // Formulário de criação
 
+        Route::get('/alunos/{id}', [AlunosController::class, 'show'])->name('alunos.show');  // Exibir um aluno específico
+        Route::get('/alunos/{id}/edit', [AlunosController::class, 'edit'])->name('alunos.edit');  // Formulário de edição
+        Route::put('/alunos/{id}', [AlunosController::class, 'update'])->name('alunos.update');  // Atualizar aluno existente
+        Route::delete('/alunos/{id}', [AlunosController::class, 'destroy'])->name('alunos.destroy');  // Excluir aluno
+        Route::get('/{turma}', [AlunosController::class, 'showAlunosPorTurma'])
+            ->where('turma', 'info[1-4]|pg[1-3]|adm[1-3]|eletronica[1-3]|mecanica[1-3]|contabilidade[1-3]|jogos[1-4]|pf[1-3]')
+            ->name('turma');
+        Route::post('/alunos', [AlunosController::class, 'store'])->name('alunos.store');  // Salvar novo aluno
+        Route::post('/deletar-alunos', [AlunosController::class, 'deletarAlunos']);
 
 
 
@@ -231,12 +234,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             return view('layouts.partials.alunosPassados');
         })->name('alunosPassados');
 
-        
-        /*qrRegis  
-        Route::get('/qrRegistrarAluno', function () {
-            return view('layouts.partials.qrRegistrarAluno');
-        })->name('qrRegistrarAluno');
-*/
+
 
         //Password reset routes
 
@@ -261,11 +259,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
 
 
-        Route::post('/notifications/read', function() {
+        Route::post('/notifications/read', function () {
             auth()->user()->unreadNotifications->markAsRead();
             return response()->json(['message' => 'Notificações marcadas como lidas']);
         });
-        
+
 
 
 

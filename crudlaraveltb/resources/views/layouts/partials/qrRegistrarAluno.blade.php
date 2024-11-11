@@ -16,7 +16,7 @@
 <div class="container mt-4 form-container text-center">
     <img class="mb-4" src="{!! url('assets/img/ifpr_vertical.svg') !!}" alt="" width="202" height="187">
     <h5>Formulário de Cadastro de Aluno</h5>
-    <form id="infoForm" data-store-url="{{ route('alunos.store') }}" enctype="multipart/form-data">
+    <form id="cadastroAluno" data-store-url="{{ route('alunos.store2') }}" enctype="multipart/form-data">
         @csrf
         <div class="form-floating mb-3">
             <input type="text" class="form-control" id="nome" placeholder="Nome" name="nome" required>
@@ -72,6 +72,10 @@
             <label for="data_nascimento">Data de Nascimento</label>
         </div>
         <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="senha" placeholder="Senha" name="senha" required>
+            <label for="senha">Senha</label>
+        </div>        
+        <div class="form-floating mb-3">
             <input type="file" id="foto" name="foto" accept="image/*">
             <div id="imagePreviewContainer">
                 <img id="imagePreview" class="img-preview" alt="">
@@ -89,7 +93,7 @@
 
 <script>
     // Captura o evento de envio do formulário
-    document.getElementById('infoForm').addEventListener('submit', function(event) {
+    document.getElementById('cadastroAluno').addEventListener('submit', function(event) {
         // Impede o comportamento padrão de envio
         event.preventDefault();
 
@@ -97,58 +101,36 @@
         const formData = new FormData(this);
         const url = this.getAttribute('data-store-url');
 
-        // Envia os dados via POST
         fetch(url, {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: formData
-        })
-        .then(response => {
-            if (response.ok) {
-                // Redireciona para a tela principal (matérias)
-                window.location.href = '/usuarios'; // Substitua '/materias' pelo caminho correto
-            } else {
-                console.error('Erro ao enviar o formulário:', response.statusText);
-            }
-        })
-        .catch(error => {
-            console.error('Erro ao enviar o formulário:', error);
-        });
-    });
+    method: 'POST',
+    headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+    body: formData
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error(`Erro HTTP: ${response.status}`);
+    }
+    return response.json(); // Apenas converte para JSON se o status for OK
+})
+.then(data => {
+    console.log(data);
+    // Redireciona o usuário para a rota de login se a operação for bem-sucedida
+    window.location.href = '{{ route("login.perform") }}';
+})
+.catch(error => {
+    console.error('Erro ao enviar o formulário:', error);
+});
+
+
+});
+
+
+    
 </script>
 
 <script>
-    document.getElementById('relatorioForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // Impede o comportamento padrão de envio
-    
-        // Coleta os dados do formulário
-        const formData = new FormData(this);
-    
-        // Envia os dados via POST para gerar o PDF
-        fetch('/alunos/gerar-relatorio-napne', {
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: formData
-        })
-        .then(response => response.blob())
-        .then(blob => {
-            // Cria um link temporário para download do PDF
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'relatorio_napne.pdf';
-            document.body.appendChild(a); // Necessário para o Firefox
-            a.click();
-            a.remove();
-        })
-        .catch(error => {
-            console.error('Erro ao gerar PDF:', error);
-        });
-    });
     
     function isValidCPF(cpf) {
         // Remove caracteres não numéricos
@@ -211,6 +193,43 @@
             document.getElementById('cpf').focus(); // Foca no campo de CPF
         }
     });
+
+    document.getElementById('cpf').addEventListener('blur', function() {
+    const cpf = this.value;
+    checkDuplicate('cpf', cpf);
+});
+
+document.getElementById('email').addEventListener('blur', function() {
+    const email = this.value;
+    checkDuplicate('email', email);
+});
+
+function checkDuplicate(field, value) {
+    const url = "{{ route('alunos.checkDuplicate') }}";
+    const formData = new FormData();
+    formData.append(field, value);
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (field === 'cpf' && data.cpfExists) {
+            alert('O CPF já está em uso. Por favor, insira um CPF diferente.');
+            document.getElementById('cpf').focus();
+        }
+        if (field === 'email' && data.emailExists) {
+            alert('O email já está em uso. Por favor, insira um email diferente.');
+            document.getElementById('email').focus();
+        }
+    })
+    .catch(error => console.error('Erro ao verificar duplicação:', error));
+}
+
     
     
     </script>

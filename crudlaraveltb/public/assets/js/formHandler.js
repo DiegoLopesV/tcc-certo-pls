@@ -11,34 +11,29 @@ document.getElementById('infoForm').addEventListener('submit', function(event) {
     const method = alunoId ? 'PUT' : 'POST';
 
     fetch(url, {
-            method: method,
-            headers: {
-                'X-CSRF-TOKEN': csrfToken,
-                'Accept': 'application/json',
-                
-            },
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message === 'Aluno salvo com sucesso!' || data.message === 'Aluno atualizado com sucesso!') {
-                if (alunoId) {
-                    updateAluno(alunoId, data.aluno);
-                } else {
-                    renderAluno(data.aluno);
-                }
-
-                // Fechar modal e resetar formulário
-                const alunoModal = bootstrap.Modal.getInstance(document.getElementById('alunoModal'));
-                alunoModal.hide();
-                document.getElementById('infoForm').reset();
-                document.getElementById('infoForm').removeAttribute('data-id');
-                document.querySelector('.btn-danger')?.remove();
-            } else {
-                console.error('Erro:', data);
-            }
-        })
-        .catch(error => {
-            console.error('Erro:', error);
-        });
+        method: method,
+        headers: {
+            'X-CSRF-TOKEN': csrfToken,
+            'Accept': 'application/json',
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Erro HTTP: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data); // Exibe a resposta para verificação
+        if (data.message) {
+            // Recarrega a página
+            location.reload();
+        } else {
+            console.error('Erro:', data);
+        }
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    });
 });

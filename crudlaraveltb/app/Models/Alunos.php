@@ -23,4 +23,15 @@ class Alunos extends Model
         'foto',
         'status_reprovacao',
     ];
+
+    // No modelo Alunos
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
+
+public static $rules = [
+    'cpf' => 'required|unique:alunos,cpf',
+    'email' => 'required|email|unique:alunos,email', // Regra de validação para CPF
+];
 }
