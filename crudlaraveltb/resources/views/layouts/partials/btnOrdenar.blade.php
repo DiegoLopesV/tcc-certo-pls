@@ -6,13 +6,13 @@
 </div>
 
 <script>
-// Mostrar/ocultar dropdown ao clicar no link
+// Mostrar/ocultar dropdown ao clicar no link de ordenar
 document.getElementById('ordenarLink').addEventListener('click', function(event) {
     event.preventDefault();
     const dropdown = document.getElementById('ordenarDropdown');
     dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
 
-    // Posiciona o dropdown logo abaixo do link
+    // Posicionar o dropdown logo abaixo do link
     const rect = this.getBoundingClientRect();
     dropdown.style.left = `${rect.left}px`;
     dropdown.style.top = `${rect.bottom}px`;
@@ -26,7 +26,28 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// Ordenar a lista de acordo com a opção escolhida
+// Função para ordenar os cards
+function ordenarCards(ordem) {
+    const container = document.getElementById('ocorrenciaContainer');
+    const cards = Array.from(container.getElementsByClassName('ocorrencia-card'));
+
+    if (ordem === 'recentes') {
+        // Ordenar por data, mais recente primeiro
+        cards.sort((a, b) => new Date(b.getAttribute('data-created')) - new Date(a.getAttribute('data-created')));
+    } else if (ordem === 'antigos') {
+        // Ordenar por data, mais antigo primeiro
+        cards.sort((a, b) => new Date(a.getAttribute('data-created')) - new Date(b.getAttribute('data-created')));
+    } else if (ordem === 'alfabetica') {
+        // Ordenar por título em ordem alfabética
+        cards.sort((a, b) => a.getAttribute('data-title').localeCompare(b.getAttribute('data-title')));
+    }
+
+    // Atualizar a lista no DOM com a nova ordem
+    container.innerHTML = '';
+    cards.forEach(card => container.appendChild(card));
+}
+
+// Adiciona o evento de ordenação para cada opção do dropdown
 document.querySelectorAll('.ordenar-opcao').forEach(opcao => {
     opcao.addEventListener('click', function(event) {
         event.preventDefault();
@@ -35,67 +56,5 @@ document.querySelectorAll('.ordenar-opcao').forEach(opcao => {
         document.getElementById('ordenarDropdown').style.display = 'none';
     });
 });
-
-// Função para ordenar os cards
-function ordenarCards(ordem) {
-    const container = document.getElementById('ocorrenciaContainer');
-    const cards = Array.from(container.getElementsByClassName('ocorrencia-card'));
-
-    if (ordem === 'recentes') {
-        cards.sort((a, b) => new Date(b.getAttribute('data-created')) - new Date(a.getAttribute('data-created')));
-    } else if (ordem === 'antigos') {
-        cards.sort((a, b) => new Date(a.getAttribute('data-created')) - new Date(b.getAttribute('data-created')));
-    } else if (ordem === 'alfabetica') {
-        cards.sort((a, b) => a.getAttribute('data-title').localeCompare(b.getAttribute('data-title')));
-    }
-
-    // Atualiza a lista no DOM
-    container.innerHTML = '';
-    cards.forEach(card => container.appendChild(card));
-}
-
-
 </script>
 
-<script>
-    document.getElementById('ordenarLink').addEventListener('click', function(event) {
-        event.preventDefault();
-        const dropdown = document.getElementById('ordenarDropdown');
-        dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
-
-        // Posiciona o dropdown logo abaixo do link
-        const rect = this.getBoundingClientRect();
-        dropdown.style.left = `${rect.left}px`;
-        dropdown.style.top = `${rect.bottom}px`;
-    });
-
-    // Fechar o dropdown ao clicar fora dele
-    document.addEventListener('click', function(event) {
-        const dropdown = document.getElementById('ordenarDropdown');
-        if (!dropdown.contains(event.target) && event.target.id !== 'ordenarLink') {
-            dropdown.style.display = 'none';
-        }
-    });
-
-    // Adiciona funcionalidade de ordenação
-    document.querySelectorAll('.ordenar-opcao').forEach(opcao => {
-        opcao.addEventListener('click', function(event) {
-            event.preventDefault();
-            const ordem = this.getAttribute('data-ordem');
-            ordenarCards(ordem);
-            document.getElementById('ordenarDropdown').style.display = 'none';
-        });
-    });
-
-    // Função para ordenar os cards (implemente como necessário)
-    function ordenarCards(ordem) {
-        const container = document.getElementById('enfermariaContainer'); // Ajuste o ID conforme necessário
-        const cards = Array.from(container.getElementsByClassName('aluno-card')); // Ajuste a classe conforme necessário
-
-        // Adicione sua lógica de ordenação aqui
-
-        // Atualiza a lista no DOM
-        container.innerHTML = '';
-        cards.forEach(card => container.appendChild(card));
-    }
-    </script>
