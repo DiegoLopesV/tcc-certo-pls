@@ -35,13 +35,21 @@ class UsuariosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    
+
+
     public function store(Request $request)
     {
         $storeData = $request->validate([
             'nome' => 'required|max:255',
-            'email' => 'required|max:255',
-            'password' => 'required|max:255'
-        ]);
+            'email' => 'required|email|max:255|unique:alunos,email',
+            'password' => 'required|max:255',
+            'cpf' => 'required|unique:alunos,cpf',
+        ],[
+                'email.unique' => 'O e-mail informado já está em uso. Por favor, utilize outro.',
+                'cpf.unique' => 'O CPF informado já está cadastrado.',
+                // Você pode adicionar mensagens personalizadas para outros campos também
+            ]);
         
         $dados = array_merge($storeData, ["role" => "ROLE_USER"]);
         

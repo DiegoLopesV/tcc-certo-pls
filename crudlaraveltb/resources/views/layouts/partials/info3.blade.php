@@ -23,7 +23,8 @@
             @foreach ($alunos as $aluno)
                 @if ($aluno->turma !== 'passou de ano')
                     <div class="aluno-card rounded text-center border border-dark border-2 excesso"
-                        data-id="{{ $aluno->id }}">
+                        data-id="{{ $aluno->id }}"
+                        style="background-color: {{ $aluno->napne === 'Sim' ? '#cce7ff' : 'transparent' }};">
                         <!-- O card agora é clicável para abrir o modal -->
                         <img src="{{ $aluno->foto }}" alt="Foto do Aluno" class="img-fluid img-preview mt-4 mb-3"
                             style="cursor: pointer;">

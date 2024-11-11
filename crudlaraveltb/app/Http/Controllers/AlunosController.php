@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Alunos;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use App\Models\Ocorrencias;
 use App\Models\Enfermaria;
+use Illuminate\Support\Facades\DB;
 
 class AlunosController extends Controller
 {
@@ -38,31 +42,151 @@ class AlunosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+
+     public function store(Request $request)
+     {
+ 
+         // Validações
+         $request->validate([
+             'nome' => 'required|string|max:255',
+             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validação da foto
+         ]);
+ 
+         // Verifica se há uma imagem e faz o upload para a pasta correta
+         if ($request->hasFile('foto')) {
+             //dd($request->file('foto'));  // Verifique se o arquivo está sendo recebido
+             $image = $request->file('foto');
+             $imageName = time() . '.' . $image->getClientOriginalExtension();
+             $image->move(public_path('assets/img'), $imageName);  // Caminho correto
+             $validatedData['foto'] = 'assets/img/' . $imageName;  // Armazena o caminho relativo
+         }
+ 
+ 
+         // Criar novo aluno
+         $aluno = new Alunos();
+         $aluno->nome = $request->nome;
+         $aluno->curso = $request->curso;
+         $aluno->turma = $request->turma;
+         $aluno->cpf = $request->cpf;
+         $aluno->nome_pais = $request->nome_pais;
+         $aluno->telefone = $request->telefone;
+         $aluno->telefone_pais = $request->telefone_pais;
+         $aluno->email = $request->email;
+         $aluno->email_pais = $request->email_pais;
+         $aluno->data_nascimento = $request->data_nascimento;
+         $aluno->napne = $request->napne;
+         $aluno->foto = $validatedData['foto'] ?? null;
+ 
+ 
+ 
+ 
+ 
+         // Mapeia as turmas para o ano_atual
+         $anoMap = [
+             'Info 1' => 1,
+             'Info 2' => 2,
+             'Info 3' => 3,
+             'Info 4' => 4,
+             'Pg 1' => 1,
+             'Pg 2' => 2,
+             'Pg 3' => 3,
+             'Adm 1' => 1,
+             'Adm 2' => 2,
+             'Adm 3' => 3,
+             'Eletrônica 1' => 1,
+             'Eletrônica 2' => 2,
+             'Eletrônica 3' => 3,
+             'Mecânica 1' => 1,
+             'Mecânica 2' => 2,
+             'Mecânica 3' => 3,
+             'Contabilidade 1' => 1,
+             'Contabilidade 2' => 2,
+             'Contabilidade 3' => 3,
+             'Jogos 1' => 1,
+             'Jogos 2' => 2,
+             'Jogos 3' => 3,
+             'Jogos 4' => 4,
+             'Pf 1' => 1,
+             'Pf 2' => 2,
+             'Pf 3' => 3,
+         ];
+ 
+         // Define o ano_atual com base na turma
+         $anoAtual = $anoMap[$request->turma] ?? 0;
+ 
+         if ($anoAtual === 0) {
+             return response()->json(['error' => 'Turma inválida.'], 400);
+         }
+ 
+         $aluno->ano_atual = $anoAtual;
+         $aluno->status_reprovacao = false;
+ 
+         // Salva o aluno no banco de dados
+         $aluno->save();
+ 
+         // Retorna o aluno completo junto com a mensagem de sucesso
+         return response()->json([
+             'message' => 'Aluno salvo com sucesso!',
+             'aluno' => $aluno // Aqui retornamos o aluno completo
+         ]);
+     }
+    
+
+     public function store2(Request $request)
+{
+    try {
+        Log::info('Iniciando o processo de salvamento de aluno.');
 
         // Validações
-        $request->validate([
-            'nome' => 'required|string|max:255',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048', // Validação da foto
-        ]);
+        $request->validate(Alunos::$rules);
 
-        // Verifica se há uma imagem e faz o upload para a pasta correta
+        // Tratamento de upload de foto, se existir
+        $validatedData = [];
         if ($request->hasFile('foto')) {
-            //dd($request->file('foto'));  // Verifique se o arquivo está sendo recebido
             $image = $request->file('foto');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('assets/img'), $imageName);  // Caminho correto
-            $validatedData['foto'] = 'assets/img/' . $imageName;  // Armazena o caminho relativo
+            $image->move(public_path('assets/img'), $imageName);
+            $validatedData['foto'] = 'assets/img/' . $imageName;
         }
 
+        // Mapeamento das turmas para o ano_atual
+        $anoMap = [
+            'Info 1' => 1, 'Info 2' => 2, 'Info 3' => 3, 'Info 4' => 4,
+            'Pg 1' => 1, 'Pg 2' => 2, 'Pg 3' => 3,
+            'Adm 1' => 1, 'Adm 2' => 2, 'Adm 3' => 3,
+            'Eletrônica 1' => 1, 'Eletrônica 2' => 2, 'Eletrônica 3' => 3,
+            'Mecânica 1' => 1, 'Mecânica 2' => 2, 'Mecânica 3' => 3,
+            'Contabilidade 1' => 1, 'Contabilidade 2' => 2, 'Contabilidade 3' => 3,
+            'Jogos 1' => 1, 'Jogos 2' => 2, 'Jogos 3' => 3, 'Jogos 4' => 4,
+            'Pf 1' => 1, 'Pf 2' => 2, 'Pf 3' => 3,
+        ];
+        
+        $anoAtual = $anoMap[$request->turma] ?? 0;
+        if ($anoAtual === 0) {
+            return response()->json(['error' => 'Turma inválida.'], 400);
+        }
 
-        // Criar novo aluno
+        // Criação do usuário
+        $user = User::create([
+            'nome' => $request->nome,
+            'cpf' => preg_replace('/\D/', '', $request->cpf), // Limpa formatação do CPF
+            'nome_pais' => $request->nome_pais,
+            'telefone' => $request->telefone,
+            'telefone_pais' => $request->telefone_pais,
+            'email' => $request->email,
+            'email_pais' => $request->email_pais,
+            'role' => 'ROLE_USER',
+            'password' => $request->senha,
+            'key' => 'aluno2024',
+        ]);
+        Log::info('Usuário criado com sucesso.', ['user_id' => $user->id]);
+
+        // Criação do aluno
         $aluno = new Alunos();
         $aluno->nome = $request->nome;
         $aluno->curso = $request->curso;
         $aluno->turma = $request->turma;
-        $aluno->cpf = $request->cpf;
+        $aluno->cpf = $user->cpf;
         $aluno->nome_pais = $request->nome_pais;
         $aluno->telefone = $request->telefone;
         $aluno->telefone_pais = $request->telefone_pais;
@@ -71,61 +195,28 @@ class AlunosController extends Controller
         $aluno->data_nascimento = $request->data_nascimento;
         $aluno->napne = $request->napne;
         $aluno->foto = $validatedData['foto'] ?? null;
-
-
-
-
-
-        // Mapeia as turmas para o ano_atual
-        $anoMap = [
-            'Info 1' => 1,
-            'Info 2' => 2,
-            'Info 3' => 3,
-            'Info 4' => 4,
-            'Pg 1' => 1,
-            'Pg 2' => 2,
-            'Pg 3' => 3,
-            'Adm 1' => 1,
-            'Adm 2' => 2,
-            'Adm 3' => 3,
-            'Eletrônica 1' => 1,
-            'Eletrônica 2' => 2,
-            'Eletrônica 3' => 3,
-            'Mecânica 1' => 1,
-            'Mecânica 2' => 2,
-            'Mecânica 3' => 3,
-            'Contabilidade 1' => 1,
-            'Contabilidade 2' => 2,
-            'Contabilidade 3' => 3,
-            'Jogos 1' => 1,
-            'Jogos 2' => 2,
-            'Jogos 3' => 3,
-            'Jogos 4' => 4,
-            'Pf 1' => 1,
-            'Pf 2' => 2,
-            'Pf 3' => 3,
-        ];
-
-        // Define o ano_atual com base na turma
-        $anoAtual = $anoMap[$request->turma] ?? 0;
-
-        if ($anoAtual === 0) {
-            return response()->json(['error' => 'Turma inválida.'], 400);
-        }
-
         $aluno->ano_atual = $anoAtual;
         $aluno->status_reprovacao = false;
-
-        // Salva o aluno no banco de dados
         $aluno->save();
 
-        // Retorna o aluno completo junto com a mensagem de sucesso
-        return response()->json([
-            'message' => 'Aluno salvo com sucesso!',
-            'aluno' => $aluno // Aqui retornamos o aluno completo
-        ]);
-    }
+        Log::info('Aluno criado com sucesso.', ['aluno_id' => $aluno->id]);
 
+        return response()->json([
+            'message' => 'Aluno e usuário salvos com sucesso!',
+            'aluno' => $aluno,
+            'user' => $user
+        ]);
+
+    } catch (\Exception $e) {
+        Log::error('Erro ao salvar aluno: ' . $e->getMessage());
+        return response()->json(['error' => 'Erro ao salvar o aluno.'], 500);
+    }
+}
+
+
+     
+    
+    
 
 
     /**
@@ -438,6 +529,24 @@ public function getEnfermariasAluno($id)
         return response()->json(['message' => 'Erro ao buscar ocorrências', 'error' => $e->getMessage()], 500);
     }
 }
+
+public function checkDuplicate(Request $request) 
+{
+    Log::info('Requisição recebida no checkDuplicate', ['cpf' => $request->cpf, 'email' => $request->email]);
+
+    $cpfExists = DB::table('tb_alunos')->where('cpf', $request->cpf)->exists();
+    $emailExists = DB::table('tb_alunos')->where('email', $request->email)->exists();
+
+    Log::info('Resultados da consulta', ['cpfExists' => $cpfExists, 'emailExists' => $emailExists]);
+
+    return response()->json([
+        'cpfExists' => $cpfExists,
+        'emailExists' => $emailExists,
+    ]);
+}
+
+
+
 
 }
 
