@@ -13,11 +13,10 @@ class PerfilController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-     // select * from tb_produtos order by id desc limit 10
-     $perfil = Perfil::orderBy("id", "desc")->paginate(10);
-     return view("perfil.index", compact("perfil"));
-    }
+{
+    $user = auth()->user(); // ou o método apropriado para recuperar o usuário logado
+    return view('perfil.index', compact('user'));
+}
 
     /**
      * Show the form for creating a new resource.
