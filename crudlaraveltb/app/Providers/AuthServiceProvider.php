@@ -31,15 +31,17 @@ class AuthServiceProvider extends ServiceProvider
             return $user->key == 'aluno2024';
         });
 
-        // Define gate for professor role
-        Gate::define('access-professor', function(User $user) {
+        // Define gate for terceirizado role
+        Gate::define('access-terceirizado', function(User $user) {
             return $user->key === 'abc123';
         });
 
-        // Define gate for terceirizado role
-        Gate::define('access-terceirizado', function(User $user) {
-            return $user->key === 'cba321';
+        // Define gate for professor role
+        Gate::define('access-professor', function(User $user) {
+            // Verifica se o último caractere da chave 'key' é 4 ou 5
+            return in_array(substr($user->key, -1), ['4', '5']);
         });
+        
 
         //
     }

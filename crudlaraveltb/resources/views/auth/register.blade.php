@@ -1,7 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+</head>
+<body>
+	
+
 @extends('layouts.auth-master')
+@include('layouts.partials.essentials')
  
 @section('content')
-<center>
+<div class="text-center">
 	@if ($errors->any())
     <div class="alert alert-danger">
         <ul>
@@ -12,7 +24,7 @@
     </div>
 @endif
 
-	<form method="post" action="{{ route('register.perform') }}">
+	<form method="post" action="{{ route('register.perform') }}" enctype="multipart/form-data">>
  
     	<input type="hidden" name="_token" value="{{ csrf_token() }}" />
     	<img class="mb-4" src="{!! url('assets/img/ifpr_vertical.svg') !!}" alt="" width="202" height="187">
@@ -37,13 +49,7 @@
         	@endif
     	</div>
 
-		<div class="form-group form-floating mb-3 w-25 mx-auto">
-        	<input type="nome_pais" class="form-control" name="nome_pais" value="{{ old('nome_pais') }}" placeholder="Nome dos pais" required="required">
-        	<label for="floatingNomePais">Nome dos pais</label>
-        	@if ($errors->has('nome_pais'))
-            	<span class="text-danger text-left">{{ $errors->first('nome_pais') }}</span>
-        	@endif
-    	</div>
+
 
 		<div class="form-group form-floating mb-3 w-25 mx-auto">
         	<input type="telefone" class="form-control" name="telefone" value="{{ old('telefone') }}" placeholder="Telefone" required="required">
@@ -53,13 +59,6 @@
         	@endif
     	</div>
 
-		<div class="form-group form-floating mb-3 w-25 mx-auto">
-        	<input type="telefone_pais" class="form-control" name="telefone_pais" value="{{ old('telefone_pais') }}" placeholder="Telefone dos Pais" required="required">
-        	<label for="floatingtelefonePais">Telefone dos Pais</label>
-        	@if ($errors->has('telefone_pais'))
-            	<span class="text-danger text-left">{{ $errors->first('telefone_pais') }}</span>
-        	@endif
-    	</div>
 
     	<div class="form-group form-floating mb-3 w-25 mx-auto">
         	<input type="email" class="form-control" name="email" value="{{ old('email') }}" placeholder="email@exemplo.com" required="required">
@@ -68,14 +67,13 @@
             	<span class="text-danger text-left">{{ $errors->first('email') }}</span>
         	@endif
     	</div>
-       
+
 		<div class="form-group form-floating mb-3 w-25 mx-auto">
-        	<input type="email_pais" class="form-control" name="email_pais" value="{{ old('email_pais') }}" placeholder="email@exemplo.com" required="required">
-        	<label for="floatingEmailPais">E-mail dos Pais</label>
-        	@if ($errors->has('email_pais'))
-            	<span class="text-danger text-left">{{ $errors->first('email_pais') }}</span>
-        	@endif
-    	</div>
+            <input type="date" class="form-control" id="data_nascimento" name="data_nascimento"  required>
+            <label for="data_nascimento">Data de Nascimento</label>
+        </div>
+
+       
 
     	<div class="form-group form-floating mb-3 w-25 mx-auto">
         	<input type="password" class="form-control" name="password" value="{{ old('password') }}" placeholder="Password" required="required">
@@ -101,6 +99,14 @@
     		@endif
 		</div>
 
+		
+		<div class="form-floating mb-3">
+			Adicionar Foto <br> <input type="file" id="foto" name="foto" accept="image/*">
+            <div id="imagePreviewContainer">
+                <img id="imagePreview" class="img-preview" alt="">
+            </div>
+        </div>
+
  
     	<div class="form-group form-floating mb-3 mx-auto">
         	<button class="btn btn-lg btn-primary w-25 mx-auto" type="submit">Registrar</button>
@@ -111,5 +117,9 @@
        
     	@include('auth.partials.copy')
 	</form>
-</center>
+</div>
 @endsection
+<script src="{{ asset('assets/js/imagePreview.js') }}"></script>
+
+</body>
+</html>

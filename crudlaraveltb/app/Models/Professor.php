@@ -12,8 +12,11 @@ class Professor extends Model
     protected $fillable = [
         "nome",
         "cpf",
+        "telefone",
+        'foto',
         "data_nascimento",
-        "email"
+        "email",
+        "chave",
     ];
     
     public function lotacao()

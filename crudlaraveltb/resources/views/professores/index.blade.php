@@ -1,64 +1,67 @@
-@extends('layouts.app-master')
- 
-@section('content')
+@extends('layouts.partials.essentials')
+@include('layouts.partials.navbarlogged')
 
-<div class="bg-light p-4 rounded">
-    <h1>Disciplinas</h1>
-    <div class="lead">
-        Gerenciamento de Disciplinas
-        <br/>
-        <a
-        	href="{{ route('disciplinas.create') }}"
-        	class="btn btn-primary btn-sm float-right">
-        	Criar novo
-        </a>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Meta tag do CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Servidores</title>
+
+</head>
+
+<body id="body">
+
+    <div>
+        
+    <div class="position-relative m-3 border border-dark border-3 rounded p-5">
+        <div class="fs-1 mb-3">Lista de todos os Servidores <br></div>
+
+        <!-- Botões posicionados no canto superior direito -->
+@if(auth()->check() && auth()->user()->key === '987xyz')
+    <div class="position-absolute top-0 end-0 mx-3">
+        <button class="rounded AddALunos mb-2" data-bs-toggle="modal" data-bs-target="#ServidorModal">Criar Chave para Servidor</button>
+        <a href="">
+            <button class="rounded AddALunos">Ex Servidores</button>
+        </a>     
     </div>
+@endif
+
+
+        <div class="alunos-container d-flex">
+    <!-- Container para adicionar o novo conteúdo -->
+    <div id="alunoContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
+        @if($professores && count($professores) > 0)
+        @foreach($professores as $professor)
+            <div class="servidor-card rounded text-center border border-dark border-2 excesso"
+                 data-bs-toggle="modal" data-bs-target="#servidorModalInfo">
+                 <img src="{{ asset($professor->foto) }}" alt="Foto do Professor" class="img-fluid img-preview mt-4 mb-3" style="cursor: pointer;">
+                 <p><strong>Nome:</strong> {{ $professor->nome }}</p>
+                 <p><strong>Email:</strong> {{ $professor->email }}</p>
+                 <p><strong>CPF:</strong> {{ $professor->cpf }}</p>
+                 <p><strong>Telefone:</strong> {{ $professor->telefone }}</p>
+                 <p><strong>Data de Nascimento:</strong> {{ $professor->data_nascimento }}</p>
+                 <p><strong>Chave:</strong> {{ $professor->chave }}</p>
+            </div>
+        @endforeach
+    @else
+        <p>Nenhum professor encontrado.</p>
+    @endif
     
-    <div class="mt-2">
-        @include('layouts.partials.messages')
     </div>
+</div>
 
-	<table class="table table-striped">
-        <thead>
-        <tr>
-            <th scope="col" width="1%">ID</th>
-            <th scope="col">Nome</th>
-            <th scope="col" width="15%">Curso</th>
-            <th scope="col" width="15%">Sigla</th>
-            <th scope="col" width="10%">Carga horária</th>
-            <th scope="col" width="1%" colspan="3">Ações</th>    
-        </tr>
-        </thead>
-        <tbody>
-            @foreach($disciplinas as $disciplina)
-                <tr>
-                    <th scope="row">{{ $disciplina->id }}</th>
-                    <td>{{ $disciplina->nome }}</td>
-                    <td>{{ $disciplina->curso }}</td>
-                    <td>{{ $disciplina->sigla }}</td>
-                    <td>{{ $disciplina->carga_horaria }}</td>
-                    <td>
-                    	<a href="{{ route('disciplinas.show', $disciplina->id) }}" class="btn btn-secondary btn-sm">Ver</a>
-                    </td>
-                    <td>
-                    	<a href="{{ route('disciplinas.edit', $disciplina->id) }}" class="btn btn-warning btn-sm">Editar</a>
-                    </td>
-                    <td>
-                        {!! Form::open(['method' => 'DELETE','route' => ['disciplinas.destroy', $disciplina->id],'style'=>'display:inline']) !!}
-                        {!! Form::submit('Remover', ['class' => 'btn btn-danger btn-sm']) !!}
-                        {!! Form::close() !!}
-                    </td>
-
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <div class="d-flex">
-        {!! $disciplinas->links() !!}
     </div>
+    @include('layouts.partials.modalServidores')
+
+    
+
 
 </div>
 
 
-@endsection
+</body>
+</html>

@@ -15,6 +15,7 @@ use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\AlunosPDFController;
 use App\Http\Controllers\BuscaController;
 use App\Models\Enfermaria;
+use App\Http\Controllers\ChaveTemporariaController;
 
 Route::get('send-mail', [MailController::class, 'index']);
 
@@ -28,6 +29,17 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
     Route::post('/alunos/store2', [AlunosController::class, 'store2'])->name('alunos.store2');  // Salvar novo aluno
 
     Route::post('/alunos/check-duplicate', [AlunosController::class, 'checkDuplicate'])->name('alunos.checkDuplicate');
+
+    
+        /**
+         * Logout Routes
+         */
+    Route::get('/logout', 'LogoutController@perform')->name('logout.perform');
+
+
+    Route::post('/chaves-temporarias/store', [ChaveTemporariaController::class, 'store']);
+    Route::get('/chave-temporaria/{nome}', [ChaveTemporariaController::class, 'getChaveByNome']);
+
 
     // Registrar Alunoqr
     Route::get('/qrRegistrarAluno', function () {
@@ -52,7 +64,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
 
 
-    Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['auth', 'check_user_key:987xyz']], function () {
         Route::get(
             "/produtos",
             "ProdutosController@index"
@@ -268,9 +280,5 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
 
 
-        /**
-         * Logout Routes
-         */
-        Route::get('/logout', 'LogoutController@perform')->name('logout.perform');
     });
 });

@@ -314,11 +314,11 @@ span {
     height: 85px;
 }
 #btn02{
-    width: 30%;
+    width: 50%;
     transition: 0.3s;
 }
 #btn02:hover{
-    width: 31%;
+    width: 51%;
     transition: 0.3s;
 }
 /*Em celularem diminui a margem e tamanho da fonte dos botões Info.blade.php */
@@ -365,6 +365,16 @@ span {
 .aluno-card:hover{
     width: 305px;
     height: 355px;
+    transition: 0.3s;
+}
+.servidor-card{
+    width: 300px;
+    height: 450px;
+    transition: 0.3s;
+}
+.servidor-card:hover{
+    width: 305px;
+    height: 455px;
     transition: 0.3s;
 }
 /*Alunos.index */
