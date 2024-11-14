@@ -17,8 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string("nome");
             $table->string("cpf");
+            $table->string("telefone");
             $table->date("data_nascimento");
             $table->string("email");
+            $table->string('foto')->nullable();
+            $table->string('chave')->nullable();
             $table->timestamps();
         });
         

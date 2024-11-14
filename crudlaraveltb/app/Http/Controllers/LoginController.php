@@ -30,7 +30,7 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
 {
     // Verifica o código de acesso do usuário
-    if ($user->key === '987xyz' || $user->key === 'cba321' || $user->key === 'abc123') {
+    if (($user->key === '987xyz' || $user->key === 'abc123')|| in_array(substr($user->key, -1), ['4', '5'])) {
         // Redireciona para a página inicial para os códigos de acesso especificados
         return redirect()->route('home.index');
     } elseif ($user->key === 'aluno2024') {

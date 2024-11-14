@@ -16,9 +16,12 @@ class ProfessoresController extends Controller
      */
     public function index()
     {
-        $professors = Professor::orderBy("id", "DESC")->paginate(10);
-        return view('professores.index', compact('professors'));
+        // Busca todos os professores e passa para a view
+        $professores = Professor::all();
+    
+        return view('professores.index', ['professores' => $professores]);
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -41,22 +44,13 @@ class ProfessoresController extends Controller
         $dadosParaSalvar = $request->validate([
             'nome' => 'required|max:255',
             'cpf' => 'required|max:255',
+            'telefone' => 'required|max:255',
             'data_nascimento' => 'required|date',
-            'email' => 'required|max:255'
+            'email' => 'required|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'chave' => 'nullable',
         ]);
 
-        $dados = array_merge($dadosParaSalvar, [
-            "role" => "ROLE_PROFESSOR"
-        ]);
-
-        $lotacao = new Lotacao();
-        $lotacao->nome_campus = $request["nome_campus"];
-        $lotacao->departamento = $request["departamento"];
-        $lotacao->area_atuacao = $request["area_atuacao"];
-
-        $professor = Professor::create($dados);
-
-        $professor->lotacao()->save($lotacao);
 
         return redirect()->route('professores.index')->withSuccess(__('Professor criado com sucesso.'));
     }

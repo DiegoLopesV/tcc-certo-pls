@@ -28,7 +28,7 @@ return new class extends Migration
             $table->boolean("status_reprovacao");
             $table->dateTime("data_nascimento");
             $table->string("napne");
-            $table->string('foto')->nullable(); // Adiciona a coluna foto
+            $table->string('foto')->nullable(); 
             $table->timestamps();
         });
     }
