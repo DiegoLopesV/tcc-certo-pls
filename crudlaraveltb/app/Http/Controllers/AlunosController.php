@@ -530,20 +530,7 @@ public function getEnfermariasAluno($id)
     }
 }
 
-public function checkDuplicate(Request $request) 
-{
-    Log::info('Requisição recebida no checkDuplicate', ['cpf' => $request->cpf, 'email' => $request->email]);
 
-    $cpfExists = DB::table('tb_alunos')->where('cpf', $request->cpf)->exists();
-    $emailExists = DB::table('tb_alunos')->where('email', $request->email)->exists();
-
-    Log::info('Resultados da consulta', ['cpfExists' => $cpfExists, 'emailExists' => $emailExists]);
-
-    return response()->json([
-        'cpfExists' => $cpfExists,
-        'emailExists' => $emailExists,
-    ]);
-}
 
 
 

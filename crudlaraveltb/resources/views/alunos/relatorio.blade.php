@@ -1,83 +1,106 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ficha de Acompanhamento Discente</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            font-size: 12px;
-            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
             text-align: center;
-            font-size: 16px;
-            color: #003366;
+            color: #000;
+            font-size: 24px;
+            margin-bottom: 20px;
         }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-        td, th {
+        th, td {
+            padding: 10px;
             border: 1px solid #000;
-            padding: 8px;
             text-align: left;
+            vertical-align: top;
         }
         th {
-            background-color: #f2f2f2;
             font-weight: bold;
+            width: 25%; /* Define a largura dos cabeçalhos para uma aparência uniforme */
+        }
+        .resposta {
+            font-weight: normal; /* Remove o negrito das respostas */
         }
     </style>
 </head>
 <body>
-    <h1>Relatório Napne</h1>
 
-    <h3>Informações do Relatório</h3>
+<div class="container">
+    <h1>Ficha de Acompanhamento Discente</h1>
     <table>
+        <!-- Linha 1: Bimestre e Aluno -->
         <tr>
-            <th>Bimestre</th>
-            <td>{{ $dados['bimestre'] }}</td>
+            <th>Bimestre:</th>
+            <td class="resposta">{{ $dados['bimestre'] }}</td>
+            <th>Aluno(a):</th>
+            <td class="resposta">{{ $dados['aluno'] }}</td>
         </tr>
+        <!-- Linha 2: Curso e Turma, Disciplina -->
         <tr>
-            <th>Aluno(a)</th>
-            <td>{{ $dados['aluno'] }}</td>
+            <th>Curso e Turma:</th>
+            <td class="resposta">{{ $dados['cursoTurma'] }}</td>
+            <th>Disciplina:</th>
+            <td class="resposta">{{ $dados['disciplina'] }}</td>
         </tr>
+        <!-- Linha 3: Professor -->
         <tr>
-            <th>Curso e Turma</th>
-            <td>{{ $dados['cursoTurma'] }}</td>
+            <th>Professor(a):</th>
+            <td class="resposta" colspan="3">{{ $dados['professor'] }}</td>
         </tr>
+        <!-- Linha 4: Objetivos do bimestre -->
         <tr>
-            <th>Disciplina</th>
-            <td>{{ $dados['disciplina'] }}</td>
+            <th>Objetivos do bimestre alcançados pelo estudante:</th>
+            <td class="resposta" colspan="3">{{ $dados['objetivos'] }}</td>
         </tr>
+        <!-- Linha 5: Nível de participação -->
         <tr>
-            <th>Professor(a)</th>
-            <td>{{ $dados['professor'] }}</td>
+            <th>Nível de participação do estudante nas atividades:</th>
+            <td class="resposta" colspan="3">{{ $dados['participacao'] }}</td>
         </tr>
+        <!-- Linha 6: Critérios e instrumentos de avaliação -->
         <tr>
-            <th>Objetivos do Bimestre</th>
-            <td>{{ $dados['objetivos'] }}</td>
+            <th>Critérios e instrumentos de avaliação utilizados:</th>
+            <td class="resposta" colspan="3">{{ $dados['avaliacao'] }}</td>
         </tr>
+        <!-- Linha 7: Métodos que facilitaram a aprendizagem -->
         <tr>
-            <th>Nível de Participação</th>
-            <td>{{ $dados['participacao'] }}</td>
+            <th>Métodos que facilitaram a aprendizagem:</th>
+            <td class="resposta" colspan="3">{{ $dados['metodos'] }}</td>
         </tr>
+        <!-- Linha 8: Dificuldades -->
         <tr>
-            <th>Avaliação</th>
-            <td>{{ $dados['avaliacao'] }}</td>
+            <th>Dificuldades:</th>
+            <td class="resposta" colspan="3">{{ $dados['dificuldades'] }}</td>
         </tr>
+        <!-- Linha 9: Informações importantes -->
         <tr>
-            <th>Métodos que Facilitaram a Aprendizagem</th>
-            <td>{{ $dados['metodos'] }}</td>
+            <th>Informações importantes:</th>
+            <td class="resposta" colspan="3">{{ $dados['informacoes'] }}</td>
         </tr>
-        <tr>
-            <th>Dificuldades</th>
-            <td>{{ $dados['dificuldades'] }}</td>
-        </tr>
-        <tr>
-            <th>Informações Importantes</th>
-            <td>{{ $dados['informacoes'] }}</td>
-        </tr>
-        <tr>
-            <th>Data</th>
-            <td>{{ $dados['data'] }}</td>
-        </tr>
+    </table>
+</div>
+
+</body>
+</html>

@@ -10,15 +10,35 @@ class AlunosPDFController extends Controller
 {
     public function gerarRelatorioNapne(Request $request)
     {
-        // Recebe os dados do formulário
+        // Valida os dados do formulário
+        $request->validate([
+            'bimestre' => 'required|string',
+            'aluno' => 'required|string',
+            'cursoTurma' => 'required|string',
+            'disciplina' => 'required|string',
+            'professor' => 'required|string',
+            'objetivos' => 'nullable|string',
+            'participacao' => 'nullable|string',
+            'avaliacao' => 'nullable|string',
+            'metodos' => 'nullable|string',
+            'dificuldades' => 'nullable|string',
+            'informacoes' => 'nullable|string',
+            'data' => 'required|date',
+        ]);
+
+        // Captura os dados validados
         $dados = $request->all();
 
-        // Gera o PDF usando a view 'alunos.relatorio-napne'
-        $pdf = Pdf::loadView('alunos.relatorio', ['dados' => $dados]);
+        // Gera o PDF com os dados
+        $pdf = PDF::loadView('alunos.relatorio', ['dados' => $dados]);
 
-        // Retorna o PDF para download
+        // Retorna o PDF como um blob para download
         return $pdf->download('relatorio_napne_' . $dados['aluno'] . '.pdf');
     }
+
+
+
+
 
     public function index($id)
 {

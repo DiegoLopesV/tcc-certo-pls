@@ -194,41 +194,7 @@
         }
     });
 
-    document.getElementById('cpf').addEventListener('blur', function() {
-    const cpf = this.value;
-    checkDuplicate('cpf', cpf);
-});
 
-document.getElementById('email').addEventListener('blur', function() {
-    const email = this.value;
-    checkDuplicate('email', email);
-});
-
-function checkDuplicate(field, value) {
-    const url = "{{ route('alunos.checkDuplicate') }}";
-    const formData = new FormData();
-    formData.append(field, value);
-
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (field === 'cpf' && data.cpfExists) {
-            alert('O CPF já está em uso. Por favor, insira um CPF diferente.');
-            document.getElementById('cpf').focus();
-        }
-        if (field === 'email' && data.emailExists) {
-            alert('O email já está em uso. Por favor, insira um email diferente.');
-            document.getElementById('email').focus();
-        }
-    })
-    .catch(error => console.error('Erro ao verificar duplicação:', error));
-}
 
     
     

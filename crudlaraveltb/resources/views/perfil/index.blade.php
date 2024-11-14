@@ -19,7 +19,7 @@
         <div class="d-flex">
             <div class="userBox border border-dark border-1 text-center m-3 rounded">
                 <i class="fa-solid fa-user user"></i>
-                <p>Diego Lopes Vieira</p>
+                <p>{{ $user->nome ?? 'Nome não informado' }}</p>
                 <p>Informática 4</p>
                 <p>18 anos</p>
             </div>
@@ -30,9 +30,20 @@
                 <button class="border border-dark border-2 rounded m-1 botaoPerf" onclick="showContent('enf')">Relatórios Enfermaria</button>
 
                 <div id="personalInfo" class="content mt-3">
-                    <div class="border border-dark border-1 m-1 p-1 boxinha"><p>Informações Pessoais</p></div>
-                    
-                </div>
+    <div class="border border-dark border-1 m-1 p-1 boxinha">
+        <h5>Informações Pessoais</h5>
+        
+        <!-- Exibindo as informações do usuário -->
+        <p>Nome: {{ $user->nome }}</p>
+        <p>CPF: {{ $user->cpf }}</p>
+        <p>Nome dos Pais: {{ $user->nome_pais }}</p>
+        <p>Telefone: {{ $user->telefone }}</p>
+        <p>Telefone dos Pais: {{ $user->telefone_pais }}</p>
+        <p>E-mail: {{ $user->email }}</p>
+        <p>E-mail dos Pais: {{ $user->email_pais }}</p>
+    </div>
+</div>
+
                 <div id="ocorrencias1" class="content mt-3">
                    <div class="border border-dark border-1 m-1 p-1 boxinha"><p>Ocorrências</p></div> 
                 </div>
