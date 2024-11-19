@@ -26,8 +26,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
      */
     Route::get('/', 'HomeController@index')->name('home.index');
 
-
-
     Route::post('/alunos/store2', [AlunosController::class, 'store2'])->name('alunos.store2');  // Salvar novo aluno
 
     Route::post('/alunos/check-duplicate', [AlunosController::class, 'checkDuplicate'])->name('alunos.checkDuplicate');
