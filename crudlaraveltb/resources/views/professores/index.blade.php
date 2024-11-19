@@ -48,8 +48,44 @@
             </div>
         @endforeach
     @else
-        <p>Nenhum professor encontrado.</p>
+        <p>Nenhum professor encontrado.</p><br>
     @endif
+
+    @if($terceirizados && count($terceirizados) > 0)
+    @foreach($terceirizados as $terceirizado)
+        <div class="servidor-card rounded text-center border border-dark border-2 excesso"
+             data-bs-toggle="modal" data-bs-target="#servidorModalInfo">
+             <img src="{{ asset($terceirizado->foto) }}" alt="Foto do Professor" class="img-fluid img-preview mt-4 mb-3" style="cursor: pointer;">
+             <p><strong>Nome:</strong> {{ $terceirizado->nome }}</p>
+             <p><strong>Email:</strong> {{ $terceirizado->email }}</p>
+             <p><strong>CPF:</strong> {{ $terceirizado->cpf }}</p>
+             <p><strong>Telefone:</strong> {{ $terceirizado->telefone }}</p>
+             <p><strong>Data de Nascimento:</strong> {{ $terceirizado->data_nascimento }}</p>
+             <p><strong>Chave:</strong> {{ $terceirizado->chave }}</p>
+             
+        </div>
+    @endforeach
+@else
+    <p>Nenhum Terceirizado encontrado.</p><br>
+@endif
+
+@if($enfermeiros && count($enfermeiros) > 0)
+@foreach($enfermeiros as $enfermeiro)
+    <div class="servidor-card rounded text-center border border-dark border-2 excesso"
+         data-bs-toggle="modal" data-bs-target="#servidorModalInfo">
+         <img src="{{ asset($enfermeiro->foto) }}" alt="Foto do Professor" class="img-fluid img-preview mt-4 mb-3" style="cursor: pointer;">
+         <p><strong>Nome:</strong> {{ $enfermeiro->nome }}</p>
+         <p><strong>Email:</strong> {{ $enfermeiro->email }}</p>
+         <p><strong>CPF:</strong> {{ $enfermeiro->cpf }}</p>
+         <p><strong>Telefone:</strong> {{ $enfermeiro->telefone }}</p>
+         <p><strong>Data de Nascimento:</strong> {{ $enfermeiro->data_nascimento }}</p>
+         <p><strong>Chave:</strong> {{ $enfermeiro->chave }}</p>
+         
+    </div>
+@endforeach
+@else
+<p>Nenhum Enfermeiro encontrado.</p><br>
+@endif
     
     </div>
 </div>

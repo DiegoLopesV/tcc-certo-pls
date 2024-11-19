@@ -8,6 +8,7 @@
     <title>SGA</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @include('layouts.partials.essentials')
+    @include('layouts.partials.btnOco')
 </head>
 
 <body id="body">
@@ -150,6 +151,8 @@
                 }
             });
         });
+
+
     </script>
 
 

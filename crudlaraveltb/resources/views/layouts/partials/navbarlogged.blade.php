@@ -20,7 +20,7 @@
                 @if (auth()->check())
                     <div class="offcanvas-body">
                         <ul class="navbar-nav align-items-center justify-content-center flex-grow-1 pe-3 mx-3">
-                            @if (auth()->user()->key === '987xyz')
+                            @if (auth()->user()->key === '987xyz' || in_array(substr(auth()->user()->key, -1), ['0', '1']))
                                 <!-- Links visíveis apenas para usuários com a chave '987xyz' -->
                                 <li class="nav-item">
                                     <a class="nav-link mx-4 fs-5 text-black" aria-current="page"
@@ -63,7 +63,11 @@
                                     <a class="nav-link mx-4 fs-5 text-black"
                                         href="{{ route('alunos.index') }}">Alunos</a>
                                 </li>
-                            @elseif(auth()->user()->key === 'abc123')
+                                <li class="nav-item">
+                                    <a class="nav-link mx-4 fs-5 text-black"
+                                        href="{{ route('ocorrencias.index') }}">Ocorrências</a>
+                                </li>
+                            @elseif(in_array(substr(auth()->user()->key, -1), ['2', '3']))
                                 <!-- Links visíveis apenas para usuários com a chave 'abc123' -->
                                 <li class="nav-item">
                                     <a class="nav-link mx-4 fs-5 text-black" aria-current="page"
@@ -71,11 +75,26 @@
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link mx-4 fs-5 text-black"
+                                        href="{{ route('alunos.index') }}">Alunos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mx-4 fs-5 text-black"
                                         href="{{ route('ocorrencias.index') }}">Ocorrências</a>
+                                </li>
+
+                                @elseif(in_array(substr(auth()->user()->key, -1), ['6', '7']))
+                                <!-- Links visíveis apenas para usuários com a chave 'abc123' -->
+                                <li class="nav-item">
+                                    <a class="nav-link mx-4 fs-5 text-black" aria-current="page"
+                                        href="{{ route('home.index') }}">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link mx-4 fs-5 text-black"
                                         href="{{ route('alunos.index') }}">Alunos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link mx-4 fs-5 text-black"
+                                        href="{{ route('enfermaria.index') }}">Enfermaria</a>
                                 </li>
                             @elseif(auth()->user()->key === 'aluno2024')
                                 <!-- Apenas o logout para usuários com a chave 'aluno2024' -->

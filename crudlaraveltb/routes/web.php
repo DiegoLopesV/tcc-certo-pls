@@ -16,6 +16,7 @@ use App\Http\Controllers\AlunosPDFController;
 use App\Http\Controllers\BuscaController;
 use App\Models\Enfermaria;
 use App\Http\Controllers\ChaveTemporariaController;
+use App\Http\Controllers\TerceirizadosController;
 
 Route::get('send-mail', [MailController::class, 'index']);
 
@@ -102,6 +103,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/professores/{professor}/edit', 'ProfessoresController@edit')->name('professores.edit');
         Route::patch('/professores/{professor}/update', 'ProfessoresController@update')->name('professores.update');
         Route::delete('/professores/{professor}/delete', 'ProfessoresController@destroy')->name('professores.destroy');
+
+        //Route::get('/professores', [TerceirizadosController::class, 'index'])->name('professores.index');
+
 
         Route::get('/disciplinas', 'DisciplinasController@index')->name('disciplinas.index');
         Route::get('/disciplinas/create', 'DisciplinasController@create')->name('disciplinas.create');

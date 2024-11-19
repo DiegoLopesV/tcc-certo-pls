@@ -20,8 +20,10 @@
             <div class="userBox border border-dark border-1 text-center m-3 rounded">
                 <i class="fa-solid fa-user user"></i>
                 <p>{{ $user->nome ?? 'Nome não informado' }}</p>
-                <p>Informática 4</p>
-                <p>18 anos</p>
+
+
+
+
             </div>
 
             <div class="infoPes border border-dark border-1 m-3 rounded">
@@ -36,11 +38,16 @@
         <!-- Exibindo as informações do usuário -->
         <p>Nome: {{ $user->nome }}</p>
         <p>CPF: {{ $user->cpf }}</p>
-        <p>Nome dos Pais: {{ $user->nome_pais }}</p>
         <p>Telefone: {{ $user->telefone }}</p>
-        <p>Telefone dos Pais: {{ $user->telefone_pais }}</p>
         <p>E-mail: {{ $user->email }}</p>
-        <p>E-mail dos Pais: {{ $user->email_pais }}</p>
+
+
+        @if(auth()->user()->key === 'aluno2024')
+        <p>Nome dos pais: {{ $user->nome_pais ?? 'Nome dos pais não informado' }}</p>
+        <p>Telefone dos Pais: {{ $user->telefone_pais ?? 'Telefone dos pais não informado' }}</p>
+        <p>Telefone dos pais: {{ $user->telefone_pais ?? 'Telefone dos pais não informado' }}</p>
+        <p>E-mail dos Pais:{{ $user->email_pais ?? 'Email dos pais não informado' }}</p>
+        @endif
     </div>
 </div>
 

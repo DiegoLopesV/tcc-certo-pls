@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Professor extends Model
+class Terceirizados extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         "nome",
         "cpf",
@@ -19,16 +19,4 @@ class Professor extends Model
         "email",
         "chave",
     ];
-    
-    public function lotacao()
-    {
-        return $this->hasOne(Lotacao::class);
-    }
-    
-    public function disciplinas()
-    {
-        return $this->hasMany(Disciplina::class);
-    }
-    
-    
 }

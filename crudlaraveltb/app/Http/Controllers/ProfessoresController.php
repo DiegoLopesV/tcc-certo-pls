@@ -3,6 +3,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Professor;
 use Illuminate\Http\Request;
+use App\Models\Terceirizados;
+use App\Models\Enfermeiros;
 use App\Models\Lotacao;
 use App\Models\Disciplina;
 
@@ -18,8 +20,13 @@ class ProfessoresController extends Controller
     {
         // Busca todos os professores e passa para a view
         $professores = Professor::all();
-    
-        return view('professores.index', ['professores' => $professores]);
+        $terceirizados = Terceirizados::all();
+        $enfermeiros = Enfermeiros::all();
+        return view('professores.index', [
+            'terceirizados' => $terceirizados,
+            'professores' => $professores,
+            'enfermeiros' => $enfermeiros,
+        ]);
     }
     
 
@@ -45,6 +52,7 @@ class ProfessoresController extends Controller
             'nome' => 'required|max:255',
             'cpf' => 'required|max:255',
             'telefone' => 'required|max:255',
+            'numeroDeContrato' => 'required',
             'data_nascimento' => 'required|date',
             'email' => 'required|max:255',
             'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
