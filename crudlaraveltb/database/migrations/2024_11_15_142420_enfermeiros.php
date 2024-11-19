@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('professors', function (Blueprint $table) {
+        Schema::create('enfermeiros', function (Blueprint $table) {
             $table->id();
             $table->string("nome");
             $table->string("cpf");
@@ -25,9 +25,6 @@ return new class extends Migration
             $table->string('chave')->nullable();
             $table->timestamps();
         });
-        
-            
-        
     }
 
     /**
@@ -37,6 +34,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('professors');
+        //
     }
 };
