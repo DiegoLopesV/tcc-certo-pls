@@ -44,7 +44,7 @@
     <!-- Seção para ordenação -->
     <div class="border border-dark border-2 border-top-0 position-relative">
         <a class="ms-1 fs-2 text-dark text-decoration-none" href="#" id="ordenarLink">Ordenar ▼</a>
-        @include('layouts.partials.btnOrdenar') <!-- Incluindo o dropdown de ordenação -->
+        @include('layouts.partials.btnOrdenacao') <!-- Incluindo o dropdown de ordenação -->
     </div>
 
     @if (auth()->check() && auth()->user()->key === '987xyz')
@@ -60,28 +60,31 @@
 
     <!-- Container com os card -->
     <div id="enfermariaContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
-        @foreach ($enfermaria as $enfermaria)
-            <div class="enfermaria-card rounded text-center border border-dark border-2 excesso"
-                data-id="{{ $enfermaria->id }}" data-turma="{{ $enfermaria->turma }}">
-                <div class="d-flex justify-content-end">
-                    @if (auth()->check() && auth()->user()->key === '987xyz')
-                        <button class="btn btn-sm btn-warning m-2"
-                            onclick="editEnfermaria({{ $enfermaria->id }})">Editar</button>
+    @foreach ($enfermaria as $enfermaria)
+        <div class="enfermaria-card rounded text-center border border-dark border-2 excesso"
+             data-id="{{ $enfermaria->id }}"
+             data-turma="{{ $enfermaria->turma }}"
+             data-title="{{ $enfermaria->titulo }}"
+             data-created="{{ $enfermaria->data }}">
+            <div class="d-flex justify-content-end">
+                @if (auth()->check() && auth()->user()->key === '987xyz')
+                    <button class="btn btn-sm btn-warning m-2" onclick="editEnfermaria({{ $enfermaria->id }})">Editar</button>
 
-                        <div class="checkbox-container">
-                            <input type="checkbox" class="enfermaria-checkbox" data-id="{{ $enfermaria->id }}">
-                        </div>
-                    @endif
-                </div>
-                <p><strong>Título:</strong> {{ $enfermaria->titulo }}</p>
-                <p><strong>Descrição:</strong> {{ $enfermaria->descricao }}</p>
-                <p><strong>Aluno Atendido:</strong> {{ $enfermaria->pessoas }}</p>
-                <p><strong>Turma:</strong> {{ $enfermaria->turma }}</p>
-                <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($enfermaria->data)->format('d-m-Y') }}</p>
-                <p><strong>Status:</strong> {{ $enfermaria->status }}</p>
+                    <div class="checkbox-container">
+                        <input type="checkbox" class="enfermaria-checkbox" data-id="{{ $enfermaria->id }}">
+                    </div>
+                @endif
             </div>
-        @endforeach
-    </div>
+            <p><strong>Título:</strong> {{ $enfermaria->titulo }}</p>
+            <p><strong>Descrição:</strong> {{ $enfermaria->descricao }}</p>
+            <p><strong>Aluno Atendido:</strong> {{ $enfermaria->pessoas }}</p>
+            <p><strong>Turma:</strong> {{ $enfermaria->turma }}</p>
+            <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($enfermaria->data)->format('d-m-Y') }}</p>
+            <p><strong>Status:</strong> {{ $enfermaria->status }}</p>
+        </div>
+    @endforeach
+</div>
+
 
     @include('layouts.partials.btnEnf')
 
@@ -186,6 +189,5 @@
 
 </body>
 @include('layouts.partials.btnFiltro')
-@include('layouts.partials.btnOrdenar')
 
 </html>

@@ -147,11 +147,11 @@
         </div>
         <div class="form-group">
             <label for="aluno">Aluno(a):</label>
-            <input type="text" class="form-control" id="aluno" name="aluno" required>
+            <input value="{{ $aluno->nome }}" type="text" class="form-control" id="aluno" name="aluno" required>
         </div>
         <div class="form-group">
             <label for="cursoTurma">Curso e Turma:</label>
-            <input type="text" class="form-control" id="cursoTurma" name="cursoTurma" required>
+            <input value="{{ $aluno->turma }}" type="text" class="form-control" id="cursoTurma" name="cursoTurma" required>
         </div>
         <div class="form-group">
             <label for="disciplina">Disciplina:</label>
