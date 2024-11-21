@@ -7,7 +7,7 @@
 
 
 <script>
-    document.getElementById('ordenarLink').addEventListener('click', function (event) {
+        document.getElementById('ordenarLink').addEventListener('click', function (event) {
     event.preventDefault(); // Impede o comportamento padrão do link
     var dropdown = document.getElementById('ordenarDropdown');
     dropdown.style.display = dropdown.style.display === 'none' ? 'block' : 'none';
@@ -19,7 +19,7 @@ ordenarOpcoes.forEach(opcao => {
     opcao.addEventListener('click', function (event) {
         event.preventDefault();
         const ordem = this.getAttribute('data-ordem');
-        const cards = Array.from(document.querySelectorAll('.ocorrencia-card'));
+        const cards = Array.from(document.querySelectorAll('.enfermaria-card'));
 
         // Ordena os cards de acordo com a opção
         if (ordem === 'recentes') {
@@ -35,13 +35,12 @@ ordenarOpcoes.forEach(opcao => {
         }
 
         // Reorganiza os cards no container correto
-        const container = document.getElementById('ocorrenciaContainer');
+        const container = document.getElementById('enfermariaContainer');
         cards.forEach(card => container.appendChild(card)); // Atualiza a ordem
 
         // Fecha o dropdown
         document.getElementById('ordenarDropdown').style.display = 'none';
     });
 });
-
 
 </script>

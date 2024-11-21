@@ -125,6 +125,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         //Rotas Perfil
         Route::get("/perfil", "PerfilController@index")->name("perfil.index");
+        Route::put('/perfil/{id}', [PerfilController::class, 'update'])->name('perfil.update');
+        Route::get('/perfil/{id}', [PerfilController::class, 'show'])->name('perfil.show');
+
         //->middleware('can:access');
 
 
