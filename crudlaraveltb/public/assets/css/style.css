@@ -384,12 +384,76 @@ span {
     transition: 0.3s;
     width: 150px;
 }
+.AddProf{
+    height: 50px;
+    margin-top: 70px;
+    transition: 0.3s;
+    width: 150px;
+}
 .AddALunos:hover{
     height: 55px;
     margin-top: 70px;
     transition: 0.3s;
-    width: 155px;
+    width: 152px;
 }
+.AddProf:hover{
+    height: 55px;
+    margin-top: 70px;
+    transition: 0.3s;
+    width: 152px;
+}
+    /* Estilo para telas pequenas */
+    @media (max-width: 640px) {
+        .button-container {
+            display: flex;
+            flex-direction: column; /* Alinha os botões em uma coluna */
+            align-items: flex-start; /* Alinha os botões à esquerda */
+            gap: 10px; /* Espaçamento entre os botões */
+            position: relative; /* Remove o posicionamento fixo */
+            margin-top: 10px; /* Adiciona espaçamento superior */
+            margin-left: 10px; /* Ajuste para ficar na margem esquerda */
+        }
+
+        .AddALunos {
+            margin-top: 100px;
+            width: 70;
+            transition: 0.3s; /* Faz os botões ocuparem a largura toda do contêiner */
+        }
+        .AddALunos:hover{
+            height: 55px;
+            margin-top: 70px;
+            transition: 0.3s;
+            width: 73px;
+        }
+    }
+
+        /* Estilo para telas pequenas */
+        @media (max-width: 640px) {
+            .button-container {
+                display: flex;
+                flex-direction: column; /* Alinha os botões em uma coluna */
+                align-items: flex-start; /* Alinha os botões à esquerda */ /* Espaçamento entre os botões */
+                position: relative; /* Remove o posicionamento fixo */
+                margin-top: 10px; /* Adiciona espaçamento superior */
+                margin-left: 100px; /* Ajuste para ficar na margem esquerda */
+            }
+    
+            .AddProf {
+                margin-top: 100px;
+
+                height: 100px;
+                width: 70;
+                transition: 0.3s; /* Faz os botões ocuparem a largura toda do contêiner */
+            }
+            .AddProf:hover{
+                height: 105px;
+                margin-top: 70px;
+                transition: 0.3s;
+                width: 73px;
+            }
+        }
+
+
 .aluno-card {
     position: relative; /* Necessário para posicionar o botão no canto superior direito */
     padding: 15px;
@@ -405,11 +469,7 @@ span {
     z-index: 10; /* Garante que o botão fique acima do conteúdo do cartão */
 }
 
-#AddAlunos:hover{
-    height: 55px;
-    width: 155px;
-    transition: 0.3s;
-}
+
 /*btnAlunos*/
 .excesso{
     font-size: small;

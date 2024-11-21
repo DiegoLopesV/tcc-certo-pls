@@ -16,10 +16,9 @@ return new class extends Migration
         Schema::create('ocorrencias', function (Blueprint $table) {
             $table->id();
             $table->string("titulo");
-            $table->string("participantes");
+            $table->json('participantes');
             $table->dateTime("data");
             $table->string("status");
-            $table->string('turma');
             $table->text('descricao');    
             $table->timestamps();
         });

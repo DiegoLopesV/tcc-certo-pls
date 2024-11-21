@@ -1,56 +1,92 @@
-function editOcorrencia(id) {
-    fetch(`/ocorrencias/${id}/edit`)
-        .then(response => response.json())
-        .then(ocorrencia => {
-            // Preenche os campos do formulário com os dados da ocorrência
-            document.getElementById('titulo').value = ocorrencia.titulo;
-            document.getElementById('descricao').value = ocorrencia.descricao;
-            document.getElementById('participantes').value = ocorrencia.participantes;
-            document.getElementById('turma').value = ocorrencia.turma;
-            document.getElementById('status').value = ocorrencia.status;
-            // Certifique-se de que a data está no formato correto (YYYY-MM-DD)
-            const dataFormatada = new Date(ocorrencia.data).toISOString().split('T')[0];
-            document.getElementById('data').value = dataFormatada;
+document.addEventListener('DOMContentLoaded', function () {
+    // Função para editar a ocorrência
+    window.editOcorrencia = function (id) {
+        fetch(`/ocorrencias/${id}/edit`)
+            .then((response) => response.json())
+            .then((ocorrencia) => {
+                // Preenche os campos básicos
+                const tituloInput = document.getElementById('titulo');
+                if (tituloInput) tituloInput.value = ocorrencia.titulo;
 
-            // Adiciona o botão de exclusão se ainda não existir
-            let deleteButton = document.querySelector('.btn-danger');
-            if (!deleteButton) {
-                deleteButton = `<button type="button" class="btn btn-danger" onclick="deleteOcorrencia(${id})">Excluir</button>`;
-                document.getElementById('infoForm').insertAdjacentHTML('beforeend', deleteButton);
-            }
+                const descricaoInput = document.getElementById('descricao');
+                if (descricaoInput) descricaoInput.value = ocorrencia.descricao;
 
-            // Atribui o ID da ocorrência ao formulário
-            document.getElementById('infoForm').setAttribute('data-id', id);
+                const statusInput = document.getElementById('status');
+                if (statusInput) statusInput.value = ocorrencia.status;
 
-            // Mostra o modal para edição
-            const infoModal = new bootstrap.Modal(document.getElementById('infoModal'));
-            infoModal.show();
-        })
-        .catch(error => console.error('Erro ao buscar a ocorrência:', error));
-}
+                const dataInput = document.getElementById('data');
+                if (dataInput) {
+                    const dataFormatada = new Date(ocorrencia.data).toISOString().split('T')[0];
+                    dataInput.value = dataFormatada;
+                }
 
+                // Limpa os participantes existentes
+                const participantsContainer = document.getElementById('participantsContainer');
+                if (participantsContainer) participantsContainer.innerHTML = '';
 
-function deleteOcorrencia(id) {
-    if (confirm('Tem certeza que deseja excluir esta ocorrência?')) {
-        fetch(`/ocorrencias/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.message.includes('sucesso')) {
-                document.querySelector(`[data-id='${id}']`).remove();
-                const infoModal = bootstrap.Modal.getInstance(document.getElementById('infoModal'));
-                infoModal.hide();
-                document.getElementById('infoForm').reset();
-                document.getElementById('infoForm').removeAttribute('data-id');
-                document.querySelector('.btn-danger')?.remove();
-            }
-        })
-        .catch(error => console.error('Erro:', error));
+                // Adiciona os participantes
+                ocorrencia.participantes.forEach((participante, index) => {
+                    const participantGroup = document.createElement('div');
+                    participantGroup.className = 'participant-group';
+
+                    participantGroup.innerHTML = `
+                        <h4>Participante ${index + 1}</h4>
+                        <label for="nome">Nome:</label>
+                        <input type="text" name="participantes[${index}][nome]" value="${participante.nome}" required>
+                        
+                        <label for="curso">Curso:</label>
+                        <select name="participantes[${index}][curso]" id="curso_${index}" required></select>
+                        
+                        <label for="turma">Turma:</label>
+                        <select name="participantes[${index}][turma]" id="turma_${index}" required></select>
+                        
+                        <button type="button" class="remove-btn" onclick="removeParticipant(this)">Remover</button>
+                    `;
+
+                    participantsContainer.appendChild(participantGroup);
+
+                    // Preenche os cursos
+                    const cursoDropdown = document.getElementById(`curso_${index}`);
+                    if (cursoDropdown) {
+                        populateCursos(cursoDropdown); // Preenche os cursos
+                        cursoDropdown.value = participante.curso; // Seleciona o curso atribuído
+
+                        // Preenche as turmas relacionadas ao curso selecionado
+                        const turmaDropdown = document.getElementById(`turma_${index}`);
+                        if (turmaDropdown) {
+                            populateTurmas(turmaDropdown, participante.curso); // Preenche as turmas do curso
+                            turmaDropdown.value = participante.turma; // Seleciona a turma atribuída
+                        }
+
+                        // Atualiza o dropdown de turmas quando o curso mudar
+                        cursoDropdown.addEventListener('change', () => {
+                            if (turmaDropdown) populateTurmas(turmaDropdown, cursoDropdown.value);
+                        });
+                    }
+                });
+
+                // Configura o formulário
+                const infoForm = document.getElementById('infoForm');
+                if (infoForm) infoForm.setAttribute('data-id', id);
+
+                // Mostra o modal
+                const infoModal = new bootstrap.Modal(document.getElementById('infoModal'));
+                if (infoModal) infoModal.show();
+            })
+            .catch((error) => console.error('Erro ao buscar a ocorrência:', error));
+    };
+
+    // Função para preencher as turmas de acordo com o curso selecionado
+    function populateTurmas(turmaDropdown, curso) {
+        turmaDropdown.innerHTML = '<option value="">Selecione a Turma</option>'; // Limpa as opções
+
+        if (curso && turmasPorCurso[curso]) {
+            turmasPorCurso[curso].forEach((turma) => {
+                const option = document.createElement('option');
+                option.value = turma;
+                option.textContent = turma;
+                turmaDropdown.appendChild(option);
+            });
+        }
     }
-}
-
-
+});

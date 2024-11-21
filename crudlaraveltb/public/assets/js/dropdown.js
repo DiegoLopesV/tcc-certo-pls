@@ -10,9 +10,16 @@ const turmasPorCurso = {
     'Pf': ['Pf 1', 'Pf 2', 'Pf 3'],
 };
 
-// Preencher dropdown de cursos
 function populateCursos(dropdownId) {
-    const cursoDropdown = document.getElementById(dropdownId);
+    const cursoDropdown = typeof dropdownId === 'string' 
+        ? document.getElementById(dropdownId) 
+        : dropdownId;
+
+    if (!cursoDropdown) {
+        console.error(`Dropdown com ID "${dropdownId}" não encontrado.`);
+        return;
+    }
+
     cursoDropdown.innerHTML = '<option value="">Selecione o Curso</option>'; // Limpa as opções anteriores
 
     Object.keys(turmasPorCurso).forEach(curso => {
@@ -23,15 +30,21 @@ function populateCursos(dropdownId) {
     });
 }
 
-// Atualizar dropdown de turmas com base no curso selecionado
 function updateTurmasDropdown(cursoDropdownId, turmaDropdownId) {
-    const cursoDropdown = document.getElementById(cursoDropdownId);
-    const turmaDropdown = document.getElementById(turmaDropdownId);
-    
-    cursoDropdown.addEventListener('change', function() {
-        const turmaSelecionada = turmaDropdown.querySelector('option[selected]');
-        if (turmaSelecionada) turmaSelecionada.removeAttribute('selected'); // Remove seleção anterior
+    const cursoDropdown = typeof cursoDropdownId === 'string' 
+        ? document.getElementById(cursoDropdownId) 
+        : cursoDropdownId;
 
+    const turmaDropdown = typeof turmaDropdownId === 'string' 
+        ? document.getElementById(turmaDropdownId) 
+        : turmaDropdownId;
+
+    if (!cursoDropdown || !turmaDropdown) {
+        console.error(`Dropdown(s) não encontrado(s). Verifique os IDs: cursoDropdownId=${cursoDropdownId}, turmaDropdownId=${turmaDropdownId}`);
+        return;
+    }
+
+    cursoDropdown.addEventListener('change', function () {
         turmaDropdown.innerHTML = '<option value="">Selecione a Turma</option>'; // Limpa as opções anteriores
 
         const cursoSelecionado = this.value;
@@ -46,8 +59,19 @@ function updateTurmasDropdown(cursoDropdownId, turmaDropdownId) {
     });
 }
 
-// Inicializar dropdowns
-document.addEventListener('DOMContentLoaded', function() {
-    populateCursos('curso');
-    updateTurmasDropdown('curso', 'turma');
+// Inicializar dropdowns em contextos específicos
+document.addEventListener('DOMContentLoaded', function () {
+    // Contexto: Formulário de Alunos
+    const alunoCursoDropdown = document.getElementById('aluno-curso');
+    const alunoTurmaDropdown = document.getElementById('aluno-turma');
+    populateCursos(alunoCursoDropdown);
+    updateTurmasDropdown(alunoCursoDropdown, alunoTurmaDropdown);
+
+    // Contexto: Formulário de Ocorrências
+    const firstCursoDropdown = document.getElementById('curso-0');
+    const firstTurmaDropdown = document.getElementById('turma-0');
+    if (firstCursoDropdown && firstTurmaDropdown) {
+        populateCursos(firstCursoDropdown);
+        updateTurmasDropdown(firstCursoDropdown, firstTurmaDropdown);
+    }
 });

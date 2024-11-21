@@ -40,8 +40,8 @@ class OcorrenciasController extends Controller
     //Função Filtro
     public function filtro($turma)
     {
-    $ocorrencias = Ocorrencias::where('turma', $turma)->get();
-    return view('ocorrencias.partials.list', compact('ocorrencias'));
+ //   $ocorrencias = Ocorrencias::where('turma', $turma)->get();
+  //  return view('ocorrencias.partials.list', compact('ocorrencias'));
     }
 
     /**
@@ -66,7 +66,6 @@ class OcorrenciasController extends Controller
     $ocorrencia->titulo = $request->titulo;
     $ocorrencia->descricao = $request->descricao;
     $ocorrencia->participantes = $request->participantes;
-    $ocorrencia->turma = $request->turma;
     $ocorrencia->data = $request->data;
     $ocorrencia->status = $request->status;
     $ocorrencia->save();
@@ -113,7 +112,6 @@ class OcorrenciasController extends Controller
         $ocorrencia->titulo = $request->titulo;
         $ocorrencia->descricao = $request->descricao;
         $ocorrencia->participantes = $request->participantes;
-        $ocorrencia->turma = $request->turma;
         $ocorrencia->data = $request->data;
         $ocorrencia->status = $request->status;
         $ocorrencia->save();

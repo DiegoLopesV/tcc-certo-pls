@@ -12,10 +12,12 @@ class Ocorrencias extends Model
     protected $fillable = [
         'titulo',
         'descricao',
-        'participantes',
-        'turma',
         'data',
         'status',
+        ];
+
+        protected $casts = [
+            'participantes' => 'array', // Aqui indicamos que o campo é um array
         ];
         
 }

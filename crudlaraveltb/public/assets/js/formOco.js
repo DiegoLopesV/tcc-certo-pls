@@ -1,8 +1,8 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const infoModalElement = document.getElementById('infoModal');
     const infoModal = new bootstrap.Modal(infoModalElement); // Inicia o modal
 
-    document.getElementById('infoForm').addEventListener('submit', function(event) {
+    document.getElementById('infoForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
         const form = event.target;
@@ -11,20 +11,32 @@ document.addEventListener('DOMContentLoaded', function() {
         const ocorrenciaId = form.getAttribute('data-id');
         const url = ocorrenciaId ? `/ocorrencias/${ocorrenciaId}` : '/ocorrencias'; // Verifica se é PUT ou POST
 
+        // Converte os dados do formulário para JSON
+        const data = {
+            titulo: formData.get('titulo'),
+            descricao: formData.get('descricao'),
+            turma: formData.get('turma'),
+            data: formData.get('data'),
+            status: formData.get('status'),
+            participantes: []
+        };
+
+        // Captura os participantes como array de objetos
+        document.querySelectorAll('.participant-group').forEach((group, index) => {
+            const nome = group.querySelector(`input[name="participantes[${index}][nome]"]`).value;
+            const curso = group.querySelector(`select[name="participantes[${index}][curso]"]`).value; // Alterado para <select>
+            const turma = group.querySelector(`select[name="participantes[${index}][turma]"]`).value; // Alterado para <select>
+
+            data.participantes.push({ nome, curso, turma });
+        });
+
         fetch(url, {
             method: ocorrenciaId ? 'PUT' : 'POST',
             headers: {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({
-                titulo: formData.get('titulo'),
-                descricao: formData.get('descricao'),
-                participantes: formData.get('participantes'),
-                turma: formData.get('turma'),
-                data: formData.get('data'),
-                status: formData.get('status')
-            })
+            body: JSON.stringify(data) // Envia o objeto JSON convertido
         })
         .then(response => response.json())
         .then(data => {
@@ -32,37 +44,34 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Atualiza ou cria o card
                 if (ocorrenciaId) {
                     updateOcorrencia(ocorrenciaId, {
-                        titulo: formData.get('titulo'),
-                        descricao: formData.get('descricao'),
-                        participantes: formData.get('participantes'),
-                        turma: formData.get('turma'),
-                        data: formData.get('data'),
-                        status: formData.get('status')
+                        ...data,
+                        participantes: Array.isArray(data.participantes) 
+    ? data.participantes.map(p => `${p.nome} (${p.curso}, ${p.turma})`).join(', ') 
+    : 'Nenhum participante'
+
                     });
                 } else {
                     renderOcorrencia({
-                        id: data.id,
-                        titulo: formData.get('titulo'),
-                        descricao: formData.get('descricao'),
-                        participantes: formData.get('participantes'),
-                        turma: formData.get('turma'),
-                        data: formData.get('data'),
-                        status: formData.get('status')
+                        ...data,
+                        participantes: Array.isArray(data.participantes) 
+    ? data.participantes.map(p => `${p.nome} (${p.curso}, ${p.turma})`).join(', ') 
+    : 'Nenhum participante'
+
                     });
                 }
 
-                // Fecha o modal e remove o overlay, se necessário
+                // Fecha o modal e limpa o formulário
                 const infoModalInstance = bootstrap.Modal.getInstance(infoModalElement);
                 infoModalInstance.hide();
 
-                // Remover overlays remanescentes
                 document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
                 document.body.classList.remove('modal-open');
-                document.body.style = ""; 
+                document.body.style = "";
 
                 document.getElementById('infoForm').reset();
                 document.getElementById('infoForm').removeAttribute('data-id');
                 document.querySelector('.btn-danger')?.remove();
+                location.reload();
             }
         })
         .catch(error => console.error('Erro ao salvar a ocorrência:', error));

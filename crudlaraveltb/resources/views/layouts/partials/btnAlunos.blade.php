@@ -62,13 +62,13 @@
                         <label for="nome">Nome</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <select id="curso" class="form-select" name="curso" required>
+                        <select id="aluno-curso" class="form-select" name="curso" required>
                             <!-- As opções são preenchidas via JavaScript -->
                         </select>
                         <label for="curso">Curso</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <select id="turma" class="form-select" name="turma" required>
+                        <select id="aluno-turma" class="form-select" name="turma" required>
                             <!-- As opções são preenchidas via JavaScript -->
                         </select>
                         <label for="turma">Turma</label>

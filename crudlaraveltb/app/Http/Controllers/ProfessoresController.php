@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\DB; 
 use App\Models\Professor;
 use Illuminate\Http\Request;
 use App\Models\Terceirizados;
@@ -18,16 +18,23 @@ class ProfessoresController extends Controller
      */
     public function index()
     {
-        // Busca todos os professores e passa para a view
+        // Busca todos os professores, terceirizados e enfermeiros
         $professores = Professor::all();
         $terceirizados = Terceirizados::all();
         $enfermeiros = Enfermeiros::all();
+        
+        // Busca todas as chaves temporárias
+        $chavesTemporarias = DB::table('chaves_temporarias')->select('nome', 'chave')->get();
+        
+        // Retorna para a view com os dados
         return view('professores.index', [
             'terceirizados' => $terceirizados,
             'professores' => $professores,
             'enfermeiros' => $enfermeiros,
+            'chavesTemporarias' => $chavesTemporarias, // Adicionado
         ]);
     }
+    
     
 
     /**
