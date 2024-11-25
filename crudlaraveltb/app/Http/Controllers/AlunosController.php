@@ -481,14 +481,26 @@ public function getOcorrenciasAluno($id)
 
         // Filtrar as ocorrências que contenham exatamente o nome do aluno no campo de participantes
         $ocorrenciasFiltradas = $ocorrencias->filter(function ($ocorrencia) use ($aluno) {
-            // Separar a string de participantes por vírgulas
-            $participantes = explode(',', $ocorrencia->participantes);
-            
-            // Limpar os espaços em branco extras ao redor dos nomes
-            $participantes = array_map('trim', $participantes);
-
-            // Verificar se o nome do aluno está na lista de participantes
-            return in_array($aluno->nome, $participantes);
+            // Verificar o tipo de 'participantes' e decodificar se necessário
+            $participantes = is_string($ocorrencia->participantes)
+                ? json_decode($ocorrencia->participantes, true)
+                : $ocorrencia->participantes;
+            // Se não for um array válido, trate como vazio
+            if (!is_array($participantes)) {
+                $participantes = [];
+            }
+            // Verificar se o aluno está entre os participantes
+            foreach ($participantes as $participante) {
+                if (
+                    isset($participante['nome'], $participante['curso'], $participante['turma']) &&
+                    $participante['nome'] === $aluno->nome &&
+                    $participante['curso'] === $aluno->curso &&
+                    $participante['turma'] === $aluno->turma
+                ) {
+                    return true;
+                }
+            }
+            return false;
         });
 
         return response()->json($ocorrenciasFiltradas->values());

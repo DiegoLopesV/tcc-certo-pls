@@ -67,7 +67,6 @@
                     <li>{{ $participante['nome'] }} ({{ $participante['curso'] }}, {{ $participante['turma'] }})</li>
                 @endforeach
                 </ul>
-                <p><strong>Turma:</strong> {{ $ocorrencia->turma }}</p>
                 <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($ocorrencia->data)->format('d-m-Y') }}</p>
                 <p><strong>Status:</strong> {{ $ocorrencia->status == 0 ? 'Concluído' : ($ocorrencia->status == 1 ? 'Em Andamento' : 'Pendente') }}</p>
             </div>
