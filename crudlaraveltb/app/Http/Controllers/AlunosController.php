@@ -479,16 +479,31 @@ public function getOcorrenciasAluno($id)
         // Buscar todas as ocorrências
         $ocorrencias = Ocorrencias::all();
 
-        // Filtrar as ocorrências que contenham exatamente o nome do aluno no campo de participantes
+        // Filtrar as ocorrências que contenham o aluno nos participantes
         $ocorrenciasFiltradas = $ocorrencias->filter(function ($ocorrencia) use ($aluno) {
-            // Separar a string de participantes por vírgulas
-            $participantes = explode(',', $ocorrencia->participantes);
-            
-            // Limpar os espaços em branco extras ao redor dos nomes
-            $participantes = array_map('trim', $participantes);
+            // Verificar o tipo de 'participantes' e decodificar se necessário
+            $participantes = is_string($ocorrencia->participantes)
+                ? json_decode($ocorrencia->participantes, true)
+                : $ocorrencia->participantes;
 
-            // Verificar se o nome do aluno está na lista de participantes
-            return in_array($aluno->nome, $participantes);
+            // Se não for um array válido, trate como vazio
+            if (!is_array($participantes)) {
+                $participantes = [];
+            }
+
+            // Verificar se o aluno está entre os participantes
+            foreach ($participantes as $participante) {
+                if (
+                    isset($participante['nome'], $participante['curso'], $participante['turma']) &&
+                    $participante['nome'] === $aluno->nome &&
+                    $participante['curso'] === $aluno->curso &&
+                    $participante['turma'] === $aluno->turma
+                ) {
+                    return true;
+                }
+            }
+
+            return false;
         });
 
         return response()->json($ocorrenciasFiltradas->values());
@@ -496,6 +511,8 @@ public function getOcorrenciasAluno($id)
         return response()->json(['message' => 'Erro ao buscar ocorrências', 'error' => $e->getMessage()], 500);
     }
 }
+
+
 
 
 // Enfermaria
@@ -509,24 +526,31 @@ public function getEnfermariasAluno($id)
             return response()->json(['message' => 'Aluno não encontrado'], 404);
         }
 
-        // Buscar todas as ocorrências
-        $enfermaria = Enfermaria::all();
+        // Buscar todas as ocorrências de enfermaria
+        $enfermarias = Enfermaria::all();
 
-        // Filtrar as ocorrências que contenham exatamente o nome do aluno no campo de participantes
-        $enfermariasFiltradas = $enfermaria->filter(function ($enfermaria) use ($aluno) {
-            // Separar a string de participantes por vírgulas
-            $pessoas = explode(',', $enfermaria->pessoas);
-            
-            // Limpar os espaços em branco extras ao redor dos nomes
-            $pessoas = array_map('trim', $pessoas);
+        // Filtrar as ocorrências que contenham o aluno nos participantes
+        $enfermariasFiltradas = $enfermarias->filter(function ($enfermaria) use ($aluno) {
+            $participantes = json_decode($enfermaria->pessoas, true);
 
-            // Verificar se o nome do aluno está na lista de participantes
-            return in_array($aluno->nome, $pessoas);
+            if (is_array($participantes)) {
+                foreach ($participantes as $participante) {
+                    if (
+                        isset($participante['nome'], $participante['curso'], $participante['turma']) &&
+                        $participante['nome'] === $aluno->nome &&
+                        $participante['curso'] === $aluno->curso &&
+                        $participante['turma'] === $aluno->turma
+                    ) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         });
 
         return response()->json($enfermariasFiltradas->values());
     } catch (\Exception $e) {
-        return response()->json(['message' => 'Erro ao buscar ocorrências', 'error' => $e->getMessage()], 500);
+        return response()->json(['message' => 'Erro ao buscar enfermarias', 'error' => $e->getMessage()], 500);
     }
 }
 
