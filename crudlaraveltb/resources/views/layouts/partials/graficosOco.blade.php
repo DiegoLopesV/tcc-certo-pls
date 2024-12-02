@@ -58,9 +58,58 @@
     <canvas class="d-flex mx-auto" style="max-width: 800px; max-height: 600px;" id="myChart"></canvas>
     
     <script>
-        // Mapeamento de cores para cada turma
-        const turmaColors = {
-    'Info 1': 'rgba(75, 192, 192, 0.2)',  // Verde
+ const dataFromBackend = @json($data);
+
+// Extrair meses únicos
+const labels = dataFromBackend.map(item => item.month);
+
+// Extrair todas as turmas presentes no resultado
+const turmas = [...new Set(dataFromBackend.flatMap(item => Object.keys(item.turmas)))];
+
+// Preparar datasets para cada turma
+const datasets = turmas.map(turma => {
+    return {
+        label: turma,
+        data: labels.map(month => {
+            const entry = dataFromBackend.find(item => item.month === month);
+            return entry && entry.turmas[turma] ? entry.turmas[turma] : 0;
+        }),
+        backgroundColor: getColorByTurma(turma),
+        borderColor: getBorderColorByTurma(turma),
+        borderWidth: 1
+    };
+});
+
+// Renderizar o gráfico
+const ctx = document.getElementById('myChart').getContext('2d');
+const chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: datasets
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                position: 'top',
+            },
+            title: {
+                display: true,
+                text: 'Ocorrências por Mês e Turma'
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+function getColorByTurma(turma) {
+    const colors = {
+        'Info 1': 'rgba(75, 192, 192, 0.2)',  // Verde
     'Info 2': 'rgba(75, 192, 192, 0.4)',  // Verde mais escuro
     'Info 3': 'rgba(75, 192, 192, 0.6)',  // Verde ainda mais escuro
     'Info 4': 'rgba(75, 192, 192, 0.8)',  // Verde mais intenso
@@ -86,10 +135,13 @@
     'Pf 1': 'rgba(0, 0, 0, 0.2)', // Preto
     'Pf 2': 'rgba(0, 0, 0, 0.4)', 
     'Pf 3': 'rgba(0, 0, 0, 0.6)'  
-};
+    };
+    return colors[turma] || 'rgba(100, 100, 100, 0.5)';
+}
 
-const borderColors = {
-    'Info 1': 'rgba(75, 192, 192, 1)',  // Verde
+function getBorderColorByTurma(turma) {
+    const colors = {
+        'Info 1': 'rgba(75, 192, 192, 1)',  // Verde
     'Info 2': 'rgba(75, 192, 192, 1)',  
     'Info 3': 'rgba(75, 192, 192, 1)',  
     'Info 4': 'rgba(75, 192, 192, 1)',  
@@ -114,52 +166,11 @@ const borderColors = {
     'Contabilidade 3': 'rgba(255, 165, 0, 1)', 
     'Pf 1': 'rgba(0, 0, 0, 1)', // Preto
     'Pf 2': 'rgba(0, 0, 0, 1)', 
-    'Pf 3': 'rgba(0, 0, 0, 1)'  
-};
-
-
-        // Dados do backend
-        const dataFromBackend = @json($data);
-
-        // Preparando os dados para o gráfico
-        const labels = [];
-        const datasets = [];
-
-        dataFromBackend.forEach((entry) => {
-            if (!labels.includes(entry.month)) {
-                labels.push(entry.month);
-            }
-
-            let dataset = datasets.find(ds => ds.label === entry.turma);
-            if (!dataset) {
-                dataset = {
-                    label: entry.turma,
-                    data: [],
-                    backgroundColor: turmaColors[entry.turma] || 'rgba(201, 203, 207, 0.2)',
-                    borderColor: borderColors[entry.turma] || 'rgba(201, 203, 207, 1)',
-                    borderWidth: 1
-                };
-                datasets.push(dataset);
-            }
-            dataset.data.push(entry.total);
-        });
-
-        // Criando o gráfico
-        const ctx = document.getElementById('myChart').getContext('2d');
-        const chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: datasets
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
+    'Pf 3': 'rgba(0, 0, 0, 1)' 
+    };
+    return colors[turma] || 'rgba(100, 100, 100, 1)';
+}
     </script>
 </body>
 </html>
+

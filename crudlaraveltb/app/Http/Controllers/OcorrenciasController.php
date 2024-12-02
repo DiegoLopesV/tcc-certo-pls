@@ -132,25 +132,47 @@ class OcorrenciasController extends Controller
         return response()->json(['message' => 'Ocorrencia excluído com sucesso!']);
     }
 
-
-       //Função Graficos Ocorrências
-       public function showMonthlyChartOco(Request $request)
-       {
-           $turmas = $request->input('turmas', []);
-           
-           // Filtrar atendimentos por turma se as turmas estiverem definidas
-           $query = Ocorrencias::query();
-           
-           if ($turmas) {
-               $query->whereIn('turma', $turmas);
-           }
-           
-           $data = $query->selectRaw('DATE_FORMAT(data, "%Y-%m") as month, turma, COUNT(*) as total')
-                         ->groupBy('month', 'turma')
-                         ->get();
-           
-           return view('layouts.partials.graficosOco', compact('data'));
-       }
+    public function showMonthlyChartOco(Request $request)
+    {
+        $turmas = $request->input('turmas', []);
+    
+        // Filtrar ocorrências com base nas turmas dos participantes
+        $query = Ocorrencias::query();
+    
+        if (!empty($turmas)) {
+            $query->where(function ($query) use ($turmas) {
+                foreach ($turmas as $turma) {
+                    $query->orWhereJsonContains('participantes', ['turma' => $turma]);
+                }
+            });
+        }
+    
+        $data = $query->selectRaw('DATE_FORMAT(data, "%Y-%m") as month, JSON_EXTRACT(participantes, "$[*].turma") as turma_json, COUNT(*) as total')
+                      ->groupBy('month', 'turma_json') // Adicione o campo turma_json ao GROUP BY
+                      ->get();
+    
+        // Transformar JSON em array e calcular a contagem de turmas
+        $dataFormatted = $data->map(function ($item) {
+            $turmas = json_decode($item->turma_json, true);
+            $turmasCount = [];
+    
+            foreach ($turmas as $turma) {
+                if (!empty($turma)) {
+                    $turmasCount[$turma] = ($turmasCount[$turma] ?? 0) + 1;
+                }
+            }
+    
+            return [
+                'month' => $item->month,
+                'turmas' => $turmasCount
+            ];
+        });
+    
+        return view('layouts.partials.graficosOco', ['data' => $dataFormatted]);
+    }
+    
+    
+    
 
 
        public function deletarOcorrencias(Request $request)
