@@ -32,6 +32,12 @@
                 </div>
             @endif
 
+            <!-- Botões para exclusão múltipla -->
+            <div class="m-2 mt-4">
+            <button id="selectModeBtn" class="btn btn-primary">Excluir múltiplos Servidores</button>
+            <button id="confirmDeleteBtn" class="btn btn-danger hidden">Confirmar Exclusão</button>
+            <button id="cancelDeleteBtn" class="btn btn-secondary hidden">Cancelar</button>
+            </div>
 
             <div class="alunos-container d-flex">
                 <!-- Container para adicionar o novo conteúdo -->
@@ -40,6 +46,9 @@
                         @foreach ($professores as $professor)
                             <div class="servidor-card rounded text-center border border-dark border-2 excesso"
                                 data-bs-toggle="modal" data-bs-target="#servidorModalInfo">
+                                <div class="checkbox-container2 hidden">
+                                <input type="checkbox" class="servidor-checkbox" data-id="{{ $professor->id }}">
+                                </div>
                                 <img src="{{ asset($professor->foto) }}" alt="Foto do Professor"
                                     class="img-fluid img-preview mt-4 mb-3" style="cursor: pointer;">
                                 <p><strong>Nome:</strong> {{ $professor->nome }}</p>
@@ -58,6 +67,9 @@
                         @foreach ($terceirizados as $terceirizado)
                             <div class="servidor-card rounded text-center border border-dark border-2 excesso"
                                 data-bs-toggle="modal" data-bs-target="#servidorModalInfo">
+                                <div class="checkbox-container2 hidden">
+                                <input type="checkbox" class="servidor-checkbox" data-id="{{ $terceirizado->id }}">
+                                </div>
                                 <img src="{{ asset($terceirizado->foto) }}" alt="Foto do Professor"
                                     class="img-fluid img-preview mt-4 mb-3" style="cursor: pointer;">
                                 <p><strong>Nome:</strong> {{ $terceirizado->nome }}</p>
@@ -77,6 +89,9 @@
                         @foreach ($enfermeiros as $enfermeiro)
                             <div class="servidor-card rounded text-center border border-dark border-2 excesso"
                                 data-bs-toggle="modal" data-bs-target="#servidorModalInfo">
+                                <div class="checkbox-container2 hidden">
+                                 <input type="checkbox" class="servidor-checkbox" data-id="{{ $enfermeiro->id }}">
+                                </div>
                                 <img src="{{ asset($enfermeiro->foto) }}" alt="Foto do Professor"
                                     class="img-fluid img-preview mt-4 mb-3" style="cursor: pointer;">
                                 <p><strong>Nome:</strong> {{ $enfermeiro->nome }}</p>
@@ -151,6 +166,101 @@
                 console.error('Erro ao copiar a chave: ', err);
             });
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    const selectModeBtn = document.getElementById('selectModeBtn');
+    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+    const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+    const servidorCards = document.querySelectorAll('.servidor-card'); // Cards de servidores
+    const checkboxes = document.querySelectorAll('.servidor-checkbox'); // Checkbox para selecionar servidores
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+    selectModeBtn.addEventListener('click', function() {
+        // Ativa ou desativa o modo de seleção
+        document.body.classList.toggle('select-mode');
+        selectModeBtn.classList.toggle('hidden');
+        confirmDeleteBtn.classList.toggle('hidden');
+        cancelDeleteBtn.classList.toggle('hidden'); // Mostrar o botão de Cancelar
+
+        // Exibe ou oculta os checkboxes em cada card de servidor
+        servidorCards.forEach(card => {
+            const checkboxContainer = card.querySelector('.checkbox-container');
+            // Alterando diretamente o estilo de display para garantir que os checkboxes apareçam ou desapareçam
+            if (checkboxContainer.style.display === 'none' || checkboxContainer.style.display === '') {
+                checkboxContainer.style.display = 'block'; // Exibir checkbox
+            } else {
+                checkboxContainer.style.display = 'none'; // Ocultar checkbox
+            }
+        });
+    });
+
+    cancelDeleteBtn.addEventListener('click', function() {
+        // Oculta o modo de seleção
+        document.body.classList.remove('select-mode');
+        selectModeBtn.classList.remove('hidden');
+        confirmDeleteBtn.classList.add('hidden');
+        cancelDeleteBtn.classList.add('hidden'); // Oculta o botão de Cancelar
+
+        // Oculta os checkboxes em cada card de servidor
+        servidorCards.forEach(card => {
+            const checkboxContainer = card.querySelector('.checkbox-container');
+            checkboxContainer.style.display = 'none'; // Ocultar checkbox
+        });
+
+        // Desmarca todas as checkboxes
+        checkboxes.forEach(checkbox => checkbox.checked = false);
+    });
+
+
+    confirmDeleteBtn.addEventListener('click', function() {
+        const selectedServidores = Array.from(checkboxes)
+            .filter(checkbox => checkbox.checked)
+            .map(checkbox => checkbox.dataset.id);
+
+        if (selectedServidores.length > 0) {
+            // Envia uma requisição AJAX para deletar os servidores
+            fetch('/deletar-servidores', { // Endpoint para deletar servidores
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': csrfToken
+                    },
+                    body: JSON.stringify({
+                        servidores: selectedServidores
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remove os cards dos servidores excluídos
+                        selectedServidores.forEach(id => {
+                            document.querySelector(`.servidor-card[data-id="${id}"]`).remove();
+                        });
+
+                        // Restaura o estado original dos botões e oculta os checkboxes
+                        document.body.classList.remove('select-mode');
+                        selectModeBtn.classList.remove('hidden');
+                        confirmDeleteBtn.classList.add('hidden');
+
+                        // Desmarca todas as checkboxes
+                        checkboxes.forEach(checkbox => checkbox.checked = false);
+
+                        // Oculta os checkboxes em cada card de servidor
+                        servidorCards.forEach(card => {
+                            const checkboxContainer = card.querySelector('.checkbox-container');
+                            checkboxContainer.style.display = 'none'; // Ocultar checkbox
+                        });
+                    } else {
+                        alert('Erro ao excluir servidores');
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                });
+        }
+    });
+});
+
 </script>
 </body>
 

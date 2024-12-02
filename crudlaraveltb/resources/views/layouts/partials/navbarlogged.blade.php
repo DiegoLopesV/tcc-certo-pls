@@ -53,7 +53,7 @@
                                     <a class="nav-link mx-4 fs-5 text-black"
                                         href="{{ route('professores.index') }}">Servidores</a>
                                 </li>
-                                @elseif(in_array(substr(auth()->user()->key, -1), ['4', '5']))
+                                @elseif(in_array(substr(auth()->user()->key, -1), ['4', '5']) && auth()->user()->key !== 'aluno2024')
                                 <!-- Links visíveis apenas para usuários com a chave 'cba321' -->
                                 <li class="nav-item">
                                     <a class="nav-link mx-4 fs-5 text-black" aria-current="page"

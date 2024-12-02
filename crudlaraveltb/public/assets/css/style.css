@@ -505,14 +505,29 @@ span {
             top: 5px;
             right: 5px;
         }
+        .select-mode .checkbox-container2 {
+            display: block;
+        }
+        .checkbox-container2 {
+            display: none;
+
+            top: 5px;
+            right: 5px;
+        }
+
+
         .hidden {
-            display: none ;
+            display: none;
         }
         .ocorrencia-card {
             position: relative;
         }
     
         .enfermaria-checkbox{
+            height: 20px;
+            width: 20px;
+        }
+        .servidor-checkbox{
             height: 20px;
             width: 20px;
         }

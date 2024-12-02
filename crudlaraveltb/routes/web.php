@@ -46,6 +46,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         return view('layouts.partials.qrRegistrarAluno');
     })->name('qrRegistrarAluno');
 
+            //Rotas Perfil
+            Route::get("/perfil", "PerfilController@index")->name("perfil.index");
+            //->middleware('can:access');
+
 
 
 
@@ -122,10 +126,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         //Rotas das Mensagens
         Route::get("/mensagens", "MensagensController@index")->name("mensagens.index");
-
-        //Rotas Perfil
-        Route::get("/perfil", "PerfilController@index")->name("perfil.index");
-        //->middleware('can:access');
 
 
 
@@ -297,6 +297,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             return response()->json(['message' => 'Notificações marcadas como lidas']);
         });
         
+
+
+        Route::post('/excluirServidores', [ProfessoresController::class, 'excluirServidores']);
 
 
 

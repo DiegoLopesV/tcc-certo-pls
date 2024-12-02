@@ -134,4 +134,31 @@ class ProfessoresController extends Controller
         $professor->delete();
         return redirect('/professores')->with('completed', 'Professor removido com sucesso');
     }
+
+    public function excluirServidores(Request $request)
+    {
+        \Log::info('Payload recebido para exclusão: ', $request->all());  // Verifique se a informação aparece aqui
+        
+        $ids = $request->input('servidores');
+        $tipo = $request->input('tipo');
+        
+        // Lógica para excluir os servidores
+        switch ($tipo) {
+            case 'professor':
+                \App\Models\Professor::whereIn('id', $ids)->delete();
+                break;
+            case 'terceirizado':
+                \App\Models\Terceirizados::whereIn('id', $ids)->delete();
+                break;
+            case 'enfermeiro':
+                \App\Models\Enfermeiros::whereIn('id', $ids)->delete();
+                break;
+            default:
+                return response()->json(['message' => 'Tipo de servidor inválido'], 400);
+        }
+        
+        return response()->json(['message' => 'Servidores excluídos com sucesso']);
+    }
+    
+
 }
