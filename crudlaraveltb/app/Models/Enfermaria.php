@@ -11,10 +11,16 @@ class Enfermaria extends Model
 
     protected $fillable = [
         'titulo',
+        'horaInicio',
+        'horaFinal',
+        'responsavel',
+        'idade',
+        'queixa',
+        'atividade_realizada',
+        'conduta',
         'descricao',
         'pessoas',
         'turma',
         'data',
-        'status',
         ];
 }

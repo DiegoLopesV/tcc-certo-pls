@@ -76,7 +76,7 @@
 		
 		<div class="form-group form-floating mb-3 w-25 mx-auto">
         	<input type="text" class="form-control" name="numeroDeContrato" placeholder="numeroDeContrato" required="required" autofocus>
-        	<label for="floatingNome">Numero de Contrato</label>
+        	<label for="floatingNome">SIAP</label>
     	</div>
        
 

@@ -41,8 +41,11 @@ class EnfermariaController extends Controller
      */
     public function store(Request $request)
     {
+
         $enfermaria = Enfermaria::create($request->all());
+        Log::debug($request->all());
         return response()->json(['message' => 'Atendimento salvo com sucesso!', 'id' => $enfermaria->id]);
+        
     }
 
     /**

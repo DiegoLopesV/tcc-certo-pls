@@ -130,6 +130,7 @@
             ServidorModal.hide();
             document.getElementById('ServidorModal').reset();
             document.getElementById('ServidorModal').removeAttribute('data-id');
+            location.reload();
 
         }
     </script>
