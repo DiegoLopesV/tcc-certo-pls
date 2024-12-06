@@ -74,9 +74,18 @@
                     @endif
                 </div>
                 <p><strong>Título:</strong> {{ $enfermaria->titulo }}</p>
-                <p><strong>Descrição:</strong> {{ $enfermaria->descricao }}</p>
+                <p><strong>Responsável:</strong> {{ $enfermaria->responsavel }}</p>
                 <p><strong>Aluno Atendido:</strong> {{ $enfermaria->pessoas }}</p>
+                <p><strong>Idade:</strong> {{ $enfermaria->idade }}</p>
                 <p><strong>Turma:</strong> {{ $enfermaria->turma }}</p>
+                <p><strong>Hora de Início:</strong> {{ $enfermaria->horaIncio }}</p>
+                <p><strong>Horário de Término:</strong> {{ $enfermaria->horaFinal }}</p>
+                <p><strong>Queixa:</strong> {{ $enfermaria->queixa }}</p>
+                <p><strong>Atividade Realizada:</strong> {{ $enfermaria->atividade }}</p>
+                <p><strong>Conduta:</strong> {{ $enfermaria->conduta }}</p>
+                <p><strong>Outras informações/observações:</strong> {{ $enfermaria->descricao }}</p>
+
+
                 <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($enfermaria->data)->format('d-m-Y') }}</p>
                 <p><strong>Status:</strong> {{ $enfermaria->status }}</p>
             </div>
