@@ -139,3 +139,13 @@ document.getElementById('emitirRelatorioNapneButton').onclick = function() {
         console.error('Erro ao gerar PDF:', error);
     });
 };
+
+document.getElementById('gerarDesempenhoButton').onclick = function() {
+    const alunoId = document.getElementById("modalDeleteButton").getAttribute('data-aluno-id');
+    if (alunoId) {
+        // Redireciona para a rota que gera o PDF
+        window.location.href = `/alunos/${alunoId}/gerar-desempenho`;
+    } else {
+        console.error('ID do aluno não encontrado');
+    }
+};

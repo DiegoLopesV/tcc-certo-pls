@@ -17,6 +17,7 @@ use App\Http\Controllers\BuscaController;
 use App\Models\Enfermaria;
 use App\Http\Controllers\ChaveTemporariaController;
 use App\Http\Controllers\TerceirizadosController;
+use App\Http\Controllers\DesempenhoPDFController;
 
 Route::get('send-mail', [MailController::class, 'index']);
 
@@ -30,10 +31,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
     Route::post('/alunos/check-duplicate', [AlunosController::class, 'checkDuplicate'])->name('alunos.checkDuplicate');
 
-    
-        /**
-         * Logout Routes
-         */
+
+    /**
+     * Logout Routes
+     */
     Route::get('/logout', 'LogoutController@perform')->name('logout.perform');
 
 
@@ -46,9 +47,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         return view('layouts.partials.qrRegistrarAluno');
     })->name('qrRegistrarAluno');
 
-            //Rotas Perfil
-            Route::get("/perfil", "PerfilController@index")->name("perfil.index");
-            //->middleware('can:access');
+    //Rotas Perfil
+    Route::get("/perfil", "PerfilController@index")->name("perfil.index");
+    //->middleware('can:access');
 
 
 
@@ -68,7 +69,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         // Registrar Aluno
         Route::get('/qrRegistrarAluno', function () {
-        return view('layouts.partials.qrRegistrarAluno');
+            return view('layouts.partials.qrRegistrarAluno');
         })->name('qrRegistrarAluno');
     });
 
@@ -191,21 +192,13 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::put('/alunos/{id}', [AlunosController::class, 'update'])->name('alunos.update');  // Atualizar aluno existente
         Route::delete('/alunos/{id}', [AlunosController::class, 'destroy'])->name('alunos.destroy');  // Excluir aluno
         Route::get('/{turma}', [AlunosController::class, 'showAlunosPorTurma'])
-        ->where('turma', 'info[1-4]|pg[1-3]|adm[1-3]|eletronica[1-3]|mecanica[1-3]|contabilidade[1-3]|jogos[1-4]|pf[1-3]')
-        ->name('turma');
+            ->where('turma', 'info[1-4]|pg[1-3]|adm[1-3]|eletronica[1-3]|mecanica[1-3]|contabilidade[1-3]|jogos[1-4]|pf[1-3]')
+            ->name('turma');
         Route::post('/deletar-alunos', [AlunosController::class, 'deletarAlunos']);
-        // routes/web.php
         Route::get('/alunos/{id}/ocorrencias', [AlunosController::class, 'getOcorrenciasAluno']);
         Route::get('/alunos/{id}/enfermaria', [AlunosController::class, 'getEnfermariasAluno']);
         Route::get('/alunos/pdf/{id}', [AlunosPDFController::class, 'gerarPDF'])->name('alunos.pdf');
-
-
-
-
-
-
-
-
+        Route::get('/alunos/{id}/gerar-desempenho', [DesempenhoPDFController::class, 'gerarDesempenhoPDF'])->name('gerar.desempenho');
 
 
         //Rotas das Ocorrências
@@ -220,7 +213,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         Route::post('/deletar-ocorrencias', [OcorrenciasController::class, 'deletarOcorrencias']);
 
-        Route::get('busca',[BuscaController::class,'index'])->name('busca.index');
+        Route::get('busca', [BuscaController::class, 'index'])->name('busca.index');
 
         //Rotas Enfermaria
         Route::get('/enfermaria', [EnfermariaController::class, 'index'])->name('enfermaria.index');
@@ -236,9 +229,12 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
         //Rota para manter o card dos alunos
         Route::post('/alunos', 'AlunosController@store')->name('alunos.store');
+        Route::get('/perfil/{id}', [PerfilController::class, 'show'])->name('perfil.show');
+        Route::put('/perfil/{id}', [PerfilController::class, 'update'])->name('perfil.update');
+        
 
-
-
+        
+        
 
 
 
@@ -259,7 +255,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             return view('layouts.partials.alunosPassados');
         })->name('alunosPassados');
 
-        
+
         /*qrRegis  
         Route::get('/qrRegistrarAluno', function () {
             return view('layouts.partials.qrRegistrarAluno');
@@ -292,11 +288,11 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
 
 
 
-        Route::post('/notifications/read', function() {
+        Route::post('/notifications/read', function () {
             auth()->user()->unreadNotifications->markAsRead();
             return response()->json(['message' => 'Notificações marcadas como lidas']);
         });
-        
+
 
 
         Route::post('/excluirServidores', [ProfessoresController::class, 'excluirServidores']);
