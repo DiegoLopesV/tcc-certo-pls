@@ -17,6 +17,7 @@ class AlunosPDFController extends Controller
             'cursoTurma' => 'required|string',
             'disciplina' => 'required|string',
             'professor' => 'required|string',
+            'objetivos_aluno' => 'nullable|string',
             'objetivos' => 'nullable|string',
             'participacao' => 'nullable|string',
             'avaliacao' => 'nullable|string',

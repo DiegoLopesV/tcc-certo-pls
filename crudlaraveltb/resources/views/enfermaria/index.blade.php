@@ -44,7 +44,7 @@
     <!-- Seção para ordenação -->
     <div class="border border-dark border-2 border-top-0 position-relative">
         <a class="ms-1 fs-2 text-dark text-decoration-none" href="#" id="ordenarLink">Ordenar ▼</a>
-        @include('layouts.partials.btnOrdenar') <!-- Incluindo o dropdown de ordenação -->
+        <!-- Incluindo o dropdown de ordenação -->
     </div>
 
     @if (auth()->check() && auth()->user()->key === '987xyz')
@@ -62,12 +62,12 @@
     <div id="enfermariaContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
         @foreach ($enfermaria as $enfermaria)
             <div class="enfermaria-card rounded text-center border border-dark border-2 excesso"
-                data-id="{{ $enfermaria->id }}" data-turma="{{ $enfermaria->turma }}">
+                data-id="{{ $enfermaria->id }}" data-title="{{ $enfermaria->titulo }}"
+                data-created="{{ $enfermaria->data }}">
                 <div class="d-flex justify-content-end">
                     @if (auth()->check() && auth()->user()->key === '987xyz')
                         <button class="btn btn-sm btn-warning m-2"
                             onclick="editEnfermaria({{ $enfermaria->id }})">Editar</button>
-
                         <div class="checkbox-container">
                             <input type="checkbox" class="enfermaria-checkbox" data-id="{{ $enfermaria->id }}">
                         </div>
@@ -83,11 +83,12 @@
         @endforeach
     </div>
 
+
     @include('layouts.partials.btnEnf')
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const selectModeBtn = document.getElementById('selectModeBtn');
             const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
             const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
@@ -96,7 +97,7 @@
                 '.enfermaria-checkbox'); // Checkbox para selecionar enfermarias
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            selectModeBtn.addEventListener('click', function() {
+            selectModeBtn.addEventListener('click', function () {
                 // Ativa ou desativa o modo de seleção
                 document.body.classList.toggle('select-mode');
                 selectModeBtn.classList.toggle('hidden');
@@ -111,7 +112,7 @@
 
             });
 
-            cancelDeleteBtn.addEventListener('click', function() {
+            cancelDeleteBtn.addEventListener('click', function () {
                 // Oculta o modo de seleção
                 document.body.classList.remove('select-mode');
                 selectModeBtn.classList.remove('hidden');
@@ -129,7 +130,7 @@
             });
 
 
-            confirmDeleteBtn.addEventListener('click', function() {
+            confirmDeleteBtn.addEventListener('click', function () {
                 const selectedEnfermarias = Array.from(checkboxes)
                     .filter(checkbox => checkbox.checked)
                     .map(checkbox => checkbox.dataset.id);
@@ -137,22 +138,22 @@
                 if (selectedEnfermarias.length > 0) {
                     // Envia uma requisição AJAX para deletar as enfermarias
                     fetch('/deletar-enfermarias', { // Endpoint para deletar enfermarias
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-Token': csrfToken
-                            },
-                            body: JSON.stringify({
-                                enfermarias: selectedEnfermarias
-                            })
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-Token': csrfToken
+                        },
+                        body: JSON.stringify({
+                            enfermarias: selectedEnfermarias
                         })
+                    })
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
                                 // Remove os cards das enfermarias excluídas
                                 selectedEnfermarias.forEach(id => {
                                     document.querySelector(
-                                            `.enfermaria-card[data-id="${id}"]`)
+                                        `.enfermaria-card[data-id="${id}"]`)
                                         .remove();
                                 });
 
@@ -186,6 +187,5 @@
 
 </body>
 @include('layouts.partials.btnFiltro')
-@include('layouts.partials.btnOrdenar')
-
+@include('layouts.partials.btnOrdenacao')
 </html>

@@ -26,16 +26,21 @@
             </div>
             <div class="modal-footer">
                 @if(auth()->check() && auth()->user()->key === '987xyz')
-<!-- Botão Editar -->
-<button id="modalEditButton" class="btn btn-primary">Editar</button>
+                    <!-- Botão Editar -->
+                    <button id="modalEditButton" class="btn btn-primary">Editar</button>
 
-<!-- Botão Deletar -->
-<button id="modalDeleteButton" class="btn btn-danger" data-aluno-id="">Deletar</button>
+                    <!-- Botão Deletar -->
+                    <button id="modalDeleteButton" class="btn btn-danger" data-aluno-id="">Deletar</button>
 
-<!-- Botão Emitir Relatório Napne -->
-<button type="button" class="btn btn-primary" id="emitirRelatorioNapneButton">
-    Emitir Relatório Napne
-</button>
+                    <!-- Botão Emitir Relatório Napne -->
+                    <button type="button" class="btn btn-primary" id="emitirRelatorioNapneButton">
+                        Emitir Relatório Napne
+                    </button>
+
+                    <!-- Botão Gerar Desempenho Individual -->
+                    <button type="button" class="btn btn-primary" id="gerarDesempenhoButton">
+                        Gerar Desempenho Individual
+                    </button>
 
                 @endif
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -78,18 +83,21 @@
                         <label for="cpf">CPF</label>
                         <div id="cpfError" class="text-danger" style="display: none;"></div> <!-- Mensagem de erro -->
                     </div>
-                    
-                    
+
+
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="nome_pais" placeholder="Nome dos Pais" name="nome_pais" required>
+                        <input type="text" class="form-control" id="nome_pais" placeholder="Nome dos Pais"
+                            name="nome_pais" required>
                         <label for="nome_pais">Nome dos Pais</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="telefone" placeholder="Telefone" name="telefone" required>
+                        <input type="text" class="form-control" id="telefone" placeholder="Telefone" name="telefone"
+                            required>
                         <label for="telefone">Telefone</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="telefone_pais" placeholder="Telefone dos Pais" name="telefone_pais">
+                        <input type="text" class="form-control" id="telefone_pais" placeholder="Telefone dos Pais"
+                            name="telefone_pais">
                         <label for="telefone_pais">Telefone dos Pais</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -97,7 +105,8 @@
                         <label for="email">Email</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="email_pais" placeholder="Email dos Pais" name="email_pais">
+                        <input type="email" class="form-control" id="email_pais" placeholder="Email dos Pais"
+                            name="email_pais">
                         <label for="email_pais">Email dos Pais</label>
                     </div>
                     <div class="form-floating mb-3">
@@ -108,12 +117,12 @@
                         </select>
                         <label for="napne">É aluno da Napne?</label>
                     </div>
-                    
+
                     <div class="form-floating mb-3">
                         <input type="date" class="form-control" id="data_nascimento" name="data_nascimento" required>
                         <label for="data_nascimento">Data de Nascimento</label>
                     </div>
-                    
+
                     <div class="form-floating mb-3">
                         <input type="file" id="foto" name="foto" accept="image/*">
                         <div id="imagePreviewContainer">
@@ -129,7 +138,8 @@
 </div>
 
 <!-- Modal Napne -->
-<div class="modal fade" id="relatorioNapneModal" tabindex="-1" aria-labelledby="relatorioNapneModalLabel" aria-hidden="true">
+<div class="modal fade" id="relatorioNapneModal" tabindex="-1" aria-labelledby="relatorioNapneModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -139,129 +149,138 @@
                 </button>
             </div>
             <div class="modal-body">
-    <form id="relatorioForm" method="POST" action="{{ route('gerarRelatorioNapne') }}">
-        @csrf
-        <div class="form-group">
-            <label for="bimestre">Bimestre:</label>
-            <input type="text" class="form-control" id="bimestre" name="bimestre" required>
-        </div>
-        <div class="form-group">
-            <label for="aluno">Aluno(a):</label>
-            <input type="text" class="form-control" id="aluno" name="aluno" required>
-        </div>
-        <div class="form-group">
-            <label for="cursoTurma">Curso e Turma:</label>
-            <input type="text" class="form-control" id="cursoTurma" name="cursoTurma" required>
-        </div>
-        <div class="form-group">
-            <label for="disciplina">Disciplina:</label>
-            <input type="text" class="form-control" id="disciplina" name="disciplina" required>
-        </div>
-        <div class="form-group">
-            <label for="professor">Professor(a):</label>
-            <input type="text" class="form-control" id="professor" name="professor" required>
-        </div>
-        <div class="form-group">
-            <label for="objetivos">Objetivos do bimestre alcançados pelo estudante:</label>
-            <textarea class="form-control" id="objetivos" name="objetivos" rows="3"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="participacao">Nível de participação do estudante nas atividades:</label>
-            <textarea class="form-control" id="participacao" name="participacao" rows="2"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="avaliacao">Critérios e instrumentos de avaliação e respostas:</label>
-            <textarea class="form-control" id="avaliacao" name="avaliacao" rows="3"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="metodos">Métodos que facilitaram a aprendizagem:</label>
-            <textarea class="form-control" id="metodos" name="metodos" rows="2"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="dificuldades">Dificuldades:</label>
-            <textarea class="form-control" id="dificuldades" name="dificuldades" rows="2"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="informacoes">Informações importantes:</label>
-            <textarea class="form-control" id="informacoes" name="informacoes" rows="2"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="data">Data:</label>
-            <input type="date" class="form-control" id="data" name="data" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Salvar</button>
-    </form>
-</div>
+                <form id="relatorioForm" method="POST" action="{{ route('gerarRelatorioNapne') }}">
+                    @csrf
+                    <div class="form-group">
+                        <label for="bimestre">Bimestre:</label>
+                        <input type="text" class="form-control" id="bimestre" name="bimestre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="aluno">Aluno(a):</label>
+                        <input value="{{ $aluno->nome }}" type="text" class="form-control" id="aluno" name="aluno"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cursoTurma">Curso e Turma:</label>
+                        <input value="{{ $aluno->turma }}" type="text" class="form-control" id="cursoTurma"
+                            name="cursoTurma" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="disciplina">Disciplina:</label>
+                        <input type="text" class="form-control" id="disciplina" name="disciplina" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="professor">Professor(a):</label>
+                        <input type="text" class="form-control" id="professor" name="professor" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="objetivos_aluno">Objetivos do aluno:</label>
+                        <textarea class="form-control" id="objetivos_aluno" name="objetivos_aluno" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="objetivos">Objetivos do bimestre alcançados pelo estudante:</label>
+                        <textarea class="form-control" id="objetivos" name="objetivos" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="participacao">Nível de participação do estudante nas atividades:</label>
+                        <textarea class="form-control" id="participacao" name="participacao" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="avaliacao">Critérios e instrumentos de avaliação e respostas:</label>
+                        <textarea class="form-control" id="avaliacao" name="avaliacao" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="metodos">Métodos que facilitaram a aprendizagem:</label>
+                        <textarea class="form-control" id="metodos" name="metodos" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="dificuldades">Dificuldades:</label>
+                        <textarea class="form-control" id="dificuldades" name="dificuldades" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="informacoes">Informações importantes:</label>
+                        <textarea class="form-control" id="informacoes" name="informacoes" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="data">Data:</label>
+                        <input type="date" class="form-control" id="data" name="data" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
 
         </div>
     </div>
 </div>
 
+
+<script src="{{ asset('assets/js/modalInfoAlunos.js') }}"></script>
 <script>
-  
 
-function isValidCPF(cpf) {
-    // Remove caracteres não numéricos
-    cpf = cpf.replace(/\D/g, '');
+    function isValidCPF(cpf) {
+        // Remove caracteres não numéricos
+        cpf = cpf.replace(/\D/g, '');
 
-    // Verifica se o CPF tem 11 dígitos e não são todos iguais
-    if (cpf.length !== 11 || /^[0-9]{1}\1{10}$/.test(cpf)) {
-        return false;
+        // Verifica se o CPF tem 11 dígitos e não são todos iguais
+        if (cpf.length !== 11 || /^[0-9]{1}\1{10}$/.test(cpf)) {
+            return false;
+        }
+
+        // Cálculo do primeiro dígito verificador
+        let sum = 0;
+        for (let i = 0; i < 9; i++) {
+            sum += parseInt(cpf.charAt(i)) * (10 - i);
+        }
+        let firstVerifier = 11 - (sum % 11);
+        if (firstVerifier >= 10) firstVerifier = 0;
+
+        // Cálculo do segundo dígito verificador
+        sum = 0;
+        for (let i = 0; i < 10; i++) {
+            sum += parseInt(cpf.charAt(i)) * (11 - i);
+        }
+        let secondVerifier = 11 - (sum % 11);
+        if (secondVerifier >= 10) secondVerifier = 0;
+
+        // Verifica se os dígitos verificadores estão corretos
+        return (firstVerifier === parseInt(cpf.charAt(9))) && (secondVerifier === parseInt(cpf.charAt(10)));
     }
 
-    // Cálculo do primeiro dígito verificador
-    let sum = 0;
-    for (let i = 0; i < 9; i++) {
-        sum += parseInt(cpf.charAt(i)) * (10 - i);
-    }
-    let firstVerifier = 11 - (sum % 11);
-    if (firstVerifier >= 10) firstVerifier = 0;
 
-    // Cálculo do segundo dígito verificador
-    sum = 0;
-    for (let i = 0; i < 10; i++) {
-        sum += parseInt(cpf.charAt(i)) * (11 - i);
-    }
-    let secondVerifier = 11 - (sum % 11);
-    if (secondVerifier >= 10) secondVerifier = 0;
-
-    // Verifica se os dígitos verificadores estão corretos
-    return (firstVerifier === parseInt(cpf.charAt(9))) && (secondVerifier === parseInt(cpf.charAt(10)));
-}
-
-
-// Valida o CPF ao perder o foco do campo
-document.getElementById('cpf').addEventListener('blur', function() {
-    const cpf = this.value;
-    const errorDiv = document.getElementById('cpfError');
-
-    if (!isValidCPF(cpf)) {
-        errorDiv.textContent = 'CPF inválido. Por favor, insira um CPF válido.';
-        errorDiv.style.display = 'block';
-        this.focus(); // Foca novamente no campo
-    } else {
-        errorDiv.style.display = 'none'; // Limpa a mensagem de erro
-    }
-});
-
-// Limpar mensagem de erro enquanto digita
-document.getElementById('cpf').addEventListener('input', function() {
-    const errorDiv = document.getElementById('cpfError');
-    errorDiv.style.display = 'none'; // Oculta a mensagem de erro
-});
-
-// Validar CPF na submissão do formulário
-document.querySelector('form').addEventListener('submit', function(event) {
-    const cpf = document.getElementById('cpf').value;
-    if (!isValidCPF(cpf)) {
-        event.preventDefault(); // Impede o envio do formulário
+    // Valida o CPF ao perder o foco do campo
+    document.getElementById('cpf').addEventListener('blur', function () {
+        const cpf = this.value;
         const errorDiv = document.getElementById('cpfError');
-        errorDiv.textContent = 'CPF inválido. Por favor, insira um CPF válido.';
-        errorDiv.style.display = 'block';
-        document.getElementById('cpf').focus(); // Foca no campo de CPF
-    }
-});
 
+        if (!isValidCPF(cpf)) {
+            errorDiv.textContent = 'CPF inválido. Por favor, insira um CPF válido.';
+            errorDiv.style.display = 'block';
+            this.focus(); // Foca novamente no campo
+        } else {
+            errorDiv.style.display = 'none'; // Limpa a mensagem de erro
+        }
+    });
+
+    // Limpar mensagem de erro enquanto digita
+    document.getElementById('cpf').addEventListener('input', function () {
+        const errorDiv = document.getElementById('cpfError');
+        errorDiv.style.display = 'none'; // Oculta a mensagem de erro
+    });
+
+    // Validar CPF na submissão do formulário
+    document.querySelector('form').addEventListener('submit', function (event) {
+        const cpf = document.getElementById('cpf').value;
+        if (!isValidCPF(cpf)) {
+            event.preventDefault(); // Impede o envio do formulário
+            const errorDiv = document.getElementById('cpfError');
+            errorDiv.textContent = 'CPF inválido. Por favor, insira um CPF válido.';
+            errorDiv.style.display = 'block';
+            document.getElementById('cpf').focus(); // Foca no campo de CPF
+        }
+    });
 
 </script>
 

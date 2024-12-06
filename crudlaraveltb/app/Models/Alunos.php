@@ -25,13 +25,15 @@ class Alunos extends Model
     ];
 
     // No modelo Alunos
-public function user()
-{
-    return $this->belongsTo(User::class);
-}
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
-public static $rules = [
-    'cpf' => 'required|unique:alunos,cpf',
-    'email' => 'required|email|unique:alunos,email', // Regra de validação para CPF
-];
+    
+
+    public static $rules = [
+        'cpf' => 'required|unique:alunos,cpf',
+        'email' => 'required|email|unique:alunos,email', // Regra de validação para CPF
+    ];
 }

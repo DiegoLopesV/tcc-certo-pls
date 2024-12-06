@@ -17,6 +17,7 @@ use App\Http\Controllers\BuscaController;
 use App\Models\Enfermaria;
 use App\Http\Controllers\ChaveTemporariaController;
 use App\Http\Controllers\TerceirizadosController;
+use App\Http\Controllers\DesempenhoPDFController;
 
 Route::get('send-mail', [MailController::class, 'index']);
 
@@ -46,9 +47,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         return view('layouts.partials.qrRegistrarAluno');
     })->name('qrRegistrarAluno');
 
-            //Rotas Perfil
-            Route::get("/perfil", "PerfilController@index")->name("perfil.index");
-            //->middleware('can:access');
+    //Rotas Perfil
+    Route::get("/perfil", "PerfilController@index")->name("perfil.index");
+    //->middleware('can:access');
 
 
 
@@ -194,18 +195,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             ->where('turma', 'info[1-4]|pg[1-3]|adm[1-3]|eletronica[1-3]|mecanica[1-3]|contabilidade[1-3]|jogos[1-4]|pf[1-3]')
             ->name('turma');
         Route::post('/deletar-alunos', [AlunosController::class, 'deletarAlunos']);
-        // routes/web.php
         Route::get('/alunos/{id}/ocorrencias', [AlunosController::class, 'getOcorrenciasAluno']);
         Route::get('/alunos/{id}/enfermaria', [AlunosController::class, 'getEnfermariasAluno']);
         Route::get('/alunos/pdf/{id}', [AlunosPDFController::class, 'gerarPDF'])->name('alunos.pdf');
-
-
-
-
-
-
-
-
+        Route::get('/alunos/{id}/gerar-desempenho', [DesempenhoPDFController::class, 'gerarDesempenhoPDF'])->name('gerar.desempenho');
 
 
         //Rotas das Ocorrências
@@ -238,10 +231,10 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::post('/alunos', 'AlunosController@store')->name('alunos.store');
         Route::get('/perfil/{id}', [PerfilController::class, 'show'])->name('perfil.show');
         Route::put('/perfil/{id}', [PerfilController::class, 'update'])->name('perfil.update');
+        
 
-
-
-
+        
+        
 
 
 
