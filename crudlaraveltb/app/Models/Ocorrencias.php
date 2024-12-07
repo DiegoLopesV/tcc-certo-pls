@@ -17,7 +17,8 @@ class Ocorrencias extends Model
         ];
 
         protected $casts = [
-            'participantes' => 'array', // Aqui indicamos que o campo é um array
+            'participantes' => 'array',
         ];
+        
         
 }
