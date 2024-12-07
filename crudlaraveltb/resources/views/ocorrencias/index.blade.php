@@ -21,13 +21,17 @@
     <!-- Seção de Botões -->
     <div class="d-flex align-items-center justify-content-center border border-dark border-2 p-1 text-center">
         @include('layouts.partials.btnEmitirRelat')
-        <a href="{{ route('ocorrencias.pdf', ['download' => 'pdf']) }}" class="border border-dark border-1 border rounded-2 m-2 fs-3 fw-bold text-dark btn btn-sm float-left" id="pdf">
+        <a href="{{ route('ocorrencias.pdf', ['download' => 'pdf']) }}"
+            class="border border-dark border-1 border rounded-2 m-2 fs-3 fw-bold text-dark btn btn-sm float-left"
+            id="pdf">
             <i class="fa-solid fa-file-pdf me-1"></i> PDF
         </a>
-        <button id="filtrar" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold" data-bs-toggle="modal" data-bs-target="#filterModal">
+        <button id="filtrar" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold"
+            data-bs-toggle="modal" data-bs-target="#filterModal">
             <i class="fa-solid fa-list me-1"></i> Filtrar
         </button>
-        <button id="add" class="border border-dark border-1 border rounded-2 m-1 fs-2 text-wrap fw-bold" data-bs-toggle="modal" data-bs-target="#infoModal">
+        <button id="add" class="border border-dark border-1 border rounded-2 m-1 fs-2 text-wrap fw-bold"
+            data-bs-toggle="modal" data-bs-target="#infoModal">
             Adicionar Ocorrência <i class="fa-solid fa-plus ms-1"></i>
         </button>
     </div>
@@ -50,12 +54,15 @@
     <!-- Container para informações -->
     <div id="ocorrenciaContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
         @foreach ($ocorrencias as $ocorrencia)
-            <div class="ocorrencia-card rounded text-center border border-dark border-2 excesso" data-id="{{ $ocorrencia->id }}" data-title="{{ $ocorrencia->titulo }}" data-created="{{ $ocorrencia->data }}">
+            <div class="ocorrencia-card rounded text-center border border-dark border-2 excesso"
+                data-id="{{ $ocorrencia->id }}" data-title="{{ $ocorrencia->titulo }}"
+                data-created="{{ $ocorrencia->data }}">
                 <div class="d-flex justify-content-end">
                     @if (auth()->check() && auth()->user()->key === '987xyz')
-                        <button class="btn btn-sm btn-warning m-2" onclick="editOcorrencia({{ $ocorrencia->id }})">Editar</button>
+                        <button class="btn btn-sm btn-warning m-2"
+                            onclick="editOcorrencia({{ $ocorrencia->id }})">Editar</button>
                         <div class="checkbox-container">
-                            <input type="checkbox" class="ocorrencia-checkbox" data-id="{{ $ocorrencia->id }}" >
+                            <input type="checkbox" class="ocorrencia-checkbox" data-id="{{ $ocorrencia->id }}">
                         </div>
                     @endif
                 </div>
@@ -64,11 +71,13 @@
                 <p><strong>Participantes:</strong></p>
                 <ul>
                     @foreach ($ocorrencia->participantes as $participante)
-                    <li>{{ $participante['nome'] }} ({{ $participante['curso'] }}, {{ $participante['turma'] }})</li>
-                @endforeach
+                        <li>{{ $participante['nome'] }} ({{ $participante['curso'] }}, {{ $participante['turma'] }})</li>
+                    @endforeach
                 </ul>
                 <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($ocorrencia->data)->format('d-m-Y') }}</p>
-                <p><strong>Status:</strong> {{ $ocorrencia->status == 0 ? 'Concluído' : ($ocorrencia->status == 1 ? 'Em Andamento' : 'Pendente') }}</p>
+                <p><strong>Status:</strong>
+                    {{ $ocorrencia->status == 0 ? 'Concluído' : ($ocorrencia->status == 1 ? 'Em Andamento' : 'Pendente') }}
+                </p>
             </div>
         @endforeach
     </div>
@@ -79,7 +88,7 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const selectModeBtn = document.getElementById('selectModeBtn');
             const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
             const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
@@ -88,7 +97,7 @@
                 '.ocorrencia-checkbox'); // Checkbox para selecionar ocorrências
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-            selectModeBtn.addEventListener('click', function() {
+            selectModeBtn.addEventListener('click', function () {
                 // Ativa ou desativa o modo de seleção
                 document.body.classList.toggle('select-mode');
                 selectModeBtn.classList.toggle('hidden');
@@ -97,7 +106,7 @@
             });
 
 
-            cancelDeleteBtn.addEventListener('click', function() {
+            cancelDeleteBtn.addEventListener('click', function () {
                 // Oculta o modo de seleção
                 document.body.classList.remove('select-mode');
                 selectModeBtn.classList.remove('hidden');
@@ -114,7 +123,7 @@
                 checkboxes.forEach(checkbox => checkbox.checked = false);
             });
 
-            confirmDeleteBtn.addEventListener('click', function() {
+            confirmDeleteBtn.addEventListener('click', function () {
                 const selectedOcorrencias = Array.from(checkboxes)
                     .filter(checkbox => checkbox.checked)
                     .map(checkbox => checkbox.dataset.id);
@@ -122,15 +131,15 @@
                 if (selectedOcorrencias.length > 0) {
                     // Envia uma requisição AJAX para deletar as ocorrências
                     fetch('/deletar-ocorrencias', { // Altere para o endpoint correto de ocorrências
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRF-Token': csrfToken
-                            },
-                            body: JSON.stringify({
-                                ocorrencias: selectedOcorrencias
-                            })
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-Token': csrfToken
+                        },
+                        body: JSON.stringify({
+                            ocorrencias: selectedOcorrencias
                         })
+                    })
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
