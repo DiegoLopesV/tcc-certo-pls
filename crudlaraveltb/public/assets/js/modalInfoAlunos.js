@@ -12,6 +12,7 @@ function showModal(aluno) {
     document.getElementById("data_nascimento").textContent = aluno.data_nascimento;
     document.getElementById("napne").textContent = aluno.napne;
 
+
     function closeAlunoModal() {
         const alunoModal = bootstrap.Modal.getInstance(document.getElementById("alunoModalInfo"));
         alunoModal.hide();
@@ -25,83 +26,62 @@ function showModal(aluno) {
     document.getElementById("close").onclick = closeAlunoModal;
 
 
+
+
     // Atualiza o ID do aluno no botão Deletar
     const deleteButton = document.getElementById("modalDeleteButton");
     deleteButton.setAttribute('data-aluno-id', aluno.id);
 
-    // Faz a requisição para buscar as ocorrências do aluno
-    fetch(`/alunos/${aluno.id}/ocorrencias`)
-        .then(response => response.json())
-        .then(ocorrencias => {
-            // Renderiza as ocorrências no modal
-            const ocorrenciasList = document.getElementById("ocorrenciasList");
-            ocorrenciasList.innerHTML = ''; // Limpa a lista de ocorrências atual
-            ocorrencias.forEach(ocorrencia => {
-                const li = document.createElement('li');
-                li.innerHTML = `Título: ${ocorrencia.titulo} <br> Data do Ocorrido: ${ocorrencia.data}<br> Descrição: ${ocorrencia.descricao}`;
-                ocorrenciasList.appendChild(li);
-            });
-        })
-        .catch(error => {
-            console.error('Erro ao buscar ocorrências:', error);
-        });
-
-    // Faz a requisição para buscar as ocorrências da enfermaria
-    fetch(`/alunos/${aluno.id}/enfermaria`)
-        .then(response => response.json())
-        .then(enfermaria => {
-            const enfermariaList = document.getElementById("enfermariaList");
-            enfermariaList.innerHTML = ''; // Limpa a lista de enfermaria atual
-            enfermaria.forEach(item => {
-                const li = document.createElement('li');
-                li.textContent = `${item.data} - ${item.titulo} - ${item.descricao}`;
-                enfermariaList.appendChild(li);
-            });
-        })
-        .catch(error => {
-            console.error('Erro ao buscar enfermaria:', error);
-        });
-
-    // Configura o botão de editar
-    const editButton = document.getElementById("modalEditButton");
-    editButton.onclick = function () {
-        const alunoModalInfo = bootstrap.Modal.getInstance(
-            document.getElementById("alunoModalInfo")
-        );
-        alunoModalInfo.hide();
-        editAluno(aluno.id); // Função para editar o aluno
-    };
-
-    // Configura o botão de deletar
-    deleteButton.onclick = function () {
-        const alunoId = deleteButton.getAttribute('data-aluno-id'); // Pega o ID do aluno do atributo
-
-        if (!alunoId) {
-            console.error('Nenhum ID de aluno fornecido');
-            return;
-        }
-
-        if (confirm('Tem certeza que deseja excluir este aluno?')) {
-            const alunoModalInfo = bootstrap.Modal.getInstance(document.getElementById("alunoModalInfo"));
-            alunoModalInfo.hide(); // Fecha o modal de informações do aluno
-            
-            document.getElementById('alunoModalInfo').addEventListener('hidden.bs.modal', function() {
-                const backdrops = document.querySelectorAll('.modal-backdrop');
-                backdrops.forEach(backdrop => backdrop.remove());
-                document.body.classList.remove('modal-open');
-                document.body.style.removeProperty('padding-right');
-            });
-
-            deleteAluno(alunoId);
-        }
-    };
 
     // Mostra o modal
     const alunoModalInfo = new bootstrap.Modal(document.getElementById("alunoModalInfo"));
     alunoModalInfo.show();
 }
 
-document.getElementById('emitirRelatorioNapneButton').onclick = function() {
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Capture o modal
+    const modal = document.getElementById('alunoModalInfo');
+
+
+    // Ouça o evento de abertura do modal
+    modal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget; // O botão que foi clicado
+        const alunoId = button.getAttribute('data-id');
+        const alunoNome = button.getAttribute('data-nome');
+        const alunoCurso = button.getAttribute('data-curso');
+        const alunoTurma = button.getAttribute('data-turma');
+        const alunoCpf = button.getAttribute('data-cpf');
+        const alunoNomePais = button.getAttribute('data-nome-pais');
+        const alunoTelefone = button.getAttribute('data-telefone');
+        const alunoTelefonePais = button.getAttribute('data-telefone-pais');
+        const alunoEmail = button.getAttribute('data-email');
+        const alunoEmailPais = button.getAttribute('data-email-pais');
+        const alunoDataNascimento = button.getAttribute('data-data-nascimento');
+        const alunoNapne = button.getAttribute('data-napne'); // Adicionei o napne como exemplo
+
+
+        // Preenche o modal com as informações
+        document.getElementById('modalNome').textContent = alunoNome;
+        document.getElementById('modalCurso').textContent = alunoCurso;
+        document.getElementById('modalTurma').textContent = alunoTurma;
+        document.getElementById('modalCpf').textContent = alunoCpf;
+        document.getElementById('modalNomePais').textContent = alunoNomePais;
+        document.getElementById('modalTelefone').textContent = alunoTelefone;
+        document.getElementById('modalTelefonePais').textContent = alunoTelefonePais;
+        document.getElementById('modalEmail').textContent = alunoEmail;
+        document.getElementById('modalEmailPais').textContent = alunoEmailPais;
+        document.getElementById('data_nascimento').textContent = alunoDataNascimento;
+        document.getElementById('napne').textContent = alunoNapne;  // Preenche o campo do Napne se necessário
+    });
+});
+
+
+
+
+
+
+document.getElementById('emitirRelatorioNapneButton').onclick = function () {
     // Coleta os dados do modal
     const alunoData = {
         nome: document.getElementById("modalNome").textContent,
@@ -115,6 +95,7 @@ document.getElementById('emitirRelatorioNapneButton').onclick = function() {
         email_pais: document.getElementById("modalEmailPais").textContent
     };
 
+
     // Envia os dados para o servidor
     fetch('/alunos/gerar-relatorio-napne', {
         method: 'POST',
@@ -124,23 +105,24 @@ document.getElementById('emitirRelatorioNapneButton').onclick = function() {
         },
         body: JSON.stringify(alunoData)
     })
-    .then(response => response.blob())
-    .then(blob => {
-        // Cria um link para download do PDF
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'relatorio_napne.pdf';
-        document.body.appendChild(a); // necessário para o Firefox
-        a.click();
-        a.remove();
-    })
-    .catch(error => {
-        console.error('Erro ao gerar PDF:', error);
-    });
+        .then(response => response.blob())
+        .then(blob => {
+            // Cria um link para download do PDF
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'relatorio_napne.pdf';
+            document.body.appendChild(a); // necessário para o Firefox
+            a.click();
+            a.remove();
+        })
+        .catch(error => {
+            console.error('Erro ao gerar PDF:', error);
+        });
 };
 
-document.getElementById('gerarDesempenhoButton').onclick = function() {
+
+document.getElementById('gerarDesempenhoButton').onclick = function () {
     const alunoId = document.getElementById("modalDeleteButton").getAttribute('data-aluno-id');
     if (alunoId) {
         // Redireciona para a rota que gera o PDF
