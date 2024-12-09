@@ -12,6 +12,7 @@ function showModal(aluno) {
     document.getElementById("data_nascimento").textContent = aluno.data_nascimento;
     document.getElementById("napne").textContent = aluno.napne;
 
+
     function closeAlunoModal() {
         const alunoModal = bootstrap.Modal.getInstance(document.getElementById("alunoModalInfo"));
         alunoModal.hide();
@@ -54,7 +55,7 @@ function showModal(aluno) {
             enfermariaList.innerHTML = ''; // Limpa a lista de enfermaria atual
             enfermaria.forEach(item => {
                 const li = document.createElement('li');
-                li.textContent = `${item.data} - ${item.titulo} - ${item.descricao}`;
+                li.innerHTML = `Titulo: ${item.titulo} <br>  Queixa: ${item.queixa}  <br> Responsável: ${item.responsavel}  <br> Data do ocorrido: ${item.data}<br>  Inicío do Atendimento: ${item.horaInicio} <br> Final do Atendimento: ${item.horaFinal} <br>Atividade Realizada: ${item.atividade_realizada}  <br>Observações: ${item.descricao}`;
                 enfermariaList.appendChild(li);
             });
         })

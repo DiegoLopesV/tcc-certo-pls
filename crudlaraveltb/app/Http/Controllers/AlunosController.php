@@ -521,24 +521,18 @@ public function getEnfermariasAluno($id)
             return response()->json(['message' => 'Aluno não encontrado'], 404);
         }
 
-        // Buscar todas as ocorrências
-        $enfermaria = Enfermaria::all();
+        // Buscar todas as enfermarias
+        $enfermarias = Enfermaria::all();
 
-        // Filtrar as ocorrências que contenham exatamente o nome do aluno no campo de participantes
-        $enfermariasFiltradas = $enfermaria->filter(function ($enfermaria) use ($aluno) {
-            // Separar a string de participantes por vírgulas
-            $pessoas = explode(',', $enfermaria->pessoas);
-            
-            // Limpar os espaços em branco extras ao redor dos nomes
-            $pessoas = array_map('trim', $pessoas);
-
-            // Verificar se o nome do aluno está na lista de participantes
-            return in_array($aluno->nome, $pessoas);
+        // Filtrar as enfermarias que contenham o nome e a turma do aluno
+        $enfermariasFiltradas = $enfermarias->filter(function ($enfermaria) use ($aluno) {
+            // Verificar se o nome e a turma da enfermaria correspondem ao aluno
+            return $enfermaria->pessoas === $aluno->nome && $enfermaria->turma === $aluno->turma;
         });
 
         return response()->json($enfermariasFiltradas->values());
     } catch (\Exception $e) {
-        return response()->json(['message' => 'Erro ao buscar ocorrências', 'error' => $e->getMessage()], 500);
+        return response()->json(['message' => 'Erro ao buscar enfermarias', 'error' => $e->getMessage()], 500);
     }
 }
 

@@ -18,6 +18,7 @@ use App\Models\Enfermaria;
 use App\Http\Controllers\ChaveTemporariaController;
 use App\Http\Controllers\TerceirizadosController;
 use App\Http\Controllers\DesempenhoPDFController;
+use App\Http\Controllers\ProfessoresController;
 
 Route::get('send-mail', [MailController::class, 'index']);
 

@@ -137,7 +137,7 @@ class ProfessoresController extends Controller
 
     public function excluirServidores(Request $request)
     {
-        \Log::info('Payload recebido para exclusão: ', $request->all());  // Verifique se a informação aparece aqui
+        //Log::info('Payload recebido para exclusão: ', $request->all());  // Verifique se a informação aparece aqui
         
         $ids = $request->input('servidores');
         $tipo = $request->input('tipo');

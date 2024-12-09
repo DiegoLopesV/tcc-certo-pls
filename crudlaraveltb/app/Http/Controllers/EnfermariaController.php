@@ -87,7 +87,16 @@ class EnfermariaController extends Controller
         $enfermaria->pessoas = $request->pessoas;
         $enfermaria->turma = $request->turma;
         $enfermaria->data = $request->data;
-        $enfermaria->status = $request->status;
+        $enfermaria->responsavel = $request->responsavel;
+        $enfermaria->atividade_realizada = $request->atividade_realizada;
+        $enfermaria->queixa = $request->queixa;
+        $enfermaria->conduta = $request->conduta;
+        $enfermaria->descricao = $request->descricao;
+        $enfermaria->idade = $request->idade;
+        $enfermaria->horaInicio = $request->horaInicio;
+        $enfermaria->horaFinal = $request->horaFinal;
+
+
         $enfermaria->save();
 
         return response()->json(['message' => 'Atendimento atualizado com sucesso!']);
