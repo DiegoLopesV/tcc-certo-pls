@@ -87,7 +87,6 @@
 
 
                 <p><strong>Data:</strong> {{ \Carbon\Carbon::parse($enfermaria->data)->format('d-m-Y') }}</p>
-                <p><strong>Status:</strong> {{ $enfermaria->status }}</p>
             </div>
         @endforeach
     </div>

@@ -152,7 +152,7 @@
                 }
             })
             .catch(error => console.error('Erro:', error));
-            location.reload();
+           location.reload();
     });
 
     function renderEnfermaria(enfermaria) {
@@ -224,7 +224,7 @@
             const dataFormatada = new Date(enfermaria.data).toISOString().split('T')[0];
             document.getElementById('data').value = dataFormatada;
 
-            document.getElementById('status').value = enfermaria.status;
+            
 
             // Remove qualquer botão de excluir existente antes de adicionar um novo
             const existingDeleteButton = document.querySelector('.btn-danger');

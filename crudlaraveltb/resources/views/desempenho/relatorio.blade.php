@@ -97,26 +97,40 @@
 
         <!-- Relatório Pedagógico -->
         <h6>Ocorrências</h6>
-        <ul id="ocorrenciasList">
-            @if(!empty($aluno->ocorrencias) && count($aluno->ocorrencias) > 0)
-                @foreach($aluno->ocorrencias as $ocorrencia)
-                    <li>{{ $ocorrencia }}</li>
+        <ul>
+            @if($ocorrencias->isNotEmpty())
+                @foreach($ocorrencias as $ocorrencia)
+                    <li>
+                        <strong>Título: </strong> {{ $ocorrencia->titulo }}<br>
+                        <strong>Descrição: </strong> {{ $ocorrencia->descricao }}<br>
+                        <strong>Data: </strong>{{ \Carbon\Carbon::parse($ocorrencia->data)->format('d-m-Y') }}
+                    </li>
                 @endforeach
             @else
-                <li>Sem ocorrências registradas.</li>
+                <li>Sem registros de ocorrências.</li>
             @endif
         </ul>
-
+        
         <h6>Enfermaria</h6>
-        <ul id="enfermariaList">
-            @if(!empty($aluno->enfermarias) && count($aluno->enfermarias) > 0)
-                @foreach($aluno->enfermarias as $enfermaria)
-                    <li>{{ $enfermaria }}</li>
+        <ul>
+            @if($enfermarias->isNotEmpty())
+                @foreach($enfermarias as $enfermaria)
+                    <li>
+                        <strong>Título: </strong>{{ $enfermaria->titulo }}<br>
+                        <strong>Queixa: </strong>{{ $enfermaria->queixa }}<br>
+                        <strong>Responsável: </strong>{{ $enfermaria->responsavel }}<br>
+                        <strong>Data: </strong>{{ \Carbon\Carbon::parse($enfermaria->data)->format('d-m-Y') }}<br>
+                        <strong>Horário de Início: </strong>{{ $enfermaria->horaInicio }}<br>
+                        <strong>Horário de Final: </strong>{{ $enfermaria->horaFinal}}<br>
+                        <strong>Atividade Realizada: </strong>{{ $enfermaria->atividade_realizada}}<br>
+                        <strong>Observações: </strong>{{ $enfermaria->descricao}}<br>
+                    </li>
                 @endforeach
             @else
                 <li>Sem registros de enfermaria.</li>
             @endif
         </ul>
+        
     </div>
 
 </body>
