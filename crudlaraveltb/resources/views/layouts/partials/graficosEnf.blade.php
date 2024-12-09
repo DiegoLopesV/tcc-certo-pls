@@ -28,111 +28,12 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        @foreach (['Info 1', 'Info 2', 'Info 3', 'Info 4', 'Pg 1', 'Pg 2', 'Pg 3', 'Adm 1', 'Adm 2', 'Adm 3', 'Jogos 1', 'Jogos 2', 'Jogos 3', 'Jogos 4', 'Mecânica 1', 'Mecânica 2', 'Mecânica 3', 'Eletrônica 1', 'Eletrônica 2', 'Eletrônica 3', 'Contabilidade 1', 'Contabilidade 2', 'Contabilidade 3', 'Pf 1', 'Pf 2', 'Pf 3'] as $turma)
                         <div>
-                            <input type="checkbox" name="turmas[]" value="Info 1" {{ in_array('Info 1', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma1">Info 1</label>
+                            <input type="checkbox" name="turmas[]" value="{{ $turma }}" {{ in_array($turma, request('turmas', [])) ? 'checked' : '' }}>
+                            <label>{{ $turma }}</label>
                         </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Info 2" {{ in_array('Info 2', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma2">Info 2</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Info 3" {{ in_array('Info 3', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma3">Info 3</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Info 4" {{ in_array('Info 4', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma4">Info 4</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Pg 1" {{ in_array('Pg 1', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma5">Pg 1</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Pg 2" {{ in_array('Pg 2', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma6">Pg 2</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Pg 3" {{ in_array('Pg 3', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma7">Pg 3</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Adm 1" {{ in_array('Adm 1', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma8">Adm 1</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Adm 2" {{ in_array('Adm 2', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma9">Adm 2</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Adm 3" {{ in_array('Adm 3', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma10">Adm 3</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Jogos 1" {{ in_array('Jogos 1', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma11">Jogos 1</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Jogos 2" {{ in_array('Jogos 2', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma12">Jogos 2</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Jogos 3" {{ in_array('Jogos 3', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma13">Jogos 3</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Jogos 4" {{ in_array('Jogos 4', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma14">Jogos 4</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Mecânica 1" {{ in_array('Mecânica 1', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma15">Mecânica 1</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Mecânica 2" {{ in_array('Mecânica 2', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma16">Mecânica 2</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Mecânica 3" {{ in_array('Mecânica 3', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma17">Mecânica 3</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Eletrônica 1" {{ in_array('Eletrônica 1', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma18">Eletrônica 1</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Eletrônica 2" {{ in_array('Eletrônica 2', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma19">Eletrônica 2</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Eletrônica 3" {{ in_array('Eletrônica 3', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma20">Eletrônica 3</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Contabilidade 1" {{ in_array('Contabilidade 1', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma21">Contabilidade 1</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Contabilidade 2" {{ in_array('Contabilidade 2', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma22">Contabilidade 2</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Contabilidade 3" {{ in_array('Contabilidade 3', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma23">Contabilidade 3</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Pf 1" {{ in_array('Pf 1', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma24">Pf 1</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Pf 2" {{ in_array('Pf 2', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma25">Pf 2</label>
-                        </div>
-                        <div>
-                            <input type="checkbox" name="turmas[]" value="Pf 3" {{ in_array('Pf 3', request('turmas', [])) ? 'checked' : '' }}>
-                            <label for="turma26">Pf 3</label>
-                        </div>
-                        
+                        @endforeach
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
@@ -145,9 +46,8 @@
 
     <!-- Canvas para o gráfico -->
     <canvas class="d-flex mx-auto" style="max-width: 800px; max-height: 600px;" id="myChart"></canvas>
-    
+
     <script>
-        // Mapeamento de cores para cada turma
         const turmaColors = {
     'Info 1': 'rgba(75, 192, 192, 0.2)',  // Verde
     'Info 2': 'rgba(75, 192, 192, 0.4)',  // Verde mais escuro
@@ -206,7 +106,6 @@ const borderColors = {
     'Pf 3': 'rgba(0, 0, 0, 1)'  
 };
 
-
         // Dados do backend
         const dataFromBackend = @json($data);
 
@@ -215,22 +114,28 @@ const borderColors = {
         const datasets = [];
 
         dataFromBackend.forEach((entry) => {
-            if (!labels.includes(entry.month)) {
-                labels.push(entry.month);
+            // Verifica se os valores são válidos e define valores padrão
+            const month = entry.month;
+            const label = `${month}`;
+
+            if (!labels.includes(label)) {
+                labels.push(label);
             }
 
             let dataset = datasets.find(ds => ds.label === entry.turma);
             if (!dataset) {
                 dataset = {
                     label: entry.turma,
-                    data: [],
+                    data: Array(labels.length).fill(0), // Preenche com zeros inicialmente
                     backgroundColor: turmaColors[entry.turma] || 'rgba(201, 203, 207, 0.2)',
                     borderColor: borderColors[entry.turma] || 'rgba(201, 203, 207, 1)',
                     borderWidth: 1
                 };
                 datasets.push(dataset);
             }
-            dataset.data.push(entry.total);
+
+            const labelIndex = labels.indexOf(label);
+            dataset.data[labelIndex] = entry.total; // Preenche com o total correto
         });
 
         // Criando o gráfico
