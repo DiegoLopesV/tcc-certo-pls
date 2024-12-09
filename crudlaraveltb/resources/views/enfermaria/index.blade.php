@@ -62,7 +62,7 @@
     <div id="enfermariaContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
         @foreach ($enfermaria as $enfermaria)
             <div class="enfermaria-card rounded text-center border border-dark border-2 excesso"
-                data-id="{{ $enfermaria->id }}" data-title="{{ $enfermaria->titulo }}"
+                data-id="{{ $enfermaria->id }}" data-turma="{{ $enfermaria->turma }}" data-title="{{ $enfermaria->titulo }}"
                 data-created="{{ $enfermaria->data }}">
                 <div class="d-flex justify-content-end">
                     @if (auth()->check() && auth()->user()->key === '987xyz')
@@ -81,7 +81,7 @@
                 <p><strong>Hora de Início:</strong> {{ $enfermaria->horaIncio }}</p>
                 <p><strong>Horário de Término:</strong> {{ $enfermaria->horaFinal }}</p>
                 <p><strong>Queixa:</strong> {{ $enfermaria->queixa }}</p>
-                <p><strong>Atividade Realizada:</strong> {{ $enfermaria->atividade }}</p>
+                <p><strong>Atividade Realizada:</strong> {{ $enfermaria->atividade_realizada }}</p>
                 <p><strong>Conduta:</strong> {{ $enfermaria->conduta }}</p>
                 <p><strong>Outras informações/observações:</strong> {{ $enfermaria->descricao }}</p>
 
