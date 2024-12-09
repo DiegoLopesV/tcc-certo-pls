@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,15 +11,19 @@
     @include('layouts.partials.essentials')
 </head>
 
+
 <body id="body">
+
 
     <!-- Navbar -->
     @include('layouts.partials.navbarlogged')
+
 
     <!-- Título da página -->
     <div class="m-4 text-center fs-1 fw-bold">
         Resultado Pesquisa
     </div>
+
 
     <!-- Seção de Botões -->
     <div class="d-flex align-items-center justify-content-center border border-dark border-2 p-2 text-center">
@@ -29,11 +34,13 @@
             <i class="fa-solid fa-file-pdf me-1"></i> PDF
         </a>
 
+
         <!-- Botão para abrir modal de filtro -->
         <button id="filtrar" class="border border-dark border-1 border rounded-2 m-1 fs-2 fw-bold"
             data-bs-toggle="modal" data-bs-target="#filterModal">
             <i class="fa-solid fa-list me-1"></i> Filtrar
         </button>
+
 
         <!-- Botão para adicionar ocorrência -->
         <button id="add" class="border border-dark border-1 border rounded-2 m-1 fs-2 text-wrap fw-bold"
@@ -42,11 +49,13 @@
         </button>
     </div>
 
+
     <!-- Seção para ordenação -->
     <div class="border border-dark border-2 border-top-0">
         <!-- Link que abre o dropdown -->
         <a class="ms-1 fs-2 text-dark text-decoration-none" href="#" id="ordenarLink">Ordenar ▼</a>
     </div>
+
 
     <!-- Container para informações -->
     <div id="ocorrenciaContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
@@ -61,6 +70,7 @@
                         @endif
                     </div>
 
+
                     <p><strong>Título:</strong> {{ $ocorrencia->titulo }}</p>
                     <p><strong>Descrição:</strong> {{ $ocorrencia->descricao }}</p>
                     <p><strong>Participantes:</strong> {{ $ocorrencia->participantes }}</p>
@@ -68,6 +78,7 @@
                     <p><strong>Data:</strong> {{ $ocorrencia->created_at }}</p>
                     <p><strong>Status:</strong>
                         @php
+
 
                             if ($ocorrencia->status == 0) {
                                 echo 'Concluído';
@@ -79,6 +90,7 @@
                                 echo 'Pendente';
                             }
 
+
                         @endphp</p>
                 </div>
         @endforeach
@@ -86,6 +98,8 @@
             <div class="aluno-card rounded text-center border border-dark border-2 excesso" data-id="{{ $enfermaria->id }}">
                 <div class="d-flex justify-content-start">
                     Atendimento Enfermaria
+
+
 
 
                     @if(auth()->check() && auth()->user()->key === '987xyz')
@@ -96,6 +110,7 @@
                     @endif
                 </div>
 
+
                 <p><strong>Título:</strong> {{ $enfermaria->titulo }}</p>
                 <p><strong>Descrição:</strong> {{ $enfermaria->descricao }}</p>
                 <p><strong>Aluno Atendido:</strong> {{ $enfermaria->pessoas }}</p>
@@ -103,14 +118,22 @@
                 <p><strong>Data:</strong> {{ $enfermaria->data }}</p>
                 <p><strong>Status:</strong> {{ $enfermaria->status }}</p>
 
+
             </div>
         @endforeach
         @foreach ($alunos as $aluno)
             @if ($aluno->turma !== 'passou de ano') <!-- Manter o filtro original -->
                 <div class="aluno-card rounded text-center border border-dark border-2 excesso" data-bs-toggle="modal"
-                    data-bs-target="#alunoModalInfo" data-id="{{ $aluno->id }}" data-turma="{{ $aluno->turma }}"
+                    data-bs-target="#alunoModalInfo" data-id="{{ $aluno->id }}" data-nome="{{ $aluno->nome }}"
+                    data-curso="{{ $aluno->curso }}" data-turma="{{ $aluno->turma }}" data-cpf="{{ $aluno->cpf }}"
+                    data-nome-pais="{{ $aluno->nome_pais }}" data-telefone="{{ $aluno->telefone }}"
+                    data-telefone-pais="{{ $aluno->telefone_pais }}" data-email="{{ $aluno->email }}"
+                    data-email-pais="{{ $aluno->email_pais }}"
+                    data-data-nascimento="{{ \Carbon\Carbon::parse($aluno->data_nascimento)->format('d-m-Y') }}"
+                    data-napne="{{ $aluno->napne }}"
                     style="background-color: {{ $aluno->napne === 'Sim' ? '#cce7ff' : 'transparent' }};">
-                    <!-- O card agora é clicável para abrir o modal -->
+
+
                     <img src="{{ $aluno->foto }}" alt="Foto do Aluno" class="img-fluid img-preview mt-4 mb-3"
                         style="cursor: pointer;">
                     <p><strong>Nome:</strong> {{ $aluno->nome }}</p>
@@ -118,20 +141,38 @@
                     <p><strong>Turma:</strong> {{ $aluno->turma }}</p>
                     <p><strong>Data de Nascimento:</strong>
                         {{ \Carbon\Carbon::parse($aluno->data_nascimento)->format('d-m-Y') }}</p>
-
-
                 </div>
             @endif
         @endforeach
 
+
+
+
+
+
+        <!-- Botões adicionais -->
+        @include('layouts.partials.btnOco')
+        @include('layouts.partials.formEditAluno')
+        @include('layouts.partials.btnAlunos')
+        @include('layouts.partials.btnFiltro')
     </div>
 
-    <!-- Botões adicionais -->
-    @include('layouts.partials.btnOco')
-    @include('layouts.partials.btnFiltro')
 
-    <script src="{{ asset('assets/js/formOco.js') }}"></script>
-    <script src="{{ asset('assets/js/editOco.js') }}"></script>
+
+
+
+
+    <script src="{{ asset('assets/js/dropdown.js') }}"></script>
+    <script src="{{ asset('assets/js/imagePreview.js') }}"></script>
+    <script src="{{ asset('assets/js/formHandler.js') }}"></script>
+    <script src="{{ asset('assets/js/modalInfoAlunos.js') }}"></script>
+    <script src="{{ asset('assets/js/renderAluno.js') }}"></script>
+    <script src="{{ asset('assets/js/updateAluno.js') }}"></script>
+    <script src="{{ asset('assets/js/editAluno.js') }}"></script>
+    <script src="{{ asset('assets/js/deleteAluno.js') }}"></script>
+    <script src="{{ asset('assets/js/utilidadesAluno.js') }}"></script>
+    <script src="{{ asset('assets/js/showRelatorioNapne.js') }}"></script>
+
 
     <script>
         const pdfButton = document.getElementById('pdf');
@@ -140,5 +181,6 @@
     </script>
 </body>
 @include('layouts.partials.btnOrdenar')
+
 
 </html>
