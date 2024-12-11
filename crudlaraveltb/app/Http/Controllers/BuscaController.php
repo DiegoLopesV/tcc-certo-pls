@@ -9,31 +9,33 @@ use App\Models\Alunos;
 
 class BuscaController extends Controller
 {
-    
+
     public function index(Request $request)
     {
-        // Verifica se há uma pesquisa
+        // Obtém o valor enviado no campo 'search'
         $search = $request->input('search');
-        
-        // Se houver uma pesquisa, filtra as ocorrências e as entidades de enfermaria
-        if ($search) {
-            // Busca ocorrências com base no título
-            $ocorrencias = Ocorrencias::where('titulo', 'like', '%' . $search . '%')->get();
-            
-            // Busca entidades de enfermaria com base no título
-            $enfermarias = Enfermaria::where('titulo', 'like', '%' . $search . '%')->get();
 
-            $alunos = Alunos::where('nome', 'like', '%' . $search . '%')->get();
-            // Passa os resultados para a view
-            return view('busca.index', compact('ocorrencias', 'enfermarias', 'alunos', 'search'));
-        } else {
-            // Caso contrário, busca todas as ocorrências e entidades de enfermaria
-            $ocorrencias = Ocorrencias::all();
-            $enfermarias = Enfermaria::all();
-            $alunos = Alunos::all();
-            // Passa os resultados para a view
-            return view('busca.index', compact('ocorrencias', 'enfermarias', 'alunos'));
-        }
+        // Consulta para alunos com filtros combinados
+        $alunos = Alunos::query()
+            ->where(function ($query) use ($search) {
+                $query->where('nome', 'like', '%' . $search . '%')
+                    ->orWhere('turma', 'like', '%' . $search . '%');
+            })
+            ->get();
+
+        // Consulta para ocorrências
+        $ocorrencias = Ocorrencias::query()
+            ->where('titulo', 'like', '%' . $search . '%')
+            ->get();
+
+        // Consulta para enfermarias
+        $enfermarias = Enfermaria::query()
+            ->where('titulo', 'like', '%' . $search . '%')
+            ->get();
+
+        // Retorna os resultados para a view
+        return view('busca.index', compact('ocorrencias', 'enfermarias', 'alunos', 'search'));
+
     }
 
 }
