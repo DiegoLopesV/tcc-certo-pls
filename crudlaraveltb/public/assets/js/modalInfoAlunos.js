@@ -4,6 +4,7 @@ function showModal(aluno) {
     document.getElementById("modalCurso").textContent = aluno.curso;
     document.getElementById("modalTurma").textContent = aluno.turma;
     document.getElementById("modalCpf").textContent = aluno.cpf;
+    document.getElementById("modalMatricula").textContent = aluno.numero_matricula;
     document.getElementById("modalNomePais").textContent = aluno.nome_pais;
     document.getElementById("modalTelefone").textContent = aluno.telefone;
     document.getElementById("modalTelefonePais").textContent = aluno.telefone_pais;

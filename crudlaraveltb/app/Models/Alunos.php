@@ -22,6 +22,7 @@ class Alunos extends Model
         'ano_atual',
         'foto',
         'status_reprovacao',
+        'numero_matricula',
     ];
 
     // No modelo Alunos
