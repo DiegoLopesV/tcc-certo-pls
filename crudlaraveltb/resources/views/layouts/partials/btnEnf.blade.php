@@ -10,58 +10,50 @@
             <div class="modal-body">
                 <form id="infoForm">
                     <div class="form-group">
-                        <label for="titulo">Título</label>
-                        <input type="text" class="form-control" id="titulo" name="titulo" required>
-                    </div>
-                    <div class="form-group">
                         <label for="responsavel">Responsável</label>
-                        <input type="text" class="form-control" id="responsavel" name="responsavel" required>
+                        <input type="text" class="form-control" id="responsavel" name="responsavel" >
                     </div>
                     <div class="form-group mb-3">
                         <label for="pessoas">Aluno Atendido</label>
-                        <input type="text" class="form-control" id="pessoas" name="pessoas" required>
+                        <input type="text" class="form-control" id="pessoas" name="pessoas" >
                     </div>
                     <div class="form-group">
                         <label for="idade">Idade</label>
-                        <input type="text" class="form-control" id="idade" name="idade" required>
+                        <input type="text" class="form-control" id="idade" name="idade" >
                     </div>
-                    <div class="form-floating mb-3">
-                        <select id="turma" class="form-select" name="turma" required>
-                            <!-- As opções são preenchidas via JavaScript -->
-                        </select>
-                        <label for="turma">Turma</label>
+                    <label for="turma">Turma</label>
+                    <input type="text" class="form-control" id="turma" name="turma" >
                     </div>
-
                     <div class="form-group">
                         <label for="horaInicio">Hora Início</label>
-                        <input type="text" class="form-control" id="horaInicio" name="horaInicio" required>
+                        <input type="text" class="form-control" id="horaInicio" name="horaInicio" >
                     </div>
                     
                     <div class="form-group">
                         <label for="horaFinal">Horário de Término</label>
-                        <input type="text" class="form-control" id="horaFinal" name="horaFinal" required>
+                        <input type="text" class="form-control" id="horaFinal" name="horaFinal" >
                     </div>
                     <div class="form-group">
                         <label for="queixa">Queixa</label>
-                        <textarea type="text" class="form-control" id="queixa" name="queixa"  rows="2" required> </textarea>
+                        <textarea type="text" class="form-control" id="queixa" name="queixa"  rows="2" > </textarea>
                     </div>
                     <div class="form-group">
                         <label for="atividade_realizada">Atividade Realizada</label>
-                        <textarea type="text" class="form-control" id="atividade_realizada" name="atividade_realizada" rows="2" required> </textarea>
+                        <textarea type="text" class="form-control" id="atividade_realizada" name="atividade_realizada" rows="2" > </textarea>
                     </div>
                     <div class="form-group">
                         <label for="conduta">Conduta</label>
-                        <textarea type="text" class="form-control" id="conduta" name="conduta" rows="2" required></textarea>
+                        <textarea type="text" class="form-control" id="conduta" name="conduta" rows="2" ></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="descricao">Outras informações/observações</label>
-                        <textarea class="form-control" id="descricao" name="descricao" rows="2" required></textarea>
+                        <textarea class="form-control" id="descricao" name="descricao" rows="2" ></textarea>
                     </div>
 
                     <div class="form-group">
                         <label for="data">Data</label>
-                        <input type="date" class="form-control" id="data" name="data" required>
+                        <input type="date" class="form-control" id="data" name="data" >
                     </div>
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </form>
@@ -71,7 +63,7 @@
 </div>
 
 
-<script src="{{ asset('assets/js/dropdownTurmas.js') }}"></script>
+
 <script>
     document.getElementById('infoForm').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -90,7 +82,6 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    titulo: formData.get('titulo'),
                     responsavel: formData.get('responsavel'),
                     atividade_realizada: formData.get('atividade_realizada'),
                     queixa: formData.get('queixa'),
@@ -110,7 +101,6 @@
                     'Atendimento atualizada com sucesso!') {
                     if (enfermariaId) {
                         updateEnfermaria(enfermariaId, {
-                            titulo: formData.get('titulo'),
                     responsavel: formData.get('responsavel'),
                     atividade_realizada: formData.get('atividade_realizada'),
                     queixa: formData.get('queixa'),
@@ -127,7 +117,6 @@
                     } else {
                         renderEnfermaria({
                             id: data.id,
-                            titulo: formData.get('titulo'),
                     responsavel: formData.get('responsavel'),
                     atividade_realizada: formData.get('atividade_realizada'),
                     queixa: formData.get('queixa'),
@@ -152,7 +141,7 @@
                 }
             })
             .catch(error => console.error('Erro:', error));
-           location.reload();
+          location.reload();
     });
 
     function renderEnfermaria(enfermaria) {
@@ -164,7 +153,6 @@
             <div class="d-flex justify-content-end">
                 <button class="btn btn-sm btn-warning m-2" onclick="editEnfermaria(${enfermaria.id})">Editar</button>
             </div>
-                <p><strong>Título:</strong> ${enfermaria.titulo}</p>
                 <p><strong>Responsável:</strong> ${enfermaria.responsavel}</p>
                 <p><strong>Aluno Atendido:</strong> ${enfermaria.pessoas}</p>
                 <p><strong>Idade:</strong> ${enfermaria.idade}</p>
@@ -188,7 +176,6 @@
                 <div class="d-flex justify-content-end">
                     <button class="btn btn-sm btn-warning m-2" onclick="editEnfermaria(${id})">Editar</button>
                 </div>
-                <p><strong>Título:</strong> ${enfermaria.titulo}</p>
                 <p><strong>Responsável:</strong> ${enfermaria.responsavel}</p>
                 <p><strong>Aluno Atendido:</strong> ${enfermaria.pessoas}</p>
                 <p><strong>Idade:</strong> ${enfermaria.idade}</p>
@@ -208,7 +195,6 @@
     fetch(`/enfermaria/${id}/edit`)
         .then(response => response.json())
         .then(enfermaria => {
-            document.getElementById('titulo').value = enfermaria.titulo;
             document.getElementById('descricao').value = enfermaria.descricao;
             document.getElementById('pessoas').value = enfermaria.pessoas;
             document.getElementById('turma').value = enfermaria.turma;

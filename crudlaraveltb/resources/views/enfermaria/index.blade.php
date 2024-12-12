@@ -62,18 +62,15 @@
     <div id="enfermariaContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
         @foreach ($enfermaria as $enfermaria)
             <div class="enfermaria-card rounded text-center border border-dark border-2 excesso"
-                data-id="{{ $enfermaria->id }}" data-turma="{{ $enfermaria->turma }}" data-title="{{ $enfermaria->titulo }}"
+                data-id="{{ $enfermaria->id }}" data-turma="{{ $enfermaria->turma }}" data-title="{{ $enfermaria->descricao }}"
                 data-created="{{ $enfermaria->data }}">
                 <div class="d-flex justify-content-end">
-                    @if (auth()->check() && auth()->user()->key === '987xyz')
                         <button class="btn btn-sm btn-warning m-2"
                             onclick="editEnfermaria({{ $enfermaria->id }})">Editar</button>
                         <div class="checkbox-container">
                             <input type="checkbox" class="enfermaria-checkbox" data-id="{{ $enfermaria->id }}">
                         </div>
-                    @endif
                 </div>
-                <p><strong>Título:</strong> {{ $enfermaria->titulo }}</p>
                 <p><strong>Responsável:</strong> {{ $enfermaria->responsavel }}</p>
                 <p><strong>Aluno Atendido:</strong> {{ $enfermaria->pessoas }}</p>
                 <p><strong>Idade:</strong> {{ $enfermaria->idade }}</p>
