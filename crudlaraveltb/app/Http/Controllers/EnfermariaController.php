@@ -82,7 +82,6 @@ class EnfermariaController extends Controller
     public function update(Request $request, $id)
     {
         $enfermaria = Enfermaria::findOrFail($id);
-        $enfermaria->titulo = $request->titulo;
         $enfermaria->descricao = $request->descricao;
         $enfermaria->pessoas = $request->pessoas;
         $enfermaria->turma = $request->turma;

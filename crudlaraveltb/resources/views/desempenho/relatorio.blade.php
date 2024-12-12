@@ -116,7 +116,6 @@
             @if($enfermarias->isNotEmpty())
                 @foreach($enfermarias as $enfermaria)
                     <li>
-                        <strong>Título: </strong>{{ $enfermaria->titulo }}<br>
                         <strong>Queixa: </strong>{{ $enfermaria->queixa }}<br>
                         <strong>Responsável: </strong>{{ $enfermaria->responsavel }}<br>
                         <strong>Data: </strong>{{ \Carbon\Carbon::parse($enfermaria->data)->format('d-m-Y') }}<br>
