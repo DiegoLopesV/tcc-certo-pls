@@ -23,8 +23,8 @@
         </ul>
     </div>
 @endif
-
-	<form method="post" action="{{ route('register.perform') }}" enctype="multipart/form-data">>
+	
+	<form method="post" action="{{ route('register.perform') }}" enctype="multipart/form-data">
  
     	<input type="hidden" name="_token" value="{{ csrf_token() }}" />
     	<img class="mb-4" src="{!! url('assets/img/ifpr_vertical.svg') !!}" alt="" width="202" height="187">

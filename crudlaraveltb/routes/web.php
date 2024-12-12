@@ -68,10 +68,7 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get('/login', 'LoginController@show')->name('login.show');
         Route::post('/login', 'LoginController@login')->name('login.perform');
 
-        // Registrar Aluno
-        Route::get('/qrRegistrarAluno', function () {
-            return view('layouts.partials.qrRegistrarAluno');
-        })->name('qrRegistrarAluno');
+
     });
 
     Route::group(['middleware' => ['auth', 'check_user_key:987xyz']], function () {
@@ -256,12 +253,6 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
             return view('layouts.partials.alunosPassados');
         })->name('alunosPassados');
 
-
-        /*qrRegis  
-        Route::get('/qrRegistrarAluno', function () {
-            return view('layouts.partials.qrRegistrarAluno');
-        })->name('qrRegistrarAluno');
-*/
 
         //Password reset routes
 
