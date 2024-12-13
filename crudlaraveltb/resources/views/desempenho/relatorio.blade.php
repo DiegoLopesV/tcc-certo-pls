@@ -85,12 +85,16 @@
                 <th>Curso e Turma:</th>
                 <td class="resposta">{{ $aluno->curso }}</td>
             </tr>
+            <tr>
+                <th>Número de matrícula:</th>
+                <td class="resposta">{{ $aluno->numero_matricula }}</td>
+            </tr>
             <!-- Linha 3: Contatos -->
             <tr>
                 <th>Contatos:</th>
                 <td class="resposta">
-                    {{ $aluno->telefone_pais }}<br>
-                    {{ $aluno->email_pais }}
+                    Telefone dos Pais: {{ $aluno->telefone_pais }}<br>
+                    E-mail dos pais: {{ $aluno->email_pais }}
                 </td>
             </tr>
         </table>
