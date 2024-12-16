@@ -78,8 +78,11 @@ class ProfessoresController extends Controller
      */
     public function show($id)
     {
-        $professors = Professor::findOrFail($id);
-        return view('professores.show', compact("professors"));
+        $professor = Professor::find($id);
+        if (!$professor) {
+            return response()->json(['error' => 'Professor não encontrado'], 404);
+        }
+        return response()->json($professor);
     }
 
     /**
@@ -90,8 +93,14 @@ class ProfessoresController extends Controller
      */
     public function edit($id)
     {
-        $professors = Professor::findOrFail($id);
-        return view('professores.edit', ['professor' => $professors]);
+        $professor = Professor::find($id);
+
+        if (!$professor) {
+            return response()->json(['message' => 'Professor não encontrado'], 404);
+        }
+    
+        // Retorne os dados do professor como JSON
+        return response()->json($professor);
     }
 
     /**
@@ -103,24 +112,33 @@ class ProfessoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $storeData = $request->validate([
-            'nome' => 'required|max:255',
-            'cpf' => 'required|max:255',
+        // Encontra o professor
+        $professor = Professor::find($id);
+
+        if (!$professor) {
+            return response()->json(['message' => 'Professor não encontrado'], 404);
+        }
+
+        // Valida os dados recebidos
+        $request->validate([
+            'nome' => 'required|string|max:255',
+            'cpf' => 'required|string|max:14',
+            'telefone' => 'required|string|max:20',
+            'email' => 'required|email',
+            'numeroDeContrato' => 'required|string|max:255',
             'data_nascimento' => 'required|date',
-            'email' => 'required|max:255'
         ]);
 
-        $lotacao = Professor::find($id)->lotacao;
-        $lotacao->nome_campus = $request["nome_campus"];
-        $lotacao->departamento = $request["departamento"];
-        $lotacao->area_atuacao = $request["area_atuacao"];
+        // Atualiza os dados do professor
+        $professor->update($request->all());
 
-        Professor::whereId($id)->update($storeData);
-
-        $lotacao->update();
-        
-        return redirect('/professores')->with('completed', 'Professor atualizado com sucesso');
+        return response()->json([
+            'message' => 'Professor atualizado com sucesso!',
+            'professor' => $professor,
+        ]);
     }
+    
+    
 
     /**
      * Remove the specified resource from storage.
@@ -132,33 +150,54 @@ class ProfessoresController extends Controller
     {
         $professor = Professor::findOrFail($id);
         $professor->delete();
-        return redirect('/professores')->with('completed', 'Professor removido com sucesso');
-    }
-
-    public function excluirServidores(Request $request)
-    {
-        //Log::info('Payload recebido para exclusão: ', $request->all());  // Verifique se a informação aparece aqui
-        
-        $ids = $request->input('servidores');
-        $tipo = $request->input('tipo');
-        
-        // Lógica para excluir os servidores
-        switch ($tipo) {
-            case 'professor':
-                \App\Models\Professor::whereIn('id', $ids)->delete();
-                break;
-            case 'terceirizado':
-                \App\Models\Terceirizados::whereIn('id', $ids)->delete();
-                break;
-            case 'enfermeiro':
-                \App\Models\Enfermeiros::whereIn('id', $ids)->delete();
-                break;
-            default:
-                return response()->json(['message' => 'Tipo de servidor inválido'], 400);
-        }
-        
-        return response()->json(['message' => 'Servidores excluídos com sucesso']);
-    }
     
+        return response()->json(['message' => 'Professor excluído com sucesso!']);
+    }
 
+
+
+    public function editTerceirizado($id)
+    {
+        $terceirizado = Terceirizados::find($id);
+        if ($terceirizado) {
+            return response()->json($terceirizado);
+        } else {
+            return response()->json(['error' => 'Terceirizado não encontrado'], 404);
+        }
+    }
+
+    public function updateTerceirizado(Request $request, $id)
+    {
+        $terceirizado = Terceirizados::findOrFail($id);
+        $terceirizado->update($request->all());
+    
+        return response()->json([
+            'message' => 'Terceirizado atualizado com sucesso!',
+            'terceirizado' => $terceirizado,
+        ]);
+    }
+
+    public function destroyTerceirizado($id)
+    {
+        $terceirizado = Terceirizados::findOrFail($id);
+        $terceirizado->delete();
+    
+        return response()->json(['message' => 'Terceirizado excluído com sucesso!']);
+    }
+    public function storeTerceirizado(Request $request)
+    {
+        $dadosParaSalvar = $request->validate([
+            'nome' => 'required|max:255',
+            'cpf' => 'required|max:255',
+            'telefone' => 'required|max:255',
+            'numeroDeContrato' => 'required',
+            'data_nascimento' => 'required|date',
+            'email' => 'required|max:255',
+            'foto' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'chave' => 'nullable',
+        ]);
+
+
+        return redirect()->route('professores.index')->withSuccess(__('Professor criado com sucesso.'));
+    }
 }

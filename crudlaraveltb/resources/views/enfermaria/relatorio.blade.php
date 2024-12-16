@@ -61,7 +61,7 @@
     @foreach ($enfermaria as $item)
     <div class="card">
         <div class="card-header">
-            <div><strong>Título:</strong> {{ $item->titulo }}</div>
+            <div><strong>Responsável:</strong> {{ $item->responsavel }}</div>
             <div><strong>Descrição:</strong> {{ $item->descricao }}</div>
             <div><strong>Pessoas:</strong> {{ $item->pessoas }}</div>
             <div><strong>Turma:</strong> {{ $item->turma }}</div>

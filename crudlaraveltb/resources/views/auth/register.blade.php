@@ -11,6 +11,7 @@
 <body>
 
 
+
 	@extends('layouts.auth-master')
 	@include('layouts.partials.essentials')
 
@@ -136,6 +137,7 @@
 
 	<script src="{{ asset('assets/js/imagePreview.js') }}"></script>
 	@endsection
+
 
 
 </body>

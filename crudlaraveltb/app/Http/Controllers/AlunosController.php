@@ -75,6 +75,7 @@ class AlunosController extends Controller
          $aluno->email_pais = $request->email_pais;
          $aluno->data_nascimento = $request->data_nascimento;
          $aluno->napne = $request->napne;
+         $aluno->numero_matricula = $request->numero_matricula;
          $aluno->foto = $validatedData['foto'] ?? null;
  
  
@@ -197,6 +198,7 @@ class AlunosController extends Controller
         $aluno->foto = $validatedData['foto'] ?? null;
         $aluno->ano_atual = $anoAtual;
         $aluno->status_reprovacao = false;
+        $aluno->numero_matricula = $request->numero_matricula;
         $aluno->save();
 
         Log::info('Aluno criado com sucesso.', ['aluno_id' => $aluno->id]);
@@ -291,7 +293,7 @@ class AlunosController extends Controller
         $aluno->email_pais = $request->email_pais;
         $aluno->data_nascimento = $request->data_nascimento;
         $aluno->napne = $request->napne;
-
+        $aluno->numero_matricula = $request->numero_matricula;
 
 
         // Salva as atualizações no banco de dados

@@ -10,7 +10,6 @@ class Enfermaria extends Model
     use HasFactory;
 
     protected $fillable = [
-        'titulo',
         'horaInicio',
         'horaFinal',
         'responsavel',

@@ -115,7 +115,7 @@
                 </div>
 
 
-                <p><strong>Título:</strong> {{ $enfermaria->titulo }}</p>
+                <p><strong>Título:</strong> {{ $enfermaria->responsavel }}</p>
                 <p><strong>Descrição:</strong> {{ $enfermaria->descricao }}</p>
                 <p><strong>Aluno Atendido:</strong> {{ $enfermaria->pessoas }}</p>
                 <p><strong>Turma:</strong> {{ $enfermaria->turma }}</p>

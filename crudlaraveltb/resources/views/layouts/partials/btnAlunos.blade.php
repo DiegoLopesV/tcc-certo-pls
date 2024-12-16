@@ -10,6 +10,7 @@
                 <p><strong>Nome:</strong> <span id="modalNome"></span></p>
                 <p><strong>Curso:</strong> <span id="modalCurso"></span></p>
                 <p><strong>Turma:</strong> <span id="modalTurma"></span></p>
+                <p><strong>Número de Matrícula:</strong> <span id="modalMatricula"></span></p>
                 <p><strong>CPF:</strong> <span id="modalCpf"></span></p>
                 <p><strong>Nome dos Pais:</strong> <span id="modalNomePais"></span></p>
                 <p><strong>Telefone:</strong> <span id="modalTelefone"></span></p>
@@ -83,7 +84,10 @@
                         <label for="cpf">CPF</label>
                         <div id="cpfError" class="text-danger" style="display: none;"></div> <!-- Mensagem de erro -->
                     </div>
-
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="numero_matricula" placeholder="numero_matricula" name="numero_matricula" required>
+                        <label for="numero_matricula">Numero de Matrícula</label>
+                    </div>
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="nome_pais" placeholder="Nome dos Pais"
@@ -222,6 +226,34 @@
 
 <script src="{{ asset('assets/js/modalInfoAlunos.js') }}"></script>
 <script>
+      document.getElementById('infoForm').addEventListener('submit', function(event) {
+    document.getElementById('cadastroAluno').addEventListener('submit', function(event) {
+        // Impede o comportamento padrão de envio
+        event.preventDefault();
+        // Coleta os dados do formulário
+        const formData = new FormData(this);
+        const url = this.getAttribute('data-store-url');
+        method: 'POST',
+    headers: {
+        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    },
+    body: formData
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error(`Erro HTTP: ${response.status}`);
+    }
+    return response.json(); // Apenas converte para JSON se o status for OK
+})
+.then(data => {
+    console.log(data);
+    // Redireciona o usuário para a rota de login se a operação for bem-sucedida
+    window.location.href = '{{ route("login.perform") }}';
+})
+.catch(error => {
+    console.error('Erro ao enviar o formulário:', error);
+});
+});
 
     function isValidCPF(cpf) {
         // Remove caracteres não numéricos
