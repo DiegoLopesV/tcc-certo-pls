@@ -73,7 +73,11 @@
 
                     <p><strong>Título:</strong> {{ $ocorrencia->titulo }}</p>
                     <p><strong>Descrição:</strong> {{ $ocorrencia->descricao }}</p>
-                    <p><strong>Participantes:</strong> {{ $ocorrencia->participantes }}</p>
+                    <ul>
+                        @foreach ($ocorrencia->participantes as $participante)
+                            <li>{{ $participante['nome'] }} ({{ $participante['curso'] }}, {{ $participante['turma'] }})</li>
+                        @endforeach
+                    </ul>
                     <p><strong>Turma:</strong> {{ $ocorrencia->turma }}</p>
                     <p><strong>Data:</strong> {{ $ocorrencia->created_at }}</p>
                     <p><strong>Status:</strong>

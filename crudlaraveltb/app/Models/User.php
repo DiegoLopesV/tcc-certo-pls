@@ -49,20 +49,44 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
     public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = bcrypt($value);
     }
-    
+
     public function endereco()
     {
         return $this->hasOne(Endereco::class);
     }
-    
+
     public function solicitacoes()
     {
         return $this->hasMany(Solicitacao::class);
     }
-    
+
+
+    // app/Models/User.php
+
+    public function getFotoAttribute()
+    {
+        // Verifica em todas as tabelas relacionadas
+        $roles = [
+            'Administradores' => Administradores::class,
+            'Professores' => Professor::class,
+            'Terceirizados' => Terceirizados::class,
+            'Enfermeiros' => Enfermeiros::class,
+            'Alunos' => Alunos::class,
+        ];
+
+        foreach ($roles as $role => $model) {
+            if ($model::where('email', $this->email)->exists()) {
+                return $model::where('email', $this->email)->value('foto');
+            }
+        }
+
+        // Foto padrão se nenhuma encontrada
+        return 'assets/img/default.png';
+    }
+
 }

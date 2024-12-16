@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Perfil;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+
 use Illuminate\Http\Request;
 
 class PerfilController extends Controller
@@ -14,7 +15,7 @@ class PerfilController extends Controller
      */
     public function index()
     {
-        $user = auth()->user(); // ou o método apropriado para recuperar o usuário logado
+        $user = Auth::user(); // Usuário autenticado
         return view('perfil.index', compact('user'));
     }
 

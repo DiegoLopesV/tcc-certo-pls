@@ -18,13 +18,21 @@
     <div class="border border-dark border-2 m-5 rounded boxGPerf">
         <div class="d-flex">
             <div class="userBox border border-dark border-1 text-center m-3 rounded">
-                <i class="fa-solid fa-user user"></i>
+                <img src="{{ asset($user->foto) }}" alt="Foto de {{ $user->nome }}" class="user-photo">
                 <p>{{ $user->nome ?? 'Nome não informado' }}</p>
-
-
-
-
             </div>
+
+            <style>
+                .user-photo {
+                    width: 100px;
+                    height: 100px;
+                    border-radius: 50%;
+                    f object-fit: cover;
+                }
+            </style>
+
+
+
 
             <div class="infoPes border border-dark border-1 m-3 rounded">
                 <button class="border border-dark border-2 rounded m-1 botaoPerf"

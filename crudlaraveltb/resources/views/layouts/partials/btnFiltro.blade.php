@@ -123,25 +123,28 @@
 </div>
 
 <script>
-    document.getElementById('applyFilters').addEventListener('click', function() {
+    document.getElementById('applyFilters').addEventListener('click', function () {
         // Obtém todas as checkboxes selecionadas no formulário de filtros
         const selectedTurmas = Array.from(document.querySelectorAll('#filterForm input[type="checkbox"]:checked'))
-            .map(checkbox => checkbox.value);
-        
-        // Obtém todos os cards de ocorrência e enfermaria
-        const ocorrenciaCards = document.querySelectorAll('.ocorrencia-card');
-        const enfermariaCards = document.querySelectorAll('.enfermaria-card');
-        const alunoCards = document.querySelectorAll('.aluno-card');
+            .map(checkbox => checkbox.value.trim()); // Remove espaços extras dos valores
 
-        // Mostra ou oculta os cards de acordo com as turmas selecionadas
-        [...ocorrenciaCards, ...enfermariaCards, ...alunoCards].forEach(card => {
-            const cardTurma = card.getAttribute('data-turma');
-            if (selectedTurmas.length === 0 || selectedTurmas.includes(cardTurma)) {
-                card.style.display = 'block';
+        // Obtém todos os cards de ocorrência
+        const ocorrenciaCards = document.querySelectorAll('.ocorrencia-card');
+
+        // Itera pelos cards de ocorrências e verifica os participantes
+        ocorrenciaCards.forEach(card => {
+            // Obtém os participantes do card
+            const participantes = JSON.parse(card.getAttribute('data-participantes') || '[]'); // Array de participantes
+            
+            // Verifica se algum participante pertence às turmas selecionadas
+            const matches = participantes.some(participante => selectedTurmas.includes(participante.turma.trim()));
+
+            // Mostra ou oculta o card com base nos resultados
+            if (selectedTurmas.length === 0 || matches) {
+                card.style.display = 'block'; // Mostra o card
             } else {
-                card.style.display = 'none';
+                card.style.display = 'none'; // Oculta o card
             }
         });
     });
 </script>
-
