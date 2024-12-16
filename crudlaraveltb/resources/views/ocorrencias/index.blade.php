@@ -55,7 +55,7 @@
     <div id="ocorrenciaContainer" class="mt-4 d-flex flex-wrap mx-2 gap-2">
         @foreach ($ocorrencias as $ocorrencia)
             <div class="ocorrencia-card rounded text-center border border-dark border-2 excesso"
-                data-id="{{ $ocorrencia->id }}" data-title="{{ $ocorrencia->titulo }}"
+                data-id="{{ $ocorrencia->id }}" data-participantes="{{ json_encode($ocorrencia->participantes) }}" data-title="{{ $ocorrencia->titulo }}"
                 data-created="{{ $ocorrencia->data }}">
                 <div class="d-flex justify-content-end">
                     @if (auth()->check() && auth()->user()->key === '987xyz')
@@ -170,5 +170,5 @@
 
 
 </body>
-
+@include('layouts.partials.btnFiltro')
 </html>
