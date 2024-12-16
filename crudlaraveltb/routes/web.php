@@ -99,13 +99,35 @@ Route::group(['namespace' => 'App\Http\Controllers'], function () {
         Route::get("/usuarios/pdf", "UserPDFController@gerarPDF")->name("usuarios.pdf");
 
         Route::get('/professores', 'ProfessoresController@index')->name('professores.index');
-        Route::get('/professores/{professor}/mail', 'MailController@index')->name('professoresMail.index');
+
+        Route::put('/professores/{id}', [ProfessoresController::class, 'update'])->name('professores.update');
+
+        Route::get('/professores/{id}', [ProfessoresController::class, 'show']);
+
         Route::get('/professores/create', 'ProfessoresController@create')->name('professores.create');
         Route::post('/professores/create', 'ProfessoresController@store')->name('professores.store');
         Route::get('/professores/{professor}/show', 'ProfessoresController@show')->name('professores.show');
-        Route::get('/professores/{professor}/edit', 'ProfessoresController@edit')->name('professores.edit');
-        Route::patch('/professores/{professor}/update', 'ProfessoresController@update')->name('professores.update');
-        Route::delete('/professores/{professor}/delete', 'ProfessoresController@destroy')->name('professores.destroy');
+        Route::get('/professores/{id}/edit', [ProfessoresController::class, 'edit']);
+
+        Route::delete('/professores/{id}', [ProfessoresController::class, 'destroy'])->name('professores.destroy');
+
+        // Para os terceirizados
+// Rota para editar o terceirizado (professor) no ProfessoresController
+Route::get('/professores/terceirizados/{id}/edit', [ProfessoresController::class, 'editTerceirizado']);
+Route::put('/professores/terceirizados/{id}', [ProfessoresController::class, 'updateTerceirizado']);
+// Rota para armazenar o novo terceirizado (professor)
+Route::post('/professores/terceirizados', [ProfessoresController::class, 'storeTerceirizado'])->name('terceirizados.store');
+
+
+
+        
+        
+        Route::delete('/professores/terceirizados/{id}', [ProfessoresController::class, 'destroyTerceirizado'])->name('terceirizados.destroy');
+
+
+
+
+
 
         //Route::get('/professores', [TerceirizadosController::class, 'index'])->name('professores.index');
 
